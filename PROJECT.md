@@ -196,3 +196,25 @@ The initial development work is intentionally parallel.
                         RUMANA
              Database Formalization
              Testing + Evaluation
+```
+
+
+## Phase 1 Data Requirements
+
+| # | Feature | Owner | Input | Required Data | Output | Needs From |
+|---|---|---|---|---|---|---|
+| 1 | AI Message & Notice Parser | Prakriti | Messages, notices, OCR text | Message/notice text, OCR text content | Structured task/event information | User / External sources (messages, notices), Neha (OCR text) |
+| 2 | Screenshot-to-Action / OCR | Neha | Screenshots/images | Screenshot/image content | Extracted text | User (screenshots/images) |
+| 3 | Smart Task & Deadline Manager | TBD/Shared (Task Interface: Srijita) | Structured task/event information, user actions | Tasks, deadlines, events, task status updates | Structured task and deadline data, task statuses | Prakriti (NLP) / Srijita (task interface) |
+| 4 | Google Calendar Synchronization | TBD/Shared | TBD/Shared (Deferred) | TBD/Shared (Deferred) | TBD/Shared (Deferred) | TBD/Shared (Deferred from 5-day critical path; non-blocking) |
+| 5 | AI Priority Recommendation | Sresthita | Structured task information | Tasks, deadlines, event details | Priority recommendation outputs | Prakriti (NLP) / Storage |
+| 6 | "Did You Forget Something?" | TBD/Shared | Structured task information (TBD/Shared) | Pending tasks, deadlines, completion status (TBD/Shared) | Reminder / alert outputs (TBD/Shared) | Prakriti (NLP) / Storage (TBD/Shared) |
+| 7 | "What Did I Miss?" AI Digest | TBD/Shared | Structured task/event information, notice history (TBD/Shared) | Recent notices, tasks, events, deadlines (TBD/Shared) | Digest summary outputs (TBD/Shared) | Prakriti (NLP) / Storage (TBD/Shared) |
+| 8 | Change Detection | Prakriti | Messages, notices, OCR text, structured data | Updated notices/messages, existing structured task/event data | Change-related extraction / detected changes | Prakriti (NLP), Storage / User |
+| 9 | Source Reliability & Conflict Detection | TBD/Shared | Structured information, source metadata (TBD/Shared) | Source origin/type, conflicting task/event information (TBD/Shared) | Reliability scores, conflict detection outputs (TBD/Shared) | Prakriti (NLP) / Storage (TBD/Shared) |
+| 10 | Early Risk Detection using ML | Sresthita | Structured task information | Tasks, deadlines, workload information | Early-risk baseline outputs | Prakriti (NLP) / Storage |
+| 11 | Unified Student Dashboard | Srijita | Structured data, intelligence outputs | Structured tasks/events, priority scores, analytics, alerts | Student-facing dashboard and interfaces | Prakriti (NLP), Sresthita (Priority/Analytics), Storage, Intelligence Layer |
+| 12 | Assignment & Exam Tracker | Srijita | Structured data | Assignments, examinations, deadlines, dates | Student-facing assignment and exam tracker interface | Prakriti (NLP) / Storage |
+| 13 | Performance & Productivity Analytics | Sresthita (Analytics) / Srijita (Display) | Structured task information | Tasks, deadlines, workload and completion records | Workload calculation and productivity analytics outputs | Prakriti (NLP) / Storage |
+| 14 | Personalized Notification Engine | TBD/Shared (Alert UI: Srijita) | Structured data, intelligence outputs (TBD/Shared) | Tasks, deadlines, priority recommendations, alerts (TBD/Shared) | Personalized notification outputs (TBD/Shared) | Storage, Intelligence Layer (Sresthita / TBD/Shared) |
+| 15 | Proactive Alerts | TBD/Shared (Alert UI: Srijita) | Structured data, intelligence outputs (TBD/Shared) | Upcoming deadlines, risk baseline, priority recommendations (TBD/Shared) | Proactive alert outputs and alert UI | Storage, Intelligence Layer (Sresthita / TBD/Shared) |
