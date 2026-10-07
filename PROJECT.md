@@ -297,7 +297,7 @@ The initial development work is intentionally parallel.
 | `due_date` | string (YYYY-MM-DD) | Optional / Nullable | NLP | Raw submission/due date extracted from text. |
 | `due_time` | string (HH:MM) | Optional / Nullable | NLP | Raw submission/due time extracted from text. |
 | `due_datetime` | string (ISO 8601) | Optional / Nullable | Task/storage layer | Normalized datetime used by downstream intelligence. |
-| `event_datetime` | string (ISO 8601) | Optional / Nullable | NLP | Scheduled datetime for an event (exam, viva, class, meeting), distinct from submission deadline. |
+| `event_datetime` | string (ISO 8601) | Optional / Nullable | NLP | Scheduled datetime for an event (exam, viva, class, meeting), distinct from submission deadline. NLP extracts the event date/time from the source text and provides event_datetime in ISO 8601 format when sufficient information is available; the task/storage layer validates it and handles any final normalization or timezone handling before persistence. |
 | `status` | string | Required (default: `"pending"`) | Task/storage layer | Authoritative status managed by task/storage layer. |
 | `importance` | integer / string | Optional / Nullable | NLP / Task-storage layer | Importance level if stated in source or provided elsewhere. |
 | `estimated_effort` | string / number | Optional / Nullable | NLP / Task-storage layer | Expected completion effort/duration if stated or provided elsewhere. |
