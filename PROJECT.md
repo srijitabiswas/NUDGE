@@ -218,3 +218,136 @@ The initial development work is intentionally parallel.
 | 13 | Performance & Productivity Analytics | Sresthita (Analytics) / Srijita (Display) | Structured task information | Tasks, deadlines, workload and completion records | Workload calculation and productivity analytics outputs | Prakriti (NLP) / Storage |
 | 14 | Personalized Notification Engine | TBD/Shared (Alert UI: Srijita) | Structured data, intelligence outputs (TBD/Shared) | Tasks, deadlines, priority recommendations, alerts (TBD/Shared) | Personalized notification outputs (TBD/Shared) | Storage, Intelligence Layer (Sresthita / TBD/Shared) |
 | 15 | Proactive Alerts | TBD/Shared (Alert UI: Srijita) | Structured data, intelligence outputs (TBD/Shared) | Upcoming deadlines, risk baseline, priority recommendations (TBD/Shared) | Proactive alert outputs and alert UI | Storage, Intelligence Layer (Sresthita / TBD/Shared) |
+
+## Shared Structured JSON / Data Contract
+
+### Agreed Structure
+
+```json
+{
+  "task_id": null,
+  "task_title": "",
+  "description": null,
+  "task_type": "",
+  "subject": null,
+  "due_date": null,
+  "due_time": null,
+  "due_datetime": null,
+  "event_datetime": null,
+  "status": "pending",
+  "importance": null,
+  "estimated_effort": null,
+  "source": "",
+  "raw_text": "",
+  "date_time_expression": null,
+  "confidence": 0.0,
+  "change_information": [],
+  "created_at": null,
+  "completed_at": null
+}
+```
+
+### Component Ownership
+
+- **Task/storage layer owns:**
+  - `task_id`
+  - `due_datetime` normalization
+  - authoritative `status`
+  - `created_at`
+  - `completed_at`
+
+- **NLP provides/extracts:**
+  - `task_title`
+  - `description`
+  - `task_type`
+  - `subject`
+  - `due_date`
+  - `due_time`
+  - `event_datetime`
+  - `source`
+  - `raw_text`
+  - `date_time_expression`
+  - `confidence`
+  - `change_information`
+
+- **Optional fields:**
+  - `importance`
+  - `estimated_effort`
+  *(These may be extracted from the source when available or provided/maintained elsewhere.)*
+
+- **Intelligence layer calculates rather than receives as input:**
+  - `priority_score`
+  - `priority_label`
+  - `priority_reason`
+  - `workload metrics`
+  - `productivity metrics`
+  - `risk signals`
+
+### Field Definitions
+
+> **Note on "Required" Fields**: A required field must be present in the contract, but its value may be `null` when the information is unavailable, unless a default is explicitly defined. Status defaults to `"pending"` as already documented.
+
+| Field | Type | Requirement / Nullability | Owner | Description |
+|---|---|---|---|---|
+| `task_id` | integer / string | Nullable | Task/storage layer | Unique identifier assigned by the storage layer upon creation. |
+| `task_title` | string | Required | NLP | Extracted task title or action headline. |
+| `description` | string | Optional / Nullable | NLP | Detailed description, instructions, or notes. |
+| `task_type` | string | Required | NLP | Classified task type (e.g., assignment, exam, quiz, event). |
+| `subject` | string | Optional / Nullable | NLP | Course or subject name/code. |
+| `due_date` | string (YYYY-MM-DD) | Optional / Nullable | NLP | Raw submission/due date extracted from text. |
+| `due_time` | string (HH:MM) | Optional / Nullable | NLP | Raw submission/due time extracted from text. |
+| `due_datetime` | string (ISO 8601) | Optional / Nullable | Task/storage layer | Normalized datetime used by downstream intelligence. |
+| `event_datetime` | string (ISO 8601) | Optional / Nullable | NLP | Scheduled datetime for an event (exam, viva, class, meeting), distinct from submission deadline. |
+| `status` | string | Required (default: `"pending"`) | Task/storage layer | Authoritative status managed by task/storage layer. |
+| `importance` | integer / string | Optional / Nullable | NLP / Task-storage layer | Importance level if stated in source or provided elsewhere. |
+| `estimated_effort` | string / number | Optional / Nullable | NLP / Task-storage layer | Expected completion effort/duration if stated or provided elsewhere. |
+| `source` | string | Required | NLP | Source channel or platform (e.g., LMS, email, notice, screenshot). |
+| `raw_text` | string | Required | NLP | Original unstructured message or notice text. |
+| `date_time_expression` | string | Optional / Nullable | NLP | Literal date/time phrase extracted from the raw text. |
+| `confidence` | float (0.0 - 1.0) | Required | NLP | Confidence score of the extraction. |
+| `change_information` | array of objects | Required (defaults to `[]`) | NLP | Array of detected changes; empty array if no change is detected. |
+| `created_at` | string (ISO 8601) | Nullable | Task/storage layer | Timestamp when the task was created; owned and maintained by the task/storage layer. |
+| `completed_at` | string (ISO 8601) | Nullable | Task/storage layer | Timestamp when the task was marked completed; owned and maintained by the task/storage layer. |
+
+### Important Rules
+
+- Missing/unknown information must be represented as `null`, not invented.
+- A required field must be present in the contract, but its value may be `null` when the information is unavailable, unless a default is explicitly defined. Status defaults to `"pending"` as already documented.
+- NLP must not infer `completed` or `overdue` merely from message content.
+- The task/storage layer is authoritative for task status.
+- `created_at` and `completed_at` are owned and maintained by the task/storage layer.
+- `due_date` and `due_time` preserve NLP extraction, while `due_datetime` is the normalized datetime used by downstream intelligence.
+- `event_datetime` represents an event such as an exam, viva, class, meeting, or other scheduled event and is separate from a submission deadline.
+- `change_information` must be an array. It can contain multiple change objects. If no change is detected, it must be `[]`.
+- Each change object should contain `is_changed`, `change_type`, `old_value`, and `new_value`.
+- `change_type` may include values such as `deadline`, `date`, `time`, `location`, or `other`.
+
+### Example Transformation
+
+**Incoming Student Message:**
+> *"Dear Students, please submit your Machine Learning Assignment 1 on Moodle by 15th October at 5:00 PM."*
+
+**Structured Contract Output:**
+```json
+{
+  "task_id": null,
+  "task_title": "Submit Machine Learning Assignment 1",
+  "description": "Submit on Moodle",
+  "task_type": "assignment",
+  "subject": "Machine Learning",
+  "due_date": "2026-10-15",
+  "due_time": "17:00",
+  "due_datetime": "2026-10-15T17:00:00",
+  "event_datetime": null,
+  "status": "pending",
+  "importance": null,
+  "estimated_effort": null,
+  "source": "LMS Notice",
+  "raw_text": "Dear Students, please submit your Machine Learning Assignment 1 on Moodle by 15th October at 5:00 PM.",
+  "date_time_expression": "15th October at 5:00 PM",
+  "confidence": 0.95,
+  "change_information": [],
+  "created_at": null,
+  "completed_at": null
+}
+```
