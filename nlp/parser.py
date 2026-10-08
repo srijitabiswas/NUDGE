@@ -29,12 +29,6 @@ def extract_task_title(text: str) -> str | None:
 def extract_date(text: str) -> str | None:
     """
     Extract explicit dates from text.
-
-    Supported examples:
-    - 15th October
-    - October 15
-    - 15 October
-    - 2026-10-15
     """
 
     current_year = datetime.now().year
@@ -94,6 +88,60 @@ def extract_date(text: str) -> str | None:
     return None
 
 
+def extract_time(text: str) -> str | None:
+    """
+    Extract explicit times from text.
+
+    Supported examples:
+    - 5 PM
+    - 5:00 PM
+    - 17:00
+    """
+
+    patterns = [
+        r"\b(\d{1,2}):(\d{2})\s*(AM|PM)\b",
+        r"\b(\d{1,2})\s*(AM|PM)\b",
+        r"\b([01]?\d|2[0-3]):([0-5]\d)\b"
+    ]
+
+    for index, pattern in enumerate(patterns):
+        match = re.search(pattern, text, re.IGNORECASE)
+
+        if not match:
+            continue
+
+        try:
+            if index == 0:
+                hour = int(match.group(1))
+                minute = int(match.group(2))
+                period = match.group(3).upper()
+
+                if period == "PM" and hour != 12:
+                    hour += 12
+                elif period == "AM" and hour == 12:
+                    hour = 0
+
+            elif index == 1:
+                hour = int(match.group(1))
+                minute = 0
+                period = match.group(2).upper()
+
+                if period == "PM" and hour != 12:
+                    hour += 12
+                elif period == "AM" and hour == 12:
+                    hour = 0
+
+            else:
+                hour = int(match.group(1))
+                minute = int(match.group(2))
+
+            return f"{hour:02d}:{minute:02d}"
+
+        except ValueError:
+            return None
+
+    return None
+
 def parse_message(raw_text: str, source: str) -> dict:
     """
     Basic NLP message parser.
@@ -124,6 +172,7 @@ def parse_message(raw_text: str, source: str) -> dict:
 
     task_title = extract_task_title(text) if is_task else None
     due_date = extract_date(text)
+    due_time = extract_time(text)
 
     return {
         "task_title": task_title,
@@ -131,7 +180,7 @@ def parse_message(raw_text: str, source: str) -> dict:
         "task_type": None,
         "subject": None,
         "due_date": due_date,
-        "due_time": None,
+        "due_time": due_time,
         "event_datetime": None,
         "source": source,
         "raw_text": raw_text,
