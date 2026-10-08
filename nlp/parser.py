@@ -175,7 +175,34 @@ def classify_task_type(text: str) -> str | None:
 
     return None
 
+def calculate_confidence(
+    task_title: str | None,
+    task_type: str | None,
+    due_date: str | None,
+    due_time: str | None
+) -> float:
+    """
+    Calculate a simple baseline confidence score.
 
+    Each successfully extracted component contributes
+    to the overall confidence.
+    """
+
+    score = 0.0
+
+    if task_title:
+        score += 0.25
+
+    if task_type:
+        score += 0.25
+
+    if due_date:
+        score += 0.25
+
+    if due_time:
+        score += 0.25
+
+    return round(score, 2)
 
 def parse_message(raw_text: str, source: str) -> dict:
     """
@@ -210,7 +237,12 @@ def parse_message(raw_text: str, source: str) -> dict:
     task_type = classify_task_type(text)
     due_date = extract_date(text)
     due_time = extract_time(text)
-
+    confidence = calculate_confidence(
+    task_title,
+    task_type,
+    due_date,
+    due_time
+)
 
     return {
         "task_title": task_title,
@@ -223,6 +255,6 @@ def parse_message(raw_text: str, source: str) -> dict:
         "source": source,
         "raw_text": raw_text,
         "date_time_expression": None,
-        "confidence": 0.0,
+        "confidence": confidence,
         "change_information": []
     }
