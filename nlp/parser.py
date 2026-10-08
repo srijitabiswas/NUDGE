@@ -228,9 +228,9 @@ def parse_message(raw_text: str, source: str) -> dict:
     ]
 
     is_task = any(
-        text.lower().startswith(word)
-        for word in action_words
-    )
+    re.search(rf"\b{re.escape(word)}\b", text.lower())
+    for word in action_words
+)
 
 
     task_title = extract_task_title(text) if is_task else None
