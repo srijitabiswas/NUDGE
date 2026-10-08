@@ -142,6 +142,41 @@ def extract_time(text: str) -> str | None:
 
     return None
 
+def classify_task_type(text: str) -> str | None:
+    """
+    Classify the basic type of a student task or event.
+    """
+
+    text_lower = text.lower()
+
+    if "assignment" in text_lower:
+        return "assignment"
+
+    if "exam" in text_lower or "examination" in text_lower:
+        return "exam"
+
+    if "quiz" in text_lower:
+        return "quiz"
+
+    if "project" in text_lower:
+        return "project"
+
+    if "viva" in text_lower:
+        return "viva"
+
+    if "class" in text_lower or "lecture" in text_lower:
+        return "class"
+
+    if "meeting" in text_lower:
+        return "meeting"
+
+    if "event" in text_lower:
+        return "event"
+
+    return None
+
+
+
 def parse_message(raw_text: str, source: str) -> dict:
     """
     Basic NLP message parser.
@@ -170,14 +205,17 @@ def parse_message(raw_text: str, source: str) -> dict:
         for word in action_words
     )
 
+
     task_title = extract_task_title(text) if is_task else None
+    task_type = classify_task_type(text)
     due_date = extract_date(text)
     due_time = extract_time(text)
+
 
     return {
         "task_title": task_title,
         "description": None,
-        "task_type": None,
+        "task_type": task_type,
         "subject": None,
         "due_date": due_date,
         "due_time": due_time,
