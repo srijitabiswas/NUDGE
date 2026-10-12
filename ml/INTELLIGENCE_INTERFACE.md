@@ -61,9 +61,9 @@ For each task, the module produces:
 | `priority_label` | String | Communicates the priority category. |
 | `priority_reason` | String | Explains the main factors contributing to the recommendation. |
 
-The priority calculation may consider deadline proximity, task type, explicitly available importance, and other agreed signals.
+The initial priority calculation uses deadline urgency (50%), explicitly available importance (30%), and task type (20%). Available signal weights are normalized when one or more signals are missing.
 
-**Proposed design decision for team review:** use a score from 0 to 100 and priority labels `High`, `Medium`, and `Low`. The exact scoring formula and label thresholds must be defined before implementation.
+The baseline score ranges from 0 to 100. Labels are `High` (70–100), `Medium` (40–less than 70), `Low` (0–less than 40), and `Unavailable` when no valid scoring signals are available. These are initial heuristic rules, not validated predictive results.
 
 If insufficient information is available, the module must avoid presenting an unsupported recommendation as certain.
 
@@ -162,7 +162,7 @@ For each eligible task, the module will produce:
 - `priority_label`
 - `priority_reason`
 
-The score is intended to range from 0 to 100. The formula, signal weights, importance mapping, task-type mapping, and label thresholds must be defined explicitly before implementation and tested against available structured task records.
+The initial score ranges from 0 to 100 and uses the scoring formula, signal weights, importance mapping, task-type mapping, and label thresholds defined in Sections 8.6–8.10. Available signal weights are normalized when scoring signals are missing. These are initial heuristic rules and must be tested against available structured task records; they are not validated predictive results.
 
 ### 8.5 Validation
 
