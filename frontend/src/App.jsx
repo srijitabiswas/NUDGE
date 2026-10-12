@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { fetchTasks, fetchAnalytics, updateTaskStatus } from "./services/taskService";
 import AnalyticsPanels from "./components/AnalyticsPanels";
+import Tracker from "./components/Tracker";
 import "./App.css";
 
 const FILTERS = [
@@ -216,6 +217,8 @@ export default function App() {
         </section>
 
         <section className="main-col">
+          {!loading && !error && <Tracker tasks={tasks} />}
+
           <div className="filters">
             {FILTERS.map((f) => (
               <button
