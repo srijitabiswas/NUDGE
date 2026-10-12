@@ -18,8 +18,7 @@ const STATUS_LABEL = {
 };
 
 const NEXT_STATUS = {
-  pending: "in_progress",
-  in_progress: "completed",
+  pending: "completed",
   completed: "pending",
 };
 
@@ -79,10 +78,10 @@ function TaskCard({ task, bucket, onAdvance }) {
         {bucket === "overdue" && <span className="chip chip-danger">Overdue</span>}
       </div>
 
-      {task.previous_due_date && (
+      {task.change && (
         <p className="note note-change">
-          Deadline changed: <s>{formatDate(task.previous_due_date)}</s> →{" "}
-          <strong>{formatDate(task.due_date)}</strong>
+          {task.change.type} changed: <s>{task.change.old}</s> →{" "}
+          <strong>{task.change.new}</strong>
         </p>
       )}
       {task.conflict && (
@@ -92,7 +91,7 @@ function TaskCard({ task, bucket, onAdvance }) {
         <p className="note note-reason">
           Why: {task.priority_reason}
           {typeof task.priority_score === "number" &&
-            ` (score ${task.priority_score.toFixed(2)})`}
+            ` (score ${Math.round(task.priority_score)}/100)`}
         </p>
       )}
 
@@ -145,8 +144,8 @@ export default function App() {
         list.push({ type: "danger", text: `Overdue: ${task.title}` });
       if (bucket === "today")
         list.push({ type: "warning", text: `Due today: ${task.title}` });
-      if (task.previous_due_date && bucket !== "done")
-        list.push({ type: "info", text: `Deadline changed: ${task.title}` });
+      if (task.change && bucket !== "done")
+        list.push({ type: "info", text: `${task.change.type} changed: ${task.title}` });
       if (task.conflict && bucket !== "done")
         list.push({ type: "warning", text: `Possible clash: ${task.title}` });
     });
