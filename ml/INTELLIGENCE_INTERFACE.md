@@ -258,3 +258,43 @@ Rules:
 - An unavailable score must produce an Unavailable label, not Low.
 - Keep the score within the range 0–100.
 - These thresholds are initial heuristic assumptions and must be evaluated against real structured task records.
+
+
+## 9. Workload, Productivity, and Early-Risk Baseline
+
+Implementation: `ml/intelligence_metrics.py`
+
+### 9.1 Workload Calculation
+
+`calculate_workload(tasks, current_time=None)` reports:
+- Number of active tasks.
+- Number of overdue active tasks.
+- Number of active tasks due within seven days.
+- Number of tasks with known numeric estimated effort.
+- Sum of known numeric effort values.
+
+Missing effort is not assumed to be zero. Effort units are not inferred. Deadlines that are missing or invalid are excluded from deadline counts.
+
+### 9.2 Productivity Analytics
+
+`calculate_productivity(tasks, current_time=None)` reports:
+- Total number of supplied task records.
+- Completed and active task counts.
+- Completion rate among tasks with recognized completed or active status.
+- Number of completed tasks with a recorded completion timestamp within the previous seven days.
+
+Completion timestamps that are missing or invalid do not contribute to the seven-day count. The completion rate is unavailable when no tasks have a recognized status.
+
+### 9.3 Early-Risk Detection
+
+`detect_early_risks(tasks, current_time=None)` generates rule-based signals for active tasks:
+- High risk: deadline has passed.
+- Medium risk: deadline is within 24 hours.
+- Medium workload-review signal: at least five active tasks.
+
+These are initial heuristics, not trained machine learning predictions or validated risk thresholds. Missing or invalid deadlines do not generate deadline-based risk signals.
+
+### 9.4 Limitations
+
+The functions operate on task records supplied by the caller. They do not fetch records from the database, schedule alerts, or update the dashboard. Integration with the backend and evaluation using representative real task data remain necessary. All reported metrics depend on the completeness and correctness of the supplied records.
+
