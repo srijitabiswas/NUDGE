@@ -130,3 +130,44 @@ export const samplePriorities = [
   { task_id: 6, priority_score: 40.0, priority_label: "Medium", priority_reason: "Due in more than 7 days; quiz." },
   { task_id: 7, priority_score: null, priority_label: "Unavailable", priority_reason: "Task is completed; no active priority recommendation is needed." },
 ];
+
+
+// TEMPORARY. Shapes copy ml/intelligence_metrics.py outputs exactly.
+// Values are what those functions return for the sample tasks above.
+export const sampleAnalytics = {
+  workload: {
+    active_task_count: 6,
+    overdue_task_count: 1,
+    due_within_7_days_count: 3,
+    known_effort_task_count: 0,
+    known_effort_total: null,
+    effort_unit: null,
+  },
+  productivity: {
+    total_tasks: 7,
+    completed_task_count: 1,
+    active_task_count: 6,
+    completion_rate_percent: 14.29,
+    completed_within_7_days_count: 0,
+  },
+  risks: [
+    {
+      task_id: 4,
+      task_title: "Computer Networks lab record",
+      risk_level: "high",
+      risk_reasons: ["Deadline has passed"],
+    },
+    {
+      task_id: 1,
+      task_title: "Submit DBMS assignment 3",
+      risk_level: "medium",
+      risk_reasons: ["Deadline is within 24 hours"],
+    },
+    {
+      task_id: null,
+      task_title: "Overall workload",
+      risk_level: "medium",
+      risk_reasons: ["6 active tasks; review workload"],
+    },
+  ],
+};

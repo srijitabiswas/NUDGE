@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { fetchTasks, updateTaskStatus } from "./services/taskService";
+import { fetchTasks, fetchAnalytics, updateTaskStatus } from "./services/taskService";
+import AnalyticsPanels from "./components/AnalyticsPanels";
 import "./App.css";
 
 const FILTERS = [
@@ -110,13 +111,21 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [filter, setFilter] = useState("all");
+    const [filter, setFilter] = useState("all");
+  const [analytics, setAnalytics] = useState(null);
+  const [analyticsError, setAnalyticsError] = useState(false);
 
   useEffect(() => {
     fetchTasks()
       .then(setTasks)
       .catch(() => setError("Could not load tasks. Please try again."))
-      .finally(() => setLoading(false));
+            .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    fetchAnalytics()
+      .then(setAnalytics)
+      .catch(() => setAnalyticsError(true));
   }, []);
 
   const today = todayStr();
@@ -250,8 +259,10 @@ export default function App() {
             </ul>
           </div>
 
+          <AnalyticsPanels analytics={analytics} error={analyticsError} />
+
           <div className="panel">
-            <h2>Workload</h2>
+            <h2>By type</h2>
             <p className="muted">{workload.total} open tasks</p>
             {Object.entries(workload.byType).map(([type, n]) => (
               <div key={type} className="bar-row">

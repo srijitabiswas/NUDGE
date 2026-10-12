@@ -167,3 +167,19 @@
   }
   .stats { grid-template-columns: repeat(2, 1fr); }
 }
+
+
+.metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.metric { background: #f8fafc; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.metric-value { font-size: 1.2rem; font-weight: 700; }
+.metric-label { color: var(--color-muted); font-size: 0.78rem; }
+
+.risk-list { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.risk-item { border: 1px solid var(--color-border); border-left-width: 4px; border-radius: 10px; padding: 8px 10px; }
+.risk-item.risk-high { border-left-color: var(--color-danger); }
+.risk-item.risk-medium { border-left-color: var(--color-warning); }
+.risk-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.85rem; }
+.risk-reason { margin: 4px 0 0; font-size: 0.8rem; color: var(--color-muted); }
+.risk-pill-high { background: #fee2e2; color: var(--color-danger); }
+.risk-pill-medium { background: #fef3c7; color: var(--color-warning); }
+.small { font-size: 0.75rem; margin: 0; }
