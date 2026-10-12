@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { fetchTasks, fetchAnalytics, updateTaskStatus } from "./services/taskService";
 import AnalyticsPanels from "./components/AnalyticsPanels";
 import Tracker from "./components/Tracker";
+import Recommendations from "./components/Recommendations";
 import "./App.css";
 
 const FILTERS = [
@@ -12,6 +13,10 @@ const FILTERS = [
   { key: "assignment", label: "Assignments" },
   { key: "exam", label: "Exams" },
 ];
+
+function cap(s) {
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
+}
 
 const STATUS_LABEL = {
   pending: "Pending",
@@ -82,7 +87,7 @@ function TaskCard({ task, bucket, onAdvance }) {
 
       {task.change && (
         <p className="note note-change">
-          {task.change.type} changed: <s>{task.change.old}</s> →{" "}
+          {cap(task.change.type)} changed: <s>{task.change.old}</s> →{" "}
           <strong>{task.change.new}</strong>
         </p>
       )}
@@ -149,18 +154,22 @@ export default function App() {
 
   const alerts = useMemo(() => {
     const list = [];
+    (analytics?.risks || []).forEach((r) => {
+      const reason = (r.risk_reasons || []).join("; ");
+      list.push({
+        type: r.risk_level === "high" ? "danger" : "warning",
+        text: `${r.task_title}: ${reason}`,
+      });
+    });
     withBucket.forEach(({ task, bucket }) => {
-      if (bucket === "overdue")
-        list.push({ type: "danger", text: `Overdue: ${task.title}` });
-      if (bucket === "today")
-        list.push({ type: "warning", text: `Due today: ${task.title}` });
-      if (task.change && bucket !== "done")
-        list.push({ type: "info", text: `${task.change.type} changed: ${task.title}` });
-      if (task.conflict && bucket !== "done")
+      if (bucket === "done") return;
+      if (task.change)
+        list.push({ type: "info", text: `${cap(task.change.type)} changed: ${task.title}` });
+      if (task.conflict)
         list.push({ type: "warning", text: `Possible clash: ${task.title}` });
     });
     return list;
-  }, [withBucket]);
+  }, [withBucket, analytics]);
 
   const workload = useMemo(() => {
     const open = withBucket.filter(({ bucket }) => bucket !== "done");
@@ -250,6 +259,7 @@ export default function App() {
         </section>
 
         <aside className="side-col">
+          <Recommendations tasks={tasks} risks={analytics?.risks} />
           <div className="panel">
             <h2>Alerts</h2>
             {alerts.length === 0 && <p className="muted">No alerts.</p>}
