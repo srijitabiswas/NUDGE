@@ -174,3 +174,18 @@ textarea.input { min-height: 96px; resize: vertical; }
   .cal-chip, .cal-more, .cal-classes { display: none; }
   .cal-count { display: block; }
 }
+
+.an-bars { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.an-bar { display: grid; grid-template-columns: 110px 1fr 32px; align-items: center; gap: var(--space-3); font-size: 0.9rem; }
+.an-track { height: 10px; background: var(--color-surface-alt); border-radius: 5px; overflow: hidden; }
+.an-fill { display: block; height: 100%; background: var(--color-primary); border-radius: 5px; }
+.an-fill.ok { background: var(--color-success, #15803d); }
+.an-fill.warn { background: var(--color-warning, #b45309); }
+.an-fill.danger { background: var(--color-danger, #b91c1c); }
+.an-value { text-align: right; font-weight: 600; }
+.an-cols { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--space-3); height: 190px; align-items: end; }
+.an-col { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 4px; }
+.an-col-bar { width: 100%; max-width: 44px; min-height: 3px; background: var(--color-primary); border-radius: 4px 4px 0 0; }
+.an-col-value { font-weight: 600; font-size: 0.85rem; }
+.an-col-label { font-size: 0.75rem; color: var(--color-muted); text-align: center; }
+.an-panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); align-items: start; }
