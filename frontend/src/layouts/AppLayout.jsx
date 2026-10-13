@@ -3,18 +3,17 @@ import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { APP_ROUTES } from "../routeConfig";
 import Logo from "../components/Logo";
 import Icon from "../components/Icon";
-import Footer from "../components/Footer";import Footer from "../components/Footer";
+import Footer from "../components/Footer";
 import { useAuth } from "../hooks/useAuth";
+import { useTasks } from "../hooks/useTasks";
 
 export default function AppLayout() {
   const location = useLocation();
   const navigate = useNavigate();
+  const menuRef = useRef(null);
   const [navOpen, setNavOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-
-  // Placeholders: wired to real data in later steps.
-  const unread = 0; // Step 6: notifications from the shared provider
+  const { unread } = useTasks();
   const { user, logout } = useAuth();
   const studentName = user?.name || "Student";
 
@@ -38,7 +37,7 @@ export default function AppLayout() {
 
   const current = APP_ROUTES.find((r) => r.path === location.pathname);
 
-   async function handleSignOut() {
+  async function handleSignOut() {
     setMenuOpen(false);
     await logout();
     navigate("/", { replace: true });

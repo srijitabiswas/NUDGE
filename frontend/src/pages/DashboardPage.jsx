@@ -1,6 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
-import { fetchTasks, fetchAnalytics, updateTaskStatus, createTask } from "../services/taskService";
-import { markConflicts } from "../services/taskAdapter";
+import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { useTasks } from "../hooks/useTasks";
+import { useAuth } from "../hooks/useAuth";
+import { USING_SAMPLE_DATA } from "../services/taskService";
+import { cap, formatDate, getBucket, todayStr, STATUS_LABEL } from "../utils/taskUtils";
 import AddMessage from "../components/AddMessage";
 import TaskDetails from "../components/TaskDetails";
 import AnalyticsPanels from "../components/AnalyticsPanels";
@@ -17,44 +20,6 @@ const FILTERS = [
   { key: "exam", label: "Exams" },
 ];
 
-function cap(s) {
-  return s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
-}
-
-const STATUS_LABEL = {
-  pending: "Pending",
-  in_progress: "In progress",
-  completed: "Completed",
-};
-
-const NEXT_STATUS = {
-  pending: "completed",
-  completed: "pending",
-};
-
-function todayStr() {
-  const d = new Date();
-  const p = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
-}
-
-function formatDate(str) {
-  if (!str) return "No date";
-  const [y, m, d] = str.split("-").map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "short",
-  });
-}
-
-function getBucket(task, today) {
-  if (task.status === "completed") return "done";
-  if (!task.due_date) return "upcoming";
-  if (task.due_date < today) return "overdue";
-  if (task.due_date === today) return "today";
-  return "upcoming";
-}
-
 function StatCard({ label, value, tone }) {
   return (
     <div className={`stat-card tone-${tone}`}>
@@ -68,9 +33,7 @@ function TaskCard({ task, bucket, onAdvance, onOpen }) {
   return (
     <article className={`task-card bucket-${bucket}`}>
       <div className="task-top">
-        <h3 className={task.status === "completed" ? "done-title" : ""}>
-          {task.title}
-        </h3>
+        <h3 className={task.status === "completed" ? "done-title" : ""}>{task.title}</h3>
         <span className={`badge priority-${task.priority_label || "none"}`}>
           {task.priority_label || "unrated"}
         </span>
@@ -90,27 +53,19 @@ function TaskCard({ task, bucket, onAdvance, onOpen }) {
 
       {task.change && (
         <p className="note note-change">
-          {cap(task.change.type)} changed: <s>{task.change.old}</s> →{" "}
-          <strong>{task.change.new}</strong>
+          {cap(task.change.type)} changed: <s>{task.change.old}</s> → <strong>{task.change.new}</strong>
         </p>
       )}
-      {task.conflict && (
-        <p className="note note-conflict">Possible clash with another event.</p>
-      )}
+      {task.conflict && <p className="note note-conflict">Possible clash with another event.</p>}
       {task.priority_reason && (
         <p className="note note-reason">
           Why: {task.priority_reason}
-          {typeof task.priority_score === "number" &&
-            ` (score ${Math.round(task.priority_score)}/100)`}
+          {typeof task.priority_score === "number" && ` (score ${Math.round(task.priority_score)}/100)`}
         </p>
       )}
 
       <div className="card-actions">
-        <button
-          className={`status-btn status-${task.status}`}
-          onClick={() => onAdvance(task)}
-          title="Click to change status"
-        >
+        <button className={`status-btn status-${task.status}`} onClick={() => onAdvance(task)} title="Click to change status">
           {STATUS_LABEL[task.status] || task.status}
         </button>
         <button className="status-btn" onClick={onOpen}>
@@ -122,28 +77,13 @@ function TaskCard({ task, bucket, onAdvance, onOpen }) {
 }
 
 export default function DashboardPage() {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-    const [filter, setFilter] = useState("all");
-  const [analytics, setAnalytics] = useState(null);
+  const { user } = useAuth();
+  const { tasks, analytics, loading, error, analyticsError, alerts, addTask, advanceStatus } = useTasks();
+  const [filter, setFilter] = useState("all");
   const [selectedId, setSelectedId] = useState(null);
-  const [analyticsError, setAnalyticsError] = useState(false);
-
-  useEffect(() => {
-    fetchTasks()
-      .then(setTasks)
-      .catch(() => setError("Could not load tasks. Please try again."))
-            .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-    fetchAnalytics()
-      .then(setAnalytics)
-      .catch(() => setAnalyticsError(true));
-  }, []);
 
   const today = todayStr();
+  const firstName = (user?.name || "").split(" ")[0];
 
   const withBucket = useMemo(
     () => tasks.map((t) => ({ task: t, bucket: getBucket(t, today) })),
@@ -161,25 +101,6 @@ export default function DashboardPage() {
     return c;
   }, [withBucket]);
 
-  const alerts = useMemo(() => {
-    const list = [];
-    (analytics?.risks || []).forEach((r) => {
-      const reason = (r.risk_reasons || []).join("; ");
-      list.push({
-        type: r.risk_level === "high" ? "danger" : "warning",
-        text: `${r.task_title}: ${reason}`,
-      });
-    });
-    withBucket.forEach(({ task, bucket }) => {
-      if (bucket === "done") return;
-      if (task.change)
-        list.push({ type: "info", text: `${cap(task.change.type)} changed: ${task.title}` });
-      if (task.conflict)
-        list.push({ type: "warning", text: `Possible clash: ${task.title}` });
-    });
-    return list;
-  }, [withBucket, analytics]);
-
   const workload = useMemo(() => {
     const open = withBucket.filter(({ bucket }) => bucket !== "done");
     const byType = {};
@@ -195,46 +116,30 @@ export default function DashboardPage() {
       if (filter === "assignment" || filter === "exam") return task.type === filter;
       return bucket === filter;
     });
-    return list.sort(
-      (a, b) =>
-        (b.task.priority_score || 0) - (a.task.priority_score || 0)
-    );
+    return list.sort((a, b) => (b.task.priority_score || 0) - (a.task.priority_score || 0));
   }, [withBucket, filter]);
 
-  async function handleAddTask(parsed) {
-    const created = await createTask(parsed);
-    setTasks((prev) => markConflicts([...prev, created]));
-  }
-
-  async function handleAdvance(task) {
-    const next = NEXT_STATUS[task.status] || "pending";
-    setTasks((prev) =>
-      prev.map((t) => (t.id === task.id ? { ...t, status: next } : t))
-    );
-    try {
-      await updateTaskStatus(task.id, next);
-    } catch {
-      setTasks((prev) =>
-        prev.map((t) => (t.id === task.id ? { ...t, status: task.status } : t))
-      );
-      setError("Could not update status.");
-    }
-  }
-
   return (
-    <div className="app">
+    <div className="stack">
       <TaskDetails
         task={tasks.find((t) => t.id === selectedId) || null}
         onClose={() => setSelectedId(null)}
-        onAdvance={handleAdvance}
+        onAdvance={advanceStatus}
       />
-      <header className="topbar">
+
+      <div className="page-header row row-between">
         <div>
-          <h1>NUDGE</h1>
-          <p>From messages to actions</p>
+          <h1>{firstName ? `Welcome back, ${firstName}` : "Dashboard"}</h1>
+          <p className="muted">Here is what needs your attention.</p>
         </div>
-        <span className="dev-banner">Sample data</span>
-      </header>
+        {USING_SAMPLE_DATA && <span className="dev-banner">Sample data</span>}
+      </div>
+
+      {user && !user.profile?.completed && (
+        <div className="callout callout-info">
+          Your profile is incomplete. <Link to="/profile">Complete it</Link> so NUDGE can organise your subjects.
+        </div>
+      )}
 
       <main className="layout">
         <section className="stats">
@@ -245,7 +150,7 @@ export default function DashboardPage() {
         </section>
 
         <section className="main-col">
-          <AddMessage onConfirm={handleAddTask} />
+          <AddMessage onConfirm={addTask} />
 
           {!loading && !error && <Tracker tasks={tasks} />}
 
@@ -261,11 +166,9 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          {error && <div className="state state-error">{error}</div>}
+          {error && <div className="state state-error" role="alert">{error}</div>}
           {loading && <div className="state">Loading tasks…</div>}
-          {!loading && !error && visible.length === 0 && (
-            <div className="state">Nothing here. You're clear.</div>
-          )}
+          {!loading && !error && visible.length === 0 && <div className="state">Nothing here. You're clear.</div>}
 
           <div className="task-list">
             {visible.map(({ task, bucket }) => (
@@ -273,7 +176,7 @@ export default function DashboardPage() {
                 key={task.id}
                 task={task}
                 bucket={bucket}
-                onAdvance={handleAdvance}
+                onAdvance={advanceStatus}
                 onOpen={() => setSelectedId(task.id)}
               />
             ))}
@@ -286,12 +189,13 @@ export default function DashboardPage() {
             <h2>Alerts</h2>
             {alerts.length === 0 && <p className="muted">No alerts.</p>}
             <ul className="alert-list">
-              {alerts.map((a, i) => (
-                <li key={i} className={`alert alert-${a.type}`}>
+              {alerts.map((a) => (
+                <li key={a.id} className={`alert alert-${a.type}`}>
                   {a.text}
                 </li>
               ))}
             </ul>
+            {alerts.length > 0 && <Link to="/notifications">View all notifications</Link>}
           </div>
 
           <AnalyticsPanels analytics={analytics} error={analyticsError} />
@@ -303,10 +207,7 @@ export default function DashboardPage() {
               <div key={type} className="bar-row">
                 <span className="bar-label">{type}</span>
                 <div className="bar-track">
-                  <div
-                    className="bar-fill"
-                    style={{ width: `${(n / workload.total) * 100}%` }}
-                  />
+                  <div className="bar-fill" style={{ width: `${(n / workload.total) * 100}%` }} />
                 </div>
                 <span className="bar-count">{n}</span>
               </div>
