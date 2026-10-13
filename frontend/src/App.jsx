@@ -7,6 +7,9 @@ import DashboardPage from "./pages/DashboardPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
+import ProfileSetupPage from "./pages/ProfileSetupPage";
+import ProfilePage from "./pages/ProfilePage";
+import SettingsPage from "./pages/SettingsPage";
 
 export default function App() {
   return (
@@ -21,12 +24,14 @@ export default function App() {
       </Route>
 
       <Route element={<RequireAuth />}>
-        <Route path="/profile-setup" element={<PlaceholderPage title="Profile setup" />} />
+        <Route path="/profile-setup" element={<ProfileSetupPage />} />
         <Route element={<AppLayout />}>
-          {APP_ROUTES.filter((r) => r.path !== "/dashboard").map((r) => (
-            <Route key={r.path} path={r.path} element={<PlaceholderPage title={r.label} />} />
-          ))}
+          {APP_ROUTES.filter((r) => !["/dashboard", "/profile", "/settings"].includes(r.path)).map((r) => (
+  <Route key={r.path} path={r.path} element={<PlaceholderPage title={r.label} />} />
+))}
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Route>
     </Routes>

@@ -85,3 +85,19 @@ textarea.input { min-height: 96px; resize: vertical; }
 .auth-switch { margin: var(--space-4) 0 0; text-align: center; color: var(--color-muted); font-size: var(--text-sm); }
 .center-screen { min-height: 60vh; display: grid; place-items: center; color: var(--color-muted); }
 .muted { color: var(--color-muted); }
+
+.row-between { justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3); }
+.setup-wrap { min-height: 100vh; background: var(--color-background); padding-bottom: var(--space-8); }
+.setup-head { padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border); background: var(--color-surface); margin-bottom: var(--space-6); }
+.subject-box { border: 1px solid var(--color-border); border-radius: var(--radius-md, 8px); padding: var(--space-4); display: grid; gap: var(--space-3); margin: 0; }
+.subject-box legend { font-weight: 600; padding: 0 var(--space-2); }
+.day-picker { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.day-chip { display: inline-flex; align-items: center; padding: 6px 12px; border: 1px solid var(--color-border-strong); border-radius: 999px; cursor: pointer; font-size: 0.875rem; background: var(--color-surface); }
+.day-chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.day-chip.on { background: var(--color-primary-light); border-color: var(--color-primary); color: var(--color-primary); font-weight: 600; }
+.day-chip:focus-within { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.check { display: flex; gap: var(--space-3); align-items: flex-start; cursor: pointer; }
+.check input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--color-primary); }
+.detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin: var(--space-3) 0 0; }
+.detail-grid dd { margin: 2px 0 0; font-weight: 500; }
+.table-wrap { overflow-x: auto; }
