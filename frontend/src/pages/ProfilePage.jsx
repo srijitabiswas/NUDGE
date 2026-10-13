@@ -50,7 +50,7 @@ export default function ProfilePage() {
         <>
           <section className="card">
             <h2>Academic details</h2>
-            <dl className="detail-grid">
+            <dl className="profile-grid">
               <Item label="College" value={p.college} />
               <Item label="Department" value={p.department} />
               <Item label="Course" value={p.course} />

@@ -98,8 +98,8 @@ textarea.input { min-height: 96px; resize: vertical; }
 .day-chip:focus-within { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .check { display: flex; gap: var(--space-3); align-items: flex-start; cursor: pointer; }
 .check input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--color-primary); }
-.detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin: var(--space-3) 0 0; }
-.detail-grid dd { margin: 2px 0 0; font-weight: 500; }
+.profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin: var(--space-3) 0 0; }
+.profile-grid dd { margin: 2px 0 0; font-weight: 500; }
 .table-wrap { overflow-x: auto; }
 
 .tk-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }

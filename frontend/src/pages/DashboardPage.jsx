@@ -141,7 +141,7 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <main className="layout">
+      <div className="layout">
         <section className="stats">
           <StatCard label="Due today" value={counts.today} tone="warning" />
           <StatCard label="Upcoming" value={counts.upcoming} tone="primary" />
@@ -214,7 +214,7 @@ export default function DashboardPage() {
             ))}
           </div>
         </aside>
-      </main>
+      </div>
     </div>
   );
 }

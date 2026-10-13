@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const STATUS_LABEL = { pending: "Pending", completed: "Completed", in_progress: "In progress" };
 const NEXT_LABEL = { pending: "Mark completed", completed: "Mark pending", in_progress: "Mark completed" };
@@ -23,13 +23,47 @@ function Row({ label, children }) {
   );
 }
 
+const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export default function TaskDetails({ task, onClose, onAdvance }) {
+  const dialogRef = useRef(null);
+  const closeRef = useRef(onClose);
+  const open = !!task;
+
   useEffect(() => {
-    if (!task) return undefined;
-    const onKey = (e) => e.key === "Escape" && onClose();
+    closeRef.current = onClose;
+  });
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const previous = document.activeElement;
+    dialogRef.current?.focus();
+
+    function onKey(e) {
+      if (e.key === "Escape") {
+        closeRef.current();
+        return;
+      }
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const items = Array.from(dialogRef.current.querySelectorAll(FOCUSABLE));
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === dialogRef.current)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [task, onClose]);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      if (previous && typeof previous.focus === "function") previous.focus();
+    };
+  }, [open]);
 
   if (!task) return null;
 
@@ -42,6 +76,8 @@ export default function TaskDetails({ task, onClose, onAdvance }) {
         role="dialog"
         aria-modal="true"
         aria-label={task.title}
+        tabIndex={-1}
+        ref={dialogRef}
         onClick={(e) => e.stopPropagation()}
       >
         <button className="modal-close" onClick={onClose} aria-label="Close">

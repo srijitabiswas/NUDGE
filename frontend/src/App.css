@@ -4,23 +4,6 @@
   padding: 24px 20px 48px;
 }
 
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-.topbar h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  letter-spacing: 0.04em;
-  color: var(--color-primary);
-}
-.topbar p {
-  margin: 2px 0 0;
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
 .dev-banner {
   background: #fef3c7;
   color: #92400e;
@@ -136,7 +119,7 @@
   padding: 16px;
 }
 .panel h2 { margin: 0 0 10px; font-size: 1rem; }
-.muted { color: var(--color-muted); font-size: 0.85rem; margin: 0 0 8px; }
+.panel .muted { color: var(--color-muted); font-size: 0.85rem; margin: 0 0 8px; }
 
 .alert-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .alert { font-size: 0.85rem; padding: 8px 10px; border-radius: 8px; }
