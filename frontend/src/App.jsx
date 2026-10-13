@@ -13,6 +13,7 @@ import SettingsPage from "./pages/SettingsPage";
 import TasksPage from "./pages/TasksPage";
 import AcademicsPage from "./pages/AcademicsPage";
 import AddInformationPage from "./pages/AddInformationPage";
+import CalendarPage from "./pages/CalendarPage";
 
 export default function App() {
   return (
@@ -29,7 +30,7 @@ export default function App() {
       <Route element={<RequireAuth />}>
         <Route path="/profile-setup" element={<ProfileSetupPage />} />
         <Route element={<AppLayout />}>
-          {APP_ROUTES.filter((r) => !["/dashboard", "/tasks","/add-information",  "/academics", "/profile", "/settings"].includes(r.path)).map((r) => (
+          {APP_ROUTES.filter((r) => !["/dashboard", "/tasks","/add-information",  "/academics", "/profile", "/settings", "/calendar"].includes(r.path)).map((r) => (
   <Route key={r.path} path={r.path} element={<PlaceholderPage title={r.label} />} />
 ))}
           <Route path="/dashboard" element={<DashboardPage />} />
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/academics" element={<AcademicsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
         </Route>
       </Route>
     </Routes>
