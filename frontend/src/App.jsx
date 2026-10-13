@@ -15,6 +15,7 @@ import AcademicsPage from "./pages/AcademicsPage";
 import AddInformationPage from "./pages/AddInformationPage";
 import CalendarPage from "./pages/CalendarPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import NotificationsPage from "./pages/NotificationsPage";
 
 export default function App() {
   return (
@@ -31,7 +32,7 @@ export default function App() {
       <Route element={<RequireAuth />}>
         <Route path="/profile-setup" element={<ProfileSetupPage />} />
         <Route element={<AppLayout />}>
-          {APP_ROUTES.filter((r) => !["/dashboard", "/tasks","/add-information",  "/academics", "/profile", "/settings", "/calendar", "/analytics"].includes(r.path)).map((r) => (
+          {APP_ROUTES.filter((r) => !["/dashboard", "/tasks","/add-information", "/notifications", "/academics", "/profile", "/settings", "/calendar", "/analytics"].includes(r.path)).map((r) => (
   <Route key={r.path} path={r.path} element={<PlaceholderPage title={r.label} />} />
 ))}
           <Route path="/dashboard" element={<DashboardPage />} />
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
         </Route>
       </Route>
     </Routes>

@@ -25,7 +25,9 @@ function saveRead(uid, ids) {
   }
 }
 
-function Inner({ uid, children }) {
+const KIND_PREF = { risk: "deadlineReminders", change: "changeAlerts", clash: "clashAlerts" };
+
+function Inner({ uid, prefs, children }) {
   const [tasks, setTasks] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(!!uid);
@@ -80,7 +82,13 @@ function Inner({ uid, children }) {
     [setStatus]
   );
 
-  const alerts = useMemo(() => buildAlerts(tasks, analytics), [tasks, analytics]);
+  const alerts = useMemo(
+    () =>
+      buildAlerts(tasks, analytics).filter(
+        (a) => prefs?.[KIND_PREF[a.id.split(":")[0]]] !== false
+      ),
+    [tasks, analytics, prefs]
+  );
   const unread = useMemo(() => alerts.filter((a) => !readIds.includes(a.id)).length, [alerts, readIds]);
 
   const markRead = useCallback(
@@ -113,7 +121,7 @@ export default function TaskProvider({ children }) {
   const { user } = useAuth();
   const uid = user?.id || null;
   return (
-    <Inner key={uid || "signed-out"} uid={uid}>
+    <Inner key={uid || "signed-out"} uid={uid} prefs={user?.profile?.notifications}>
       {children}
     </Inner>
   );
