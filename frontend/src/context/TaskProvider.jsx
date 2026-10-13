@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { fetchTasks, fetchAnalytics, updateTaskStatus, createTask } from "../services/taskService";
+import {
+  fetchTasks, fetchAnalytics, updateTaskStatus, createTask, updateTaskFields, deleteTask,
+} from "../services/taskService";
 import { markConflicts } from "../services/taskAdapter";
 import { buildAlerts, NEXT_STATUS } from "../utils/taskUtils";
 import { useAuth } from "../hooks/useAuth";
@@ -52,6 +54,17 @@ function Inner({ uid, children }) {
     return created;
   }, []);
 
+  // fields: { title, description, type, subject, due_date, due_time }
+  const editTask = useCallback(async (id, fields) => {
+    await updateTaskFields(id, fields);
+    setTasks((prev) => markConflicts(prev.map((t) => (t.id === id ? { ...t, ...fields } : t))));
+  }, []);
+
+  const removeTask = useCallback(async (id) => {
+    await deleteTask(id);
+    setTasks((prev) => markConflicts(prev.filter((t) => t.id !== id)));
+  }, []);
+
   const setStatus = useCallback(async (task, next) => {
     setTasks((prev) => markConflicts(prev.map((t) => (t.id === task.id ? { ...t, status: next } : t))));
     try {
@@ -86,10 +99,10 @@ function Inner({ uid, children }) {
     () => ({
       tasks, analytics, loading, error, analyticsError,
       alerts, unread, readIds, markRead, markAllRead,
-      addTask, setStatus, advanceStatus,
+      addTask, editTask, removeTask, setStatus, advanceStatus,
       dismissError: () => setError(""),
     }),
-    [tasks, analytics, loading, error, analyticsError, alerts, unread, readIds, markRead, markAllRead, addTask, setStatus, advanceStatus]
+    [tasks, analytics, loading, error, analyticsError, alerts, unread, readIds, markRead, markAllRead, addTask, editTask, removeTask, setStatus, advanceStatus]
   );
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;

@@ -127,3 +127,17 @@ export async function createTask(parsed) {
   };
   return normalizeOne(raw, null);
 }
+
+
+// Edits the user-editable fields of a task. The backend must enforce ownership.
+export async function updateTaskFields(id, fields) {
+  if (!USING_SAMPLE_DATA) notConnected();
+  await wait(150);
+  return { id, ...fields };
+}
+
+export async function deleteTask(id) {
+  if (!USING_SAMPLE_DATA) notConnected();
+  await wait(150);
+  return { id };
+}

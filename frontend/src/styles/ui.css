@@ -101,3 +101,18 @@ textarea.input { min-height: 96px; resize: vertical; }
 .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin: var(--space-3) 0 0; }
 .detail-grid dd { margin: 2px 0 0; font-weight: 500; }
 .table-wrap { overflow-x: auto; }
+
+.tk-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.tk-item { display: flex; gap: var(--space-4); justify-content: space-between; align-items: flex-start; flex-wrap: wrap; background: var(--color-surface); border: 1px solid var(--color-border); border-left: 4px solid var(--color-border-strong); border-radius: 10px; padding: var(--space-4); }
+.tk-item.bucket-overdue { border-left-color: var(--color-danger, #b91c1c); }
+.tk-item.bucket-today { border-left-color: var(--color-warning, #b45309); }
+.tk-item.bucket-upcoming { border-left-color: var(--color-primary); }
+.tk-item.bucket-done { border-left-color: var(--color-success, #15803d); opacity: 0.8; }
+.tk-main { flex: 1 1 320px; min-width: 0; }
+.tk-title-row { flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+.tk-title-row h3 { margin: 0; font-size: 1rem; }
+.tk-meta { margin: 4px 0 0; font-size: 0.875rem; }
+.tk-desc { margin: var(--space-2) 0 0; }
+.tk-actions { display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap; }
+.tk-actions .input { width: auto; min-width: 130px; }
+.done-title { text-decoration: line-through; color: var(--color-muted); }
