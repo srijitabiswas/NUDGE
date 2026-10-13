@@ -11,6 +11,7 @@ import ProfileSetupPage from "./pages/ProfileSetupPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingsPage from "./pages/SettingsPage";
 import TasksPage from "./pages/TasksPage";
+import AcademicsPage from "./pages/AcademicsPage";
 
 export default function App() {
   return (
@@ -27,11 +28,12 @@ export default function App() {
       <Route element={<RequireAuth />}>
         <Route path="/profile-setup" element={<ProfileSetupPage />} />
         <Route element={<AppLayout />}>
-          {APP_ROUTES.filter((r) => !["/dashboard", "/tasks",  "/profile", "/settings"].includes(r.path)).map((r) => (
+          {APP_ROUTES.filter((r) => !["/dashboard", "/tasks", "/academics", "/profile", "/settings"].includes(r.path)).map((r) => (
   <Route key={r.path} path={r.path} element={<PlaceholderPage title={r.label} />} />
 ))}
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/tasks" element={<TasksPage />} />
+          <Route path="/academics" element={<AcademicsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>

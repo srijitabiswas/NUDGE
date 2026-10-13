@@ -116,3 +116,19 @@ textarea.input { min-height: 96px; resize: vertical; }
 .tk-actions { display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap; }
 .tk-actions .input { width: auto; min-width: 130px; }
 .done-title { text-decoration: line-through; color: var(--color-muted); }
+
+.plain-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.tt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-3); }
+.tt-day { border: 1px solid var(--color-border); border-radius: 10px; padding: var(--space-3); background: var(--color-surface); min-height: 90px; }
+.tt-day.today { border-color: var(--color-primary); background: var(--color-primary-light); }
+.tt-day h3 { margin: 0 0 var(--space-2); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-muted); }
+.tt-slot { display: grid; gap: 2px; font-size: 0.875rem; padding: var(--space-2) 0; border-top: 1px solid var(--color-border); }
+.tt-slot:first-of-type { border-top: 0; }
+.tt-empty { margin: 0; }
+.subj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-4); }
+.subj-card h3 { margin: 0 0 var(--space-1); font-size: 1.05rem; }
+.subj-stats { display: flex; gap: var(--space-5); margin: var(--space-3) 0; }
+.subj-stats dt { font-size: 0.8rem; color: var(--color-muted); }
+.subj-stats dd { margin: 0; font-size: 1.4rem; font-weight: 600; }
+.subj-next { margin: 0; font-size: 0.9rem; }
+.text-danger { color: var(--color-danger, #b91c1c); }
