@@ -1,18 +1,34 @@
 import { Routes, Route } from "react-router-dom";
-import { PUBLIC_ROUTES, APP_ROUTES } from "./routeConfig";
+import { APP_ROUTES } from "./routeConfig";
+import PublicLayout from "./layouts/PublicLayout";
+import AppLayout from "./layouts/AppLayout";
+import { RequireAuth, PublicOnly } from "./components/RouteGuards";
 import DashboardPage from "./pages/DashboardPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
-
-const ALL = [...PUBLIC_ROUTES, ...APP_ROUTES];
+import SignUpPage from "./pages/SignUpPage";
+import LoginPage from "./pages/LoginPage";
 
 export default function App() {
   return (
     <Routes>
-      {ALL.filter((r) => r.path !== "/dashboard").map((r) => (
-        <Route key={r.path} path={r.path} element={<PlaceholderPage title={r.label} />} />
-      ))}
-      <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="*" element={<PlaceholderPage title="Page not found" />} />
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<PlaceholderPage title="Landing page" />} />
+        <Route element={<PublicOnly />}>
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
+        <Route path="*" element={<PlaceholderPage title="Page not found" />} />
+      </Route>
+
+      <Route element={<RequireAuth />}>
+        <Route path="/profile-setup" element={<PlaceholderPage title="Profile setup" />} />
+        <Route element={<AppLayout />}>
+          {APP_ROUTES.filter((r) => r.path !== "/dashboard").map((r) => (
+            <Route key={r.path} path={r.path} element={<PlaceholderPage title={r.label} />} />
+          ))}
+          <Route path="/dashboard" element={<DashboardPage />} />
+        </Route>
+      </Route>
     </Routes>
   );
 }
