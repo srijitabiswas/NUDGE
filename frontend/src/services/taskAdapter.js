@@ -13,7 +13,7 @@ function toMinutes(t) {
   return h * 60 + m;
 }
 
-function normalizeOne(task, priority) {
+export function normalizeOne(task, priority) {
   const [dtDate, dtTime] = splitDateTime(task.event_datetime || task.due_datetime);
   const change = (task.change_information || []).find((c) => c.is_changed);
   const label = priority?.priority_label;
@@ -40,7 +40,7 @@ function normalizeOne(task, priority) {
 }
 
 // Conflict = two active tasks on the same date with times less than 2 hours apart.
-function markConflicts(tasks) {
+export function markConflicts(tasks) {
   return tasks.map((t) => {
     const a = toMinutes(t.due_time);
     const conflict =

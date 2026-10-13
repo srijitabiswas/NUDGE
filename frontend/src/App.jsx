@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { fetchTasks, fetchAnalytics, updateTaskStatus } from "./services/taskService";
+import { fetchTasks, fetchAnalytics, updateTaskStatus, createTask } from "./services/taskService";
+import { markConflicts } from "./services/taskAdapter";
+import AddMessage from "./components/AddMessage";
 import AnalyticsPanels from "./components/AnalyticsPanels";
 import Tracker from "./components/Tracker";
 import Recommendations from "./components/Recommendations";
+import TaskDetails from "./components/TaskDetails";
 import "./App.css";
 
 const FILTERS = [
@@ -61,7 +64,7 @@ function StatCard({ label, value, tone }) {
   );
 }
 
-function TaskCard({ task, bucket, onAdvance }) {
+function TaskCard({ task, bucket, onAdvance, onOpen }) {
   return (
     <article className={`task-card bucket-${bucket}`}>
       <div className="task-top">
@@ -102,13 +105,18 @@ function TaskCard({ task, bucket, onAdvance }) {
         </p>
       )}
 
-      <button
-        className={`status-btn status-${task.status}`}
-        onClick={() => onAdvance(task)}
-        title="Click to change status"
-      >
-        {STATUS_LABEL[task.status] || task.status}
-      </button>
+      <div className="card-actions">
+        <button
+          className={`status-btn status-${task.status}`}
+          onClick={() => onAdvance(task)}
+          title="Click to change status"
+        >
+          {STATUS_LABEL[task.status] || task.status}
+        </button>
+        <button className="status-btn" onClick={onOpen}>
+          Details
+        </button>
+      </div>
     </article>
   );
 }
@@ -119,6 +127,7 @@ export default function App() {
   const [error, setError] = useState("");
     const [filter, setFilter] = useState("all");
   const [analytics, setAnalytics] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
   const [analyticsError, setAnalyticsError] = useState(false);
 
   useEffect(() => {
@@ -192,6 +201,11 @@ export default function App() {
     );
   }, [withBucket, filter]);
 
+  async function handleAddTask(parsed) {
+    const created = await createTask(parsed);
+    setTasks((prev) => markConflicts([...prev, created]));
+  }
+
   async function handleAdvance(task) {
     const next = NEXT_STATUS[task.status] || "pending";
     setTasks((prev) =>
@@ -209,6 +223,11 @@ export default function App() {
 
   return (
     <div className="app">
+      <TaskDetails
+        task={tasks.find((t) => t.id === selectedId) || null}
+        onClose={() => setSelectedId(null)}
+        onAdvance={handleAdvance}
+      />
       <header className="topbar">
         <div>
           <h1>NUDGE</h1>
@@ -226,6 +245,8 @@ export default function App() {
         </section>
 
         <section className="main-col">
+          <AddMessage onConfirm={handleAddTask} />
+
           {!loading && !error && <Tracker tasks={tasks} />}
 
           <div className="filters">
@@ -253,6 +274,7 @@ export default function App() {
                 task={task}
                 bucket={bucket}
                 onAdvance={handleAdvance}
+                onOpen={() => setSelectedId(task.id)}
               />
             ))}
           </div>
