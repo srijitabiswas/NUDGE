@@ -184,16 +184,31 @@ def generate_priority_recommendation(task, current_time):
             "priority_label": "Unavailable",
             "priority_reason": "Task is completed; no active priority recommendation is needed.",
         }
-    
-    # Calculate deadline urgency only for pending tasks.
+
+
+    # Calculate deadline urgency for active tasks.
+    # Overdue urgency is assigned only to pending tasks.
     deadline_score = None
-    if isinstance(status, str) and status.strip().lower() == "pending":
+    normalized_status = (
+        status.strip().lower() if isinstance(status, str) else ""
+    )
+
+    if normalized_status in ("pending", "in_progress"):
         due_datetime = parse_datetime(task.get("due_datetime"))
 
-        deadline_score = calculate_deadline_urgency(
-            due_datetime,
-            current_time,
-        )
+        if normalized_status == "pending":
+            deadline_score = calculate_deadline_urgency(
+                due_datetime,
+                current_time,
+            )
+        elif due_datetime is not None and current_time is not None:
+            deadline_score = calculate_deadline_urgency(
+                due_datetime,
+                current_time,
+            )
+            if deadline_score == 100:
+                deadline_score = None
+
 
     importance_score = calculate_importance_score(task.get("importance"))
     task_type_score = calculate_task_type_score(task.get("task_type"))

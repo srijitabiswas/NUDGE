@@ -120,5 +120,77 @@ class TestPriorityEngine(unittest.TestCase):
         self.assertEqual(result["priority_label"], "Unavailable")
 
 
+    def test_in_progress_task_with_upcoming_deadline_gets_urgency(self):
+        now = datetime(2026, 10, 12, 10, 0)
+        task = {
+            "task_id": "T5",
+            "status": "in_progress",
+            "due_datetime": (now + timedelta(hours=12)).isoformat(),
+        }
+
+        result = generate_priority_recommendation(task, now)
+
+        self.assertEqual(result["priority_score"], 95.0)
+        self.assertIn("deadline urgency score 95", result["priority_reason"])
+
+    def test_in_progress_overdue_task_does_not_get_pending_overdue_score(self):
+        now = datetime(2026, 10, 12, 10, 0)
+        task = {
+            "task_id": "T6",
+            "status": "in_progress",
+            "due_datetime": (now - timedelta(hours=2)).isoformat(),
+        }
+
+        result = generate_priority_recommendation(task, now)
+
+        self.assertIsNone(result["priority_score"])
+        self.assertEqual(result["priority_label"], "Unavailable")
+
+    def test_distant_deadline(self):
+        now = datetime(2026, 10, 12, 10, 0)
+        deadline = now + timedelta(days=10)
+
+        self.assertEqual(
+            calculate_deadline_urgency(deadline, now),
+            25
+        )
+
+    def test_invalid_deadline_does_not_get_urgency(self):
+        now = datetime(2026, 10, 12, 10, 0)
+        task = {
+            "task_id": "T7",
+            "status": "pending",
+            "due_datetime": "not-a-valid-date",
+        }
+
+        result = generate_priority_recommendation(task, now)
+
+        self.assertIsNone(result["priority_score"])
+        self.assertEqual(result["priority_label"], "Unavailable")
+
+    def test_recommendation_contains_required_output_fields(self):
+        now = datetime(2026, 10, 12, 10, 0)
+        task = {
+            "task_id": "T8",
+            "status": "pending",
+            "due_datetime": (now + timedelta(hours=12)).isoformat(),
+        }
+
+        result = generate_priority_recommendation(task, now)
+
+        self.assertEqual(
+            set(result.keys()),
+            {
+                "task_id",
+                "priority_score",
+                "priority_label",
+                "priority_reason",
+            }
+        )
+        self.assertEqual(result["task_id"], "T8")
+        self.assertIsInstance(result["priority_reason"], str)
+        self.assertTrue(result["priority_reason"])
+
+
 if __name__ == "__main__":
     unittest.main()
