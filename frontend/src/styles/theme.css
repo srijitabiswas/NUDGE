@@ -1,0 +1,113 @@
+/* ===== Typography ===== */
+html { font-size: 100%; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.6; }
+h1, h2, h3, h4, .logo, .topbar-title, .stat-value, .metric-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+h1, h2, h3, h4 { color: var(--color-text); line-height: 1.2; }
+h1 { font-size: clamp(2rem, 1.5rem + 2.2vw, 3rem); }          /* 32px mobile, 48px desktop */
+h2 { font-size: clamp(1.5rem, 1.35rem + 0.6vw, 1.75rem); }    /* 24-28px */
+h3 { font-size: 1.25rem; line-height: 1.3; }                  /* 20px */
+h4 { font-size: 1.125rem; }
+.card h2 { font-size: 1.375rem; }
+.hero h1 { font-size: clamp(2.25rem, 1.6rem + 3vw, 3.5rem); line-height: 1.1; }
+.hero-sub { font-size: 1.125rem; }
+p { max-width: 70ch; }                                        /* 50-75 characters per line */
+.empty-state p { margin-inline: auto; }
+strong { font-weight: 600; }
+a { color: var(--color-link); }
+::selection { background: var(--color-primary); color: #000; }
+.field-label { font-size: 0.9375rem; }
+.field-hint, .field-error { font-size: var(--text-sm); }
+.tag { font-size: 0.8125rem; }
+.nav-badge, .bell-dot { font-size: 0.75rem; background: #b3342b; color: #fff; }
+
+/* ===== Buttons: primary gold + bold black; secondary gold outline + bold ivory ===== */
+.btn, .primary-btn, .ghost-btn {
+  min-height: 44px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.08s, box-shadow 0.15s;
+}
+.btn:active:not(:disabled), .primary-btn:active:not(:disabled), .ghost-btn:active:not(:disabled) { transform: translateY(1px); }
+
+.btn-primary, .primary-btn {
+  background: var(--color-primary);
+  color: #000;
+  border: 2px solid var(--color-primary);
+  padding: 0 var(--space-4);
+}
+.btn-primary:hover:not(:disabled), .primary-btn:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+}
+
+.btn-secondary, .ghost-btn {
+  background: transparent;
+  color: var(--color-on-secondary);
+  border: 2px solid var(--color-primary);
+  padding: 0 var(--space-4);
+}
+.btn-secondary:hover:not(:disabled), .ghost-btn:hover:not(:disabled) {
+  background: rgba(212, 175, 55, 0.18);
+  border-color: var(--color-primary-hover);
+}
+
+.btn-ghost { background: transparent; color: var(--color-link); font-weight: 600; border: 2px solid transparent; }
+.btn-ghost:hover:not(:disabled) { background: var(--color-surface-alt); }
+
+.btn-danger { background: #b3342b; color: #fff; border: 2px solid #b3342b; }
+.btn-danger:hover:not(:disabled) { background: #cc3d33; border-color: #cc3d33; }
+
+.btn-sm { min-height: 40px; font-size: 0.875rem; padding: 0 var(--space-3); }
+.btn-lg { min-height: 52px; font-size: 1.125rem; padding: 0 var(--space-5); }
+.btn:disabled, .primary-btn:disabled, .ghost-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.icon-btn { width: 44px; height: 44px; }
+
+/* Text on gold fills is always black */
+.logo-mark, .step-badge, .focus-num, .filter-btn.active,
+.stepper li.current .step-num, .seg button.on, .cal-cell.today .cal-num {
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+  font-weight: 700;
+}
+
+/* Pills and toggles */
+.filter-btn, .status-btn, .seg button {
+  min-height: 40px;
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.filter-btn:hover, .status-btn:hover { background: var(--color-surface-alt); border-color: var(--color-primary); }
+.seg { border-color: var(--color-border-strong); }
+
+/* ===== Inputs ===== */
+.input, .add-text, .review input, .review select, .add-row select {
+  background: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  min-height: 44px;
+  font-size: 1rem;
+}
+.input::placeholder, .add-text::placeholder { color: #b9a98b; }
+.input:hover, .add-text:hover { border-color: var(--color-primary); }
+.input[aria-invalid="true"] { border-color: var(--color-danger); }
+select option { background: var(--color-surface); color: var(--color-text); }
+
+/* ===== Surfaces and feedback ===== */
+.task-card, .tk-item, .card, .panel, .nt-item { transition: border-color 0.15s, box-shadow 0.15s; }
+.task-card:hover, .tk-item:hover { border-color: var(--color-border-strong); box-shadow: var(--shadow-sm); }
+.modal-backdrop { background: rgba(0, 0, 0, 0.65); }
+.hero { background: linear-gradient(180deg, #4a2e1e, var(--color-background)); }
+.cta-band { background: var(--color-surface); }
+.site-header { background: var(--color-surface); }

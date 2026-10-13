@@ -52,14 +52,14 @@
 .side-link:hover { background: var(--color-surface-alt); color: var(--color-text); text-decoration: none; }
 .side-link.active { background: var(--color-primary-light); color: var(--color-primary); }
 .side-link.active::before { content: ""; position: absolute; left: -12px; top: 8px; bottom: 8px; width: 3px; border-radius: 3px; background: var(--color-primary); }
-.nav-badge { margin-left: auto; min-width: 20px; padding: 0 6px; border-radius: var(--radius-pill); background: var(--color-danger); color: #fff; font-size: 11px; font-weight: 700; text-align: center; }
+.nav-badge { margin-left: auto; min-width: 20px; padding: 0 6px; border-radius: var(--radius-pill); background: var(--color-danger); color: #fff; font-size: 0.75rem; font-weight: 700; text-align: center; }
 
 .app-main { display: flex; flex-direction: column; min-width: 0; min-height: 100vh; }
 .app-content { flex: 1; min-width: 0; }
 .topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: 64px; padding: 0 var(--space-5); background: var(--color-surface); border-bottom: 1px solid var(--color-border); }
 .topbar-left, .topbar-right { display: flex; align-items: center; gap: var(--space-3); }
 .topbar-title { font-weight: 700; }
-.bell-dot { position: absolute; top: 4px; right: 4px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: var(--radius-pill); background: var(--color-danger); color: #fff; font-size: 11px; font-weight: 700; display: grid; place-items: center; }
+.bell-dot { position: absolute; top: 4px; right: 4px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: var(--radius-pill); background: var(--color-danger); color: #fff; font-size: 0.75rem; font-weight: 700; display: grid; place-items: center; }
 
 .profile-menu { position: relative; }
 .profile-btn { display: flex; align-items: center; gap: 10px; padding: 4px 12px 4px 4px; border: 1px solid var(--color-border); border-radius: var(--radius-pill); background: var(--color-surface); color: var(--color-text); font-weight: 600; font-size: var(--text-sm); }

@@ -1,48 +1,55 @@
 :root {
-  /* Typography */
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.5rem;
+  color-scheme: dark;
 
-  /* Brand (restrained academic indigo) */
-  --color-primary: #4338ca;
-  --color-primary-hover: #3730a3;
-  --color-primary-light: #eef2ff;
-  --color-primary-contrast: #ffffff;
-  --color-focus: #4338ca;
+  /* Typography: bold display headings + neutral sans body. rem-based (1rem = 16px) */
+  --font-display: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-body);
+  --text-xs: 0.75rem;   /* 12px minimum */
+  --text-sm: 0.875rem;  /* 14px labels, captions */
+  --text-base: 1rem;    /* 16px body */
+  --text-lg: 1.125rem;  /* 18px */
+  --text-xl: 1.25rem;   /* 20px */
+  --text-2xl: 1.5rem;   /* 24px */
+  --text-3xl: 1.75rem;  /* 28px */
+  --text-4xl: 3rem;     /* 48px */
+
+  /* Brand: gold actions on chocolate */
+  --color-accent: #d4af37;
+  --color-primary: #d4af37;
+  --color-primary-hover: #e8c95c;
+  --color-primary-light: #4a3519;
+  --color-primary-contrast: #000000;
+  --color-link: #f1d37a;
+  --color-on-secondary: #fff4c2;
+  --color-focus: #ffe08a;
 
   /* Surfaces and text */
-  --color-background: #f6f7fb;
-  --color-surface: #ffffff;
-  --color-surface-alt: #f1f3f9;
-  --color-text: #1b2333;
-  --color-muted: #566176;
-  --color-border: #dfe3ec;
-  --color-border-strong: #b9c1d1;
+  --color-background: #2e1c12;
+  --color-surface: #3d261a;
+  --color-surface-alt: #4a3123;
+  --color-text: #fffff0;
+  --color-muted: #d6c9ae;
+  --color-border: #5f4636;
+  --color-border-strong: #a58a69;
 
-  /* Status */
-  --color-success: #166534;
-  --color-success-soft: #dcfce7;
-  --color-warning: #92400e;
-  --color-warning-soft: #fef3c7;
-  --color-danger: #b91c1c;
-  --color-danger-soft: #fee2e2;
-  --color-info: #1d4ed8;
-  --color-info-soft: #e0ecff;
+  /* Status (light-on-dark) */
+  --color-success: #9bd68f;
+  --color-success-soft: #26381f;
+  --color-warning: #f2c76b;
+  --color-warning-soft: #43330f;
+  --color-danger: #ff9e94;
+  --color-danger-soft: #4d201c;
+  --color-info: #a9cbe8;
+  --color-info-soft: #213447;
 
-  /* Spacing (4px scale) */
+  /* Spacing: 8-point grid */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.5rem;
-  --space-6: 2rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 2.5rem;
   --space-7: 3rem;
   --space-8: 4rem;
 
@@ -51,10 +58,10 @@
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-pill: 999px;
-  --shadow-sm: 0 1px 2px rgba(27, 35, 51, 0.06), 0 1px 3px rgba(27, 35, 51, 0.04);
-  --shadow-md: 0 4px 14px rgba(27, 35, 51, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.45);
 
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   color: var(--color-text);
   background: var(--color-background);
   font-synthesis: none;
