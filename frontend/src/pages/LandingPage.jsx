@@ -23,14 +23,16 @@ export default function LandingPage() {
     <>
       <section className="hero">
         <div className="container hero-grid">
-          <div className="stack">
+          <div className="hero-copy">
             <p className="eyebrow">Student life management</p>
-            <h1>Turn scattered messages into a clear plan.</h1>
+            <h1>
+              Turn scattered messages into a <span className="hl">clear plan.</span>
+            </h1>
             <p className="hero-sub">
               NUDGE reads the messages, notices and deadlines you receive and turns them into tasks you can review,
               prioritise and track, all in one place.
             </p>
-            <div className="row">
+            <div className="hero-cta">
               {user ? (
                 <Link className="btn btn-primary btn-lg" to="/dashboard">Go to dashboard</Link>
               ) : (
@@ -40,6 +42,7 @@ export default function LandingPage() {
                 </>
               )}
             </div>
+            <p className="hero-note">You confirm every task before it is saved.</p>
           </div>
 
           <figure className="demo" aria-label="Example of a message becoming a task">
@@ -51,47 +54,31 @@ export default function LandingPage() {
             <div className="demo-task">
               <span className="demo-label">Task</span>
               <strong>Submit DBMS assignment 3</strong>
-              <div className="row demo-tags">
+              <div className="demo-tags">
                 <span className="tag tag-neutral">Assignment</span>
                 <span className="tag tag-neutral">Tomorrow, 17:00</span>
                 <span className="tag tag-danger">High priority</span>
               </div>
             </div>
-            <figcaption className="muted">Example only</figcaption>
+            <figcaption>Example only</figcaption>
           </figure>
         </div>
       </section>
 
       <section id="features" className="section">
-        <div className="container stack">
-          <div>
+        <div className="container features-layout">
+          <div className="features-intro">
+            <p className="eyebrow">Features</p>
             <h2>What NUDGE does</h2>
-            <p className="muted">Everything you need to stay on top of coursework, in one workspace.</p>
+            <p>Everything you need to stay on top of coursework, in one workspace.</p>
           </div>
-          <div className="feature-grid">
-            {FEATURES.map((f) => (
-              <article key={f.title} className="card">
-                <h3>{f.title}</h3>
-                <p>{f.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="how-it-works" className="section section-alt">
-        <div className="container stack">
-          <div>
-            <h2>How it works</h2>
-            <p className="muted">Three steps, and you stay in control.</p>
-          </div>
-          <ol className="steps">
-            {STEPS.map((s, i) => (
-              <li key={s.title} className="step">
-                <span className="step-badge" aria-hidden="true">{i + 1}</span>
+          <ol className="feature-list">
+            {FEATURES.map((f, i) => (
+              <li key={f.title}>
+                <span className="feature-num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
                 <div>
-                  <h3>{s.title}</h3>
-                  <p>{s.text}</p>
+                  <h3>{f.title}</h3>
+                  <p>{f.text}</p>
                 </div>
               </li>
             ))}
@@ -99,14 +86,34 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <section id="how-it-works" className="section section-alt">
+        <div className="container">
+          <div className="section-head">
+            <p className="eyebrow">How it works</p>
+            <h2>Three steps, and you stay in control.</h2>
+          </div>
+          <ol className="steps">
+            {STEPS.map((s, i) => (
+              <li key={s.title} className="step">
+                <span className="step-badge" aria-hidden="true">{i + 1}</span>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       {!user && (
-        <section className="section">
-          <div className="container cta-band">
-            <div>
-              <h2>Ready to get organised?</h2>
-              <p className="muted">Create an account and add your first message in a minute.</p>
+        <section className="section section-cta">
+          <div className="container">
+            <div className="cta-band on-dark">
+              <div>
+                <h2>Ready to get organised?</h2>
+                <p>Create an account and add your first message in a minute.</p>
+              </div>
+              <Link className="btn btn-primary btn-lg" to="/signup">Get started</Link>
             </div>
-            <Link className="btn btn-primary btn-lg" to="/signup">Get started</Link>
           </div>
         </section>
       )}

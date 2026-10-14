@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Field } from "../components/ui";
+import { parseMessage } from "../services/taskService";
 import { useAuth } from "../hooks/useAuth";
 import { useTasks } from "../hooks/useTasks";
-import { parseMessage, USING_SAMPLE_DATA } from "../services/taskService";
 import { cap, formatDate } from "../utils/taskUtils";
 import { matchSubject } from "../utils/academics";
 
@@ -143,7 +143,6 @@ export default function AddInformationPage() {
               Upload screenshot (needs OCR)
             </button>
           </div>
-          {USING_SAMPLE_DATA && <p className="muted">A temporary stand-in parser is used until the real NLP module is connected.</p>}
         </form>
       )}
 

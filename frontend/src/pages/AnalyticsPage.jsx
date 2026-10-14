@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useTasks } from "../hooks/useTasks";
-import { USING_SAMPLE_DATA } from "../services/taskService";
 import AnalyticsPanels from "../components/AnalyticsPanels";
 import BarList from "../components/BarList";
 import { cap, getBucket, todayStr } from "../utils/taskUtils";
@@ -68,7 +67,6 @@ export default function AnalyticsPage() {
           <h1>Analytics</h1>
           <p className="muted">Your workload and progress at a glance.</p>
         </div>
-        {USING_SAMPLE_DATA && <span className="dev-banner">Sample data</span>}
       </div>
 
       {error && <div className="callout callout-danger" role="alert">{error}</div>}

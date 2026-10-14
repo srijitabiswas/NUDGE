@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTasks } from "../hooks/useTasks";
 import { useAuth } from "../hooks/useAuth";
-import { USING_SAMPLE_DATA } from "../services/taskService";
 import { cap, formatDate, getBucket, todayStr, STATUS_LABEL } from "../utils/taskUtils";
 import AddMessage from "../components/AddMessage";
 import TaskDetails from "../components/TaskDetails";
@@ -20,59 +19,55 @@ const FILTERS = [
   { key: "exam", label: "Exams" },
 ];
 
-function StatCard({ label, value, tone }) {
+function Stat({ label, value, tone }) {
   return (
-    <div className={`stat-card tone-${tone}`}>
+    <div className={`stat tone-${tone}`}>
       <span className="stat-value">{value}</span>
       <span className="stat-label">{label}</span>
     </div>
   );
 }
 
-function TaskCard({ task, bucket, onAdvance, onOpen }) {
+function TaskRow({ task, bucket, onAdvance, onOpen }) {
+  const label = STATUS_LABEL[task.status] || task.status;
   return (
-    <article className={`task-card bucket-${bucket}`}>
-      <div className="task-top">
+    <li className={`drow bucket-${bucket}`}>
+      <button
+        className={`status-btn status-${task.status}`}
+        onClick={() => onAdvance(task)}
+        aria-label={`Status ${label}. Change status for ${task.title}`}
+      >
+        {label}
+      </button>
+
+      <div className="drow-main">
         <h3 className={task.status === "completed" ? "done-title" : ""}>{task.title}</h3>
+        <p className="drow-meta">
+          {cap(task.type)} · {formatDate(task.due_date)}
+          {task.due_time ? `, ${task.due_time}` : ""} · via {task.source}
+          {bucket === "overdue" && <span className="drow-flag"> · Overdue</span>}
+        </p>
+        {task.change && (
+          <p className="drow-note">
+            {cap(task.change.type)} changed: <s>{task.change.old}</s> → <strong>{task.change.new}</strong>
+          </p>
+        )}
+        {task.conflict && <p className="drow-note">Possible clash with another event.</p>}
+        {task.priority_reason && (
+          <p className="drow-note">
+            Why: {task.priority_reason}
+            {typeof task.priority_score === "number" && ` (score ${Math.round(task.priority_score)}/100)`}
+          </p>
+        )}
+      </div>
+
+      <div className="drow-side">
         <span className={`badge priority-${task.priority_label || "none"}`}>
           {task.priority_label || "unrated"}
         </span>
+        <button className="btn btn-secondary btn-sm" onClick={onOpen}>Details</button>
       </div>
-
-      {task.description && <p className="task-desc">{task.description}</p>}
-
-      <div className="task-meta">
-        <span className="chip">{task.type}</span>
-        <span>
-          {formatDate(task.due_date)}
-          {task.due_time ? `, ${task.due_time}` : ""}
-        </span>
-        <span>via {task.source}</span>
-        {bucket === "overdue" && <span className="chip chip-danger">Overdue</span>}
-      </div>
-
-      {task.change && (
-        <p className="note note-change">
-          {cap(task.change.type)} changed: <s>{task.change.old}</s> → <strong>{task.change.new}</strong>
-        </p>
-      )}
-      {task.conflict && <p className="note note-conflict">Possible clash with another event.</p>}
-      {task.priority_reason && (
-        <p className="note note-reason">
-          Why: {task.priority_reason}
-          {typeof task.priority_score === "number" && ` (score ${Math.round(task.priority_score)}/100)`}
-        </p>
-      )}
-
-      <div className="card-actions">
-        <button className={`status-btn status-${task.status}`} onClick={() => onAdvance(task)} title="Click to change status">
-          {STATUS_LABEL[task.status] || task.status}
-        </button>
-        <button className="status-btn" onClick={onOpen}>
-          Details
-        </button>
-      </div>
-    </article>
+    </li>
   );
 }
 
@@ -83,7 +78,6 @@ export default function DashboardPage() {
   const [selectedId, setSelectedId] = useState(null);
 
   const today = todayStr();
-  const firstName = (user?.name || "").split(" ")[0];
 
   const withBucket = useMemo(
     () => tasks.map((t) => ({ task: t, bucket: getBucket(t, today) })),
@@ -127,12 +121,8 @@ export default function DashboardPage() {
         onAdvance={advanceStatus}
       />
 
-      <div className="page-header row row-between">
-        <div>
-          <h1>{firstName ? `Welcome back, ${firstName}` : "Dashboard"}</h1>
-          <p className="muted">Here is what needs your attention.</p>
-        </div>
-        {USING_SAMPLE_DATA && <span className="dev-banner">Sample data</span>}
+      <div className="page-header">
+        <h1>Dashboard</h1>
       </div>
 
       {user && !user.profile?.completed && (
@@ -142,49 +132,56 @@ export default function DashboardPage() {
       )}
 
       <div className="layout">
-        <section className="stats">
-          <StatCard label="Due today" value={counts.today} tone="warning" />
-          <StatCard label="Upcoming" value={counts.upcoming} tone="primary" />
-          <StatCard label="Overdue" value={counts.overdue} tone="danger" />
-          <StatCard label="High priority" value={counts.high} tone="danger" />
+        <section className="stats statbar" aria-label="Summary">
+          <Stat label="Due today" value={counts.today} tone="warning" />
+          <Stat label="Upcoming" value={counts.upcoming} tone="primary" />
+          <Stat label="Overdue" value={counts.overdue} tone="danger" />
+          <Stat label="High priority" value={counts.high} tone="danger" />
         </section>
 
         <section className="main-col">
           <AddMessage onConfirm={addTask} />
 
+          <div className="panel list-panel">
+            <div className="list-head">
+              <h2>Your tasks</h2>
+              <div className="filters" role="group" aria-label="Filter tasks">
+                {FILTERS.map((f) => (
+                  <button
+                    key={f.key}
+                    className={`filter-btn ${filter === f.key ? "active" : ""}`}
+                    aria-pressed={filter === f.key}
+                    onClick={() => setFilter(f.key)}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {error && <div className="state state-error" role="alert">{error}</div>}
+            {loading && <div className="state">Loading tasks…</div>}
+            {!loading && !error && visible.length === 0 && <div className="state">Nothing here. You're clear.</div>}
+
+            <ul className="drow-list">
+              {visible.map(({ task, bucket }) => (
+                <TaskRow
+                  key={task.id}
+                  task={task}
+                  bucket={bucket}
+                  onAdvance={advanceStatus}
+                  onOpen={() => setSelectedId(task.id)}
+                />
+              ))}
+            </ul>
+          </div>
+
           {!loading && !error && <Tracker tasks={tasks} />}
-
-          <div className="filters">
-            {FILTERS.map((f) => (
-              <button
-                key={f.key}
-                className={`filter-btn ${filter === f.key ? "active" : ""}`}
-                onClick={() => setFilter(f.key)}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
-
-          {error && <div className="state state-error" role="alert">{error}</div>}
-          {loading && <div className="state">Loading tasks…</div>}
-          {!loading && !error && visible.length === 0 && <div className="state">Nothing here. You're clear.</div>}
-
-          <div className="task-list">
-            {visible.map(({ task, bucket }) => (
-              <TaskCard
-                key={task.id}
-                task={task}
-                bucket={bucket}
-                onAdvance={advanceStatus}
-                onOpen={() => setSelectedId(task.id)}
-              />
-            ))}
-          </div>
         </section>
 
         <aside className="side-col">
           <Recommendations tasks={tasks} risks={analytics?.risks} />
+
           <div className="panel">
             <h2>Alerts</h2>
             {alerts.length === 0 && <p className="muted">No alerts.</p>}

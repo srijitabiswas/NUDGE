@@ -19,12 +19,12 @@ export default function Footer({ variant = "public" }) {
   }
 
   return (
-    <footer className="site-footer">
+    <footer className="site-footer site-footer-public on-dark">
       <div className="container">
         <div className="footer-grid">
           <div>
             <Logo />
-            <p style={{ marginTop: "var(--space-3)", maxWidth: 360 }}>
+            <p className="footer-blurb">
               NUDGE turns scattered messages, notices and screenshots into tasks, deadlines and
               priorities, so students never miss what matters.
             </p>

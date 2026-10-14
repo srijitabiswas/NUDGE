@@ -16,6 +16,7 @@ export default function AppLayout() {
   const { unread } = useTasks();
   const { user, logout } = useAuth();
   const studentName = user?.name || "Student";
+  const firstName = studentName.split(" ")[0];
 
   useEffect(() => {
     function onKey(e) {
@@ -36,6 +37,12 @@ export default function AppLayout() {
   }, []);
 
   const current = APP_ROUTES.find((r) => r.path === location.pathname);
+  const title =
+    location.pathname === "/dashboard"
+      ? `Welcome back, ${firstName}`
+      : current
+        ? current.label
+        : "NUDGE";
 
   async function handleSignOut() {
     setMenuOpen(false);
@@ -49,7 +56,7 @@ export default function AppLayout() {
 
       <div className={`scrim ${navOpen ? "open" : ""}`} onClick={() => setNavOpen(false)} />
 
-      <aside className={`sidebar ${navOpen ? "open" : ""}`} id="sidebar" aria-label="Sidebar">
+      <aside className={`sidebar on-dark ${navOpen ? "open" : ""}`} id="sidebar" aria-label="Sidebar">
         <div className="sidebar-brand">
           <Logo to="/dashboard" />
         </div>
@@ -86,24 +93,28 @@ export default function AppLayout() {
             >
               <Icon name="menu" />
             </button>
-            <span className="topbar-title">{current ? current.label : "NUDGE"}</span>
+            <p className="topbar-title">{title}</p>
           </div>
 
           <div className="topbar-right">
-            <NavLink to="/notifications" className="icon-btn" aria-label={`Notifications${unread ? `, ${unread} unread` : ""}`}>
+            <NavLink
+              to="/notifications"
+              className="icon-btn bell-btn"
+              aria-label={`Notifications${unread ? `, ${unread} unread` : ""}`}
+            >
               <Icon name="bell" />
-              {unread > 0 && <span className="bell-dot">{unread}</span>}
+              {unread > 0 && <span className="bell-dot" aria-hidden="true" />}
             </NavLink>
 
             <div className="profile-menu" ref={menuRef}>
               <button
                 className="profile-btn"
+                aria-label={`Account menu for ${studentName}`}
                 aria-haspopup="menu"
                 aria-expanded={menuOpen}
                 onClick={() => setMenuOpen((v) => !v)}
               >
-                <span className="avatar" aria-hidden="true">{studentName.charAt(0)}</span>
-                <span className="profile-name">{studentName}</span>
+                <span className="avatar" aria-hidden="true">{studentName.charAt(0).toUpperCase()}</span>
               </button>
 
               {menuOpen && (

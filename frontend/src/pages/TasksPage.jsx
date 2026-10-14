@@ -1,9 +1,8 @@
 import { useMemo, useState } from "react";
 import { useTasks } from "../hooks/useTasks";
-import { USING_SAMPLE_DATA } from "../services/taskService";
 import TaskDetails from "../components/TaskDetails";
 import TaskForm from "../components/TaskForm";
-import { cap, formatDate, getBucket, todayStr, STATUS_LABEL } from "../utils/taskUtils";
+import { cap, formatDate, getBucket, todayStr, STATUS_LABEL, NEXT_STATUS } from "../utils/taskUtils";
 
 const SORTS = [
   { key: "priority", label: "Priority (high first)" },
@@ -11,12 +10,15 @@ const SORTS = [
   { key: "title", label: "Title (A–Z)" },
 ];
 
+const COLUMNS = ["pending", "in_progress", "completed"];
+
 function dueValue(t) {
   return t.due_date ? `${t.due_date}T${t.due_time || "23:59"}` : "9999";
 }
 
 export default function TasksPage() {
   const { tasks, loading, error, addTask, editTask, removeTask, setStatus, advanceStatus } = useTasks();
+  const [view, setView] = useState("board");
   const [search, setSearch] = useState("");
   const [status, setStatusFilter] = useState("all");
   const [type, setType] = useState("all");
@@ -49,6 +51,12 @@ export default function TasksPage() {
       return (b.priority_score || 0) - (a.priority_score || 0);
     });
   }, [tasks, search, status, type, priority, sort, today]);
+
+  const columns = useMemo(() => {
+    const map = { pending: [], in_progress: [], completed: [] };
+    visible.forEach((t) => (map[COLUMNS.includes(t.status) ? t.status : "pending"]).push(t));
+    return map;
+  }, [visible]);
 
   const filtersActive = search || status !== "all" || type !== "all" || priority !== "all";
 
@@ -90,6 +98,24 @@ export default function TasksPage() {
     }
   }
 
+  function openEdit(t) {
+    setForm({ task: t });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function deleteControl(t) {
+    return confirmId === t.id ? (
+      <span className="row">
+        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(t.id)}>Confirm delete</button>
+        <button className="btn btn-ghost btn-sm" onClick={() => setConfirmId(null)}>Cancel</button>
+      </span>
+    ) : (
+      <button className="btn btn-ghost btn-sm" onClick={() => setConfirmId(t.id)} aria-label={`Delete ${t.title}`}>
+        Delete
+      </button>
+    );
+  }
+
   return (
     <div className="stack">
       <TaskDetails
@@ -101,13 +127,17 @@ export default function TasksPage() {
       <div className="page-header row row-between">
         <div>
           <h1>My Tasks</h1>
-          <p className="muted">
-            {tasks.length} total{USING_SAMPLE_DATA ? " · sample data" : ""}
-          </p>
+          <p className="muted">{tasks.length} total</p>
         </div>
-        {!form && (
-          <button className="btn btn-primary" onClick={() => setForm({ task: null })}>+ Add task</button>
-        )}
+        <div className="page-actions">
+          <div className="seg" role="group" aria-label="View">
+            <button aria-pressed={view === "board"} onClick={() => setView("board")}>Board</button>
+            <button aria-pressed={view === "list"} onClick={() => setView("list")}>List</button>
+          </div>
+          {!form && (
+            <button className="btn btn-primary" onClick={() => setForm({ task: null })}>+ Add task</button>
+          )}
+        </div>
       </div>
 
       {form && (
@@ -119,51 +149,50 @@ export default function TasksPage() {
         />
       )}
 
-      <section className="card stack" aria-label="Search and filters">
-        <div className="form-grid">
-          <div className="field">
-            <label htmlFor="tk-search">Search</label>
-            <input id="tk-search" className="input" type="search" placeholder="Title, description or subject" value={search} onChange={(e) => setSearch(e.target.value)} />
-          </div>
-          <div className="field">
-            <label htmlFor="tk-status">Status</label>
-            <select id="tk-status" className="input" value={status} onChange={(e) => setStatusFilter(e.target.value)}>
-              <option value="all">All</option>
-              <option value="pending">Pending</option>
-              <option value="in_progress">In progress</option>
-              <option value="completed">Completed</option>
-              <option value="overdue">Overdue</option>
-            </select>
-          </div>
-          <div className="field">
-            <label htmlFor="tk-type">Type</label>
-            <select id="tk-type" className="input" value={type} onChange={(e) => setType(e.target.value)}>
-              <option value="all">All</option>
-              {types.map((t) => <option key={t} value={t}>{cap(t)}</option>)}
-            </select>
-          </div>
-          <div className="field">
-            <label htmlFor="tk-priority">Priority</label>
-            <select id="tk-priority" className="input" value={priority} onChange={(e) => setPriority(e.target.value)}>
-              <option value="all">All</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-              <option value="unrated">Unrated</option>
-            </select>
-          </div>
-          <div className="field">
-            <label htmlFor="tk-sort">Sort by</label>
-            <select id="tk-sort" className="input" value={sort} onChange={(e) => setSort(e.target.value)}>
-              {SORTS.map((s) => <option key={s.key} value={s.key}>{s.label}</option>)}
-            </select>
-          </div>
+      <section className="tk-toolbar" aria-label="Search and filters">
+        <div className="field">
+          <label htmlFor="tk-search">Search</label>
+          <input id="tk-search" className="input" type="search" placeholder="Title, description or subject" value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
-        <div className="row row-between">
-          <span className="muted" role="status">Showing {visible.length} of {tasks.length}</span>
-          {filtersActive && <button className="btn btn-ghost btn-sm" onClick={clearFilters}>Clear filters</button>}
+        <div className="field">
+          <label htmlFor="tk-status">Status</label>
+          <select id="tk-status" className="input" value={status} onChange={(e) => setStatusFilter(e.target.value)}>
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="in_progress">In progress</option>
+            <option value="completed">Completed</option>
+            <option value="overdue">Overdue</option>
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="tk-type">Type</label>
+          <select id="tk-type" className="input" value={type} onChange={(e) => setType(e.target.value)}>
+            <option value="all">All</option>
+            {types.map((t) => <option key={t} value={t}>{cap(t)}</option>)}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="tk-priority">Priority</label>
+          <select id="tk-priority" className="input" value={priority} onChange={(e) => setPriority(e.target.value)}>
+            <option value="all">All</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+            <option value="unrated">Unrated</option>
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="tk-sort">Sort by</label>
+          <select id="tk-sort" className="input" value={sort} onChange={(e) => setSort(e.target.value)}>
+            {SORTS.map((s) => <option key={s.key} value={s.key}>{s.label}</option>)}
+          </select>
         </div>
       </section>
+
+      <div className="row row-between tk-count">
+        <span className="muted" role="status">Showing {visible.length} of {tasks.length}</span>
+        {filtersActive && <button className="btn btn-ghost btn-sm" onClick={clearFilters}>Clear filters</button>}
+      </div>
 
       {(error || actionError) && <div className="callout callout-danger" role="alert">{error || actionError}</div>}
       {loading && <div className="empty-state">Loading tasks…</div>}
@@ -174,46 +203,87 @@ export default function TasksPage() {
         <div className="empty-state">No tasks match your filters.</div>
       )}
 
-      <ul className="tk-list">
-        {visible.map((t) => {
-          const bucket = getBucket(t, today);
-          return (
-            <li key={t.id} className={`tk-item bucket-${bucket}`}>
-              <div className="tk-main">
-                <div className="row tk-title-row">
-                  <h3 className={t.status === "completed" ? "done-title" : ""}>{t.title}</h3>
-                  <span className="tag tag-neutral">{cap(t.type)}</span>
-                  {t.priority_label && <span className={`tag tag-${t.priority_label}`}>{cap(t.priority_label)}</span>}
-                  {bucket === "overdue" && <span className="tag tag-danger">Overdue</span>}
-                  {t.conflict && <span className="tag tag-warning">Clash</span>}
-                </div>
-                <p className="muted tk-meta">
-                  {formatDate(t.due_date)}{t.due_time ? `, ${t.due_time}` : ""}
-                  {t.subject ? ` · ${t.subject}` : ""} · via {t.source}
-                </p>
-                {t.description && <p className="tk-desc">{t.description}</p>}
+      {view === "board" && tasks.length > 0 && (
+        <div className="board">
+          {COLUMNS.map((col) => (
+            <section key={col} className="bcol" aria-label={STATUS_LABEL[col]}>
+              <h2 className={`bcol-head bcol-${col}`}>
+                <span className="bcol-dot" aria-hidden="true" />
+                {STATUS_LABEL[col]}
+                <span className="bcol-count">{columns[col].length}</span>
+              </h2>
+              <div className="bcol-body">
+                {columns[col].length === 0 && <p className="bcol-empty">Nothing here.</p>}
+                {columns[col].map((t) => {
+                  const bucket = getBucket(t, today);
+                  const next = NEXT_STATUS?.[t.status];
+                  return (
+                    <article key={t.id} className={`bcard bucket-${bucket}`}>
+                      <div className="bcard-tags">
+                        <span className="tag tag-neutral">{cap(t.type)}</span>
+                        {t.priority_label && <span className={`tag tag-${t.priority_label}`}>{cap(t.priority_label)}</span>}
+                        {bucket === "overdue" && <span className="tag tag-danger">Overdue</span>}
+                        {t.conflict && <span className="tag tag-warning">Clash</span>}
+                      </div>
+                      <h3 className={t.status === "completed" ? "done-title" : ""}>{t.title}</h3>
+                      <p className="bcard-meta">
+                        {formatDate(t.due_date)}{t.due_time ? `, ${t.due_time}` : ""}
+                        {t.subject ? ` · ${t.subject}` : ""}
+                      </p>
+                      <div className="bcard-actions">
+                        {next && (
+                          <button className="btn btn-secondary btn-sm" onClick={() => advanceStatus(t)}>
+                            Move to {STATUS_LABEL[next] || next}
+                          </button>
+                        )}
+                        <button className="btn btn-ghost btn-sm" onClick={() => setSelectedId(t.id)}>Details</button>
+                        <button className="btn btn-ghost btn-sm" onClick={() => openEdit(t)}>Edit</button>
+                        {deleteControl(t)}
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
+            </section>
+          ))}
+        </div>
+      )}
 
-              <div className="tk-actions">
-                <label className="sr-only" htmlFor={`st-${t.id}`}>Status for {t.title}</label>
-                <select id={`st-${t.id}`} className="input" value={t.status} onChange={(e) => setStatus(t, e.target.value)}>
-                  {Object.entries(STATUS_LABEL).map(([k, label]) => <option key={k} value={k}>{label}</option>)}
-                </select>
-                <button className="btn btn-secondary btn-sm" onClick={() => setSelectedId(t.id)}>Details</button>
-                <button className="btn btn-secondary btn-sm" onClick={() => { setForm({ task: t }); window.scrollTo({ top: 0, behavior: "smooth" }); }}>Edit</button>
-                {confirmId === t.id ? (
-                  <span className="row">
-                    <button className="btn btn-danger btn-sm" onClick={() => handleDelete(t.id)}>Confirm delete</button>
-                    <button className="btn btn-ghost btn-sm" onClick={() => setConfirmId(null)}>Cancel</button>
-                  </span>
-                ) : (
-                  <button className="btn btn-ghost btn-sm" onClick={() => setConfirmId(t.id)} aria-label={`Delete ${t.title}`}>Delete</button>
-                )}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      {view === "list" && (
+        <ul className="tk-list">
+          {visible.map((t) => {
+            const bucket = getBucket(t, today);
+            return (
+              <li key={t.id} className={`tk-item bucket-${bucket}`}>
+                <div className="tk-main">
+                  <div className="row tk-title-row">
+                    <h3 className={t.status === "completed" ? "done-title" : ""}>{t.title}</h3>
+                    <span className="tag tag-neutral">{cap(t.type)}</span>
+                    {t.priority_label && <span className={`tag tag-${t.priority_label}`}>{cap(t.priority_label)}</span>}
+                    {bucket === "overdue" && <span className="tag tag-danger">Overdue</span>}
+                    {t.conflict && <span className="tag tag-warning">Clash</span>}
+                  </div>
+                  <p className="muted tk-meta">
+                    {formatDate(t.due_date)}{t.due_time ? `, ${t.due_time}` : ""}
+                    {t.subject ? ` · ${t.subject}` : ""} · via {t.source}
+                  </p>
+                  {t.description && <p className="tk-desc">{t.description}</p>}
+                </div>
+
+                <div className="tk-actions">
+                  <label className="sr-only" htmlFor={`st-${t.id}`}>Status for {t.title}</label>
+                  <select id={`st-${t.id}`} className="input" value={t.status} onChange={(e) => setStatus(t, e.target.value)}>
+                    {Object.entries(STATUS_LABEL).map(([k, label]) => <option key={k} value={k}>{label}</option>)}
+                  </select>
+                  <button className="btn btn-secondary btn-sm" onClick={() => setSelectedId(t.id)}>Details</button>
+                  <button className="btn btn-secondary btn-sm" onClick={() => openEdit(t)}>Edit</button>
+                  {deleteControl(t)}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

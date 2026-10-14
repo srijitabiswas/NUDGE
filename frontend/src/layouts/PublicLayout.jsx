@@ -19,7 +19,7 @@ export default function PublicLayout() {
     <div className="public-shell">
       <a href="#main-content" className="skip-link">Skip to main content</a>
 
-      <header className="site-header">
+      <header className="site-header on-dark">
         <div className="container site-header-inner">
           <Logo />
 
@@ -40,8 +40,8 @@ export default function PublicLayout() {
               <Link className="nav-link" to="/#how-it-works" onClick={close}>How it works</Link>
             </nav>
             <div className="site-actions">
-              <Link to="/login" className="btn btn-secondary" onClick={close}>Sign in</Link>
-              <Link to="/signup" className="btn btn-primary" onClick={close}>Sign up</Link>
+              <Link to="/login" className="btn btn-secondary btn-sm" onClick={close}>Sign in</Link>
+              <Link to="/signup" className="btn btn-primary btn-sm" onClick={close}>Sign up</Link>
             </div>
           </div>
         </div>

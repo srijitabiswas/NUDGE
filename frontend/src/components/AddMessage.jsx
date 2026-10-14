@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { parseMessage, USING_SAMPLE_DATA } from "../services/taskService";
+import { parseMessage } from "../services/taskService";
 
 const SOURCES = ["WhatsApp", "Email", "LMS", "Notice", "Manual input", "Other"];
 const TYPES = ["assignment", "exam", "quiz", "project", "event", "announcement", "notice", "other"];
@@ -124,9 +124,6 @@ export default function AddMessage({ onConfirm }) {
       )}
 
       {error && <p className="add-error">{error}</p>}
-      {USING_SAMPLE_DATA && (
-        <p className="muted small">Using a temporary stand-in parser, not the real NLP module yet.</p>
-      )}
     </div>
   );
 }
