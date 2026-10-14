@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useTasks } from "../hooks/useTasks";
+import Tracker from "../components/Tracker";
 import { formatDate, getBucket, todayStr } from "../utils/taskUtils";
 import { matchSubject, orderedDays, scheduleText, sessionsByDay, todayName } from "../utils/academics";
 
@@ -54,6 +55,7 @@ export default function AcademicsPage() {
         <Link className="btn btn-secondary" to="/profile">Edit subjects</Link>
       </div>
 
+      {!loading && <Tracker tasks={tasks} />}
       <section className="card stack" aria-labelledby="ac-today">
         <h2 id="ac-today">Today's classes ({todayDay})</h2>
         {todayClasses.length === 0 ? (

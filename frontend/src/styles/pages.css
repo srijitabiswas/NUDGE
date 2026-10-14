@@ -143,3 +143,67 @@
   .drow { grid-template-columns: 1fr; gap: var(--space-2); }
   .drow-side { justify-content: space-between; }
 }
+
+/* ===== Dashboard v2: calm, task-first ===== */
+.dash { gap: var(--space-3); }
+.dash-sub { margin: 0; color: var(--brown); font-size: var(--text-base); }
+.dash .page-header { display: block; }
+
+.link-btn { padding: 0; border: 0; background: none; color: inherit; font: inherit; font-weight: inherit; text-align: left; cursor: pointer; }
+.link-btn:hover { color: var(--brown); text-decoration: underline; text-underline-offset: 3px; }
+.view-all { font-size: var(--text-sm); font-weight: 600; color: var(--brown); text-decoration: none; white-space: nowrap; }
+.view-all:hover { color: var(--espresso); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Focus next */
+.focus-hero {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;
+  padding: 1.25rem 1.5rem; background: #fff;
+  border: 1px solid var(--color-border); border-left: 4px solid var(--brown); border-radius: var(--radius-md);
+}
+.focus-hero-main { flex: 1 1 320px; min-width: 0; }
+.focus-hero h2 { margin: 2px 0 4px; font-size: var(--text-xl); }
+.focus-hero-meta { margin: 0; color: var(--brown); font-size: var(--text-sm); font-weight: 500; }
+.focus-hero-reason { margin: 4px 0 0; font-size: var(--text-sm); color: var(--espresso); }
+.focus-hero-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--space-2); }
+.focus-hero-tags:empty { display: none; }
+
+/* Three summary figures */
+.sum-grid { display: grid; grid-template-columns: repeat(3, 1fr); background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.sum { display: flex; flex-direction: column; gap: 2px; padding: 1rem 1.5rem; border-left: 1px solid var(--color-border); }
+.sum:first-child { border-left: 0; }
+.sum-value { font-family: var(--font-display); font-size: 2.25rem; font-weight: 600; line-height: 1.1; color: var(--espresso); }
+.sum.tone-warning .sum-value { color: var(--color-warning); }
+.sum.tone-danger .sum-value { color: var(--color-danger); }
+.sum-label { font-size: var(--text-sm); font-weight: 500; color: var(--brown); }
+
+/* Main area */
+.dash-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--space-3); align-items: start; }
+.dash-side { display: grid; gap: var(--space-3); }
+.dash-tasks .list-head { border-bottom: 1px solid var(--color-border); }
+.list-sub { margin: 0; padding: 0.75rem 1.25rem 0.5rem; font-family: var(--font-body); font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brown); background: var(--ivory); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.drow-today { color: var(--color-warning); font-weight: 700; }
+
+/* Urgent alerts: only rendered when something is urgent */
+.urgent { padding: 1rem 1.25rem; background: var(--color-danger-bg); border: 1px solid #f0c4bf; border-left: 4px solid var(--color-danger); border-radius: var(--radius-md); }
+.urgent h2 { margin: 0 0 var(--space-2); font-size: var(--text-base); font-family: var(--font-body); font-weight: 700; color: var(--color-danger); }
+.urgent ul { list-style: none; margin: 0 0 var(--space-2); padding: 0; display: grid; gap: var(--space-2); font-size: var(--text-sm); color: var(--espresso); }
+.urgent ul:last-child { margin-bottom: 0; }
+
+/* Compact quick-add */
+.add-box.compact { gap: var(--space-2); padding: 1.25rem; }
+.add-box.compact h2 { margin: 0; }
+.add-box.compact .add-text { min-height: 72px; }
+.add-box.compact .add-row { flex-wrap: wrap; }
+.add-box.compact .add-row select { flex: 1 1 120px; }
+.add-box.compact .review-grid { grid-template-columns: 1fr; }
+.add-error { margin: 0; color: var(--color-danger); font-size: var(--text-sm); font-weight: 600; }
+
+@media (max-width: 1000px) {
+  .dash-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .sum { padding: 0.75rem 1rem; }
+  .sum-value { font-size: 1.75rem; }
+  .focus-hero { padding: 1rem; }
+  .focus-hero .btn { width: 100%; }
+}

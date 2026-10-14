@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { parseMessage } from "../services/taskService";
 
 const SOURCES = ["WhatsApp", "Email", "LMS", "Notice", "Manual input", "Other"];
 const TYPES = ["assignment", "exam", "quiz", "project", "event", "announcement", "notice", "other"];
 
-export default function AddMessage({ onConfirm }) {
+export default function AddMessage({ onConfirm, compact = false }) {
   const [text, setText] = useState("");
   const [source, setSource] = useState("WhatsApp");
   const [stage, setStage] = useState("idle"); // idle | parsing | review | saving
@@ -52,20 +53,22 @@ export default function AddMessage({ onConfirm }) {
   }
 
   return (
-    <div className="panel add-box">
-      <h2>Add a message</h2>
+    <div className={`panel add-box ${compact ? "compact" : ""}`}>
+      <h2>{compact ? "Quick add" : "Add a message"}</h2>
+      {compact && stage === "idle" && <p className="muted small">Paste a message to turn it into a task.</p>}
 
       {stage !== "review" && stage !== "saving" && (
         <>
           <textarea
             className="add-text"
-            rows={3}
+            aria-label="Message to turn into a task"
+            rows={compact ? 2 : 3}
             placeholder="Paste a message, notice or announcement…"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
           <div className="add-row">
-            <select value={source} onChange={(e) => setSource(e.target.value)}>
+            <select aria-label="Message source" value={source} onChange={(e) => setSource(e.target.value)}>
               {SOURCES.map((s) => (
                 <option key={s}>{s}</option>
               ))}
@@ -73,9 +76,11 @@ export default function AddMessage({ onConfirm }) {
             <button className="primary-btn" onClick={handleParse} disabled={!text.trim() || stage === "parsing"}>
               {stage === "parsing" ? "Reading…" : "Detect task"}
             </button>
-            <button className="ghost-btn" disabled title="Needs the OCR module to be connected">
-              Upload screenshot (soon)
-            </button>
+            {!compact && (
+              <button className="ghost-btn" disabled title="Needs the OCR module to be connected">
+                Upload screenshot (soon)
+              </button>
+            )}
           </div>
         </>
       )}
@@ -123,7 +128,11 @@ export default function AddMessage({ onConfirm }) {
         </div>
       )}
 
-      {error && <p className="add-error">{error}</p>}
+      {error && <p className="add-error" role="alert">{error}</p>}
+
+      {compact && (
+        <Link to="/add-information" className="view-all">Open full Add Information →</Link>
+      )}
     </div>
   );
 }
