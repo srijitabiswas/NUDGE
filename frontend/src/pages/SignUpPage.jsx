@@ -4,6 +4,7 @@ import { Button, Callout, Card, Field } from "../components/ui";
 import { useAuth } from "../hooks/useAuth";
 import { USING_DEMO_AUTH } from "../services/authService";
 import { validateSignUp } from "../utils/validation";
+import AuthAside from "../components/AuthAside";
 
 export default function SignUpPage() {
   const { register } = useAuth();
@@ -41,6 +42,7 @@ export default function SignUpPage() {
 
   return (
     <div className="auth-wrap">
+            <AuthAside mode="signup" />
       <Card>
         <h1 className="auth-title">Create your account</h1>
         <p className="muted">Set up NUDGE in a minute. You can add your academic details next.</p>

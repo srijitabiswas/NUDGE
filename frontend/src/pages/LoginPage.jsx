@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Callout, Card, Field } from "../components/ui";
 import { useAuth } from "../hooks/useAuth";
 import { USING_DEMO_AUTH } from "../services/authService";
+import AuthAside from "../components/AuthAside";
 import { validateLogin } from "../utils/validation";
 
 export default function LoginPage() {
@@ -42,6 +43,7 @@ export default function LoginPage() {
 
   return (
     <div className="auth-wrap">
+            <AuthAside mode="login" />
       <Card>
         <h1 className="auth-title">Welcome back</h1>
         <p className="muted">Sign in to see your tasks and deadlines.</p>
