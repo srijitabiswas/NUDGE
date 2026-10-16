@@ -3,13 +3,14 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import Logo from "../components/Logo";
 import Icon from "../components/Icon";
 import Footer from "../components/Footer";
+import { smoothScrollTo } from "../lib/lenis";
 
 export default function PublicLayout() {
   const { hash, pathname } = useLocation();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
+    if (hash) smoothScrollTo(`#${hash.slice(1)}`);
     else window.scrollTo(0, 0);
   }, [hash, pathname]);
 
@@ -36,11 +37,12 @@ export default function PublicLayout() {
           <div id="site-menu" className={`site-collapsible ${open ? "open" : ""}`}>
             <nav className="site-nav" aria-label="Main">
               <Link className="nav-link" to="/" onClick={close}>Home</Link>
-              <Link className="nav-link" to="/#features" onClick={close}>Features</Link>
+              <Link className="nav-link" to="/#solution" onClick={close}>Solution</Link>
               <Link className="nav-link" to="/#how-it-works" onClick={close}>How it works</Link>
+              <Link className="nav-link" to="/#contact" onClick={close}>Contact</Link>
             </nav>
             <div className="site-actions">
-              <Link to="/login" className="btn btn-secondary btn-sm" onClick={close}>Sign in</Link>
+              <Link to="/login" className="btn btn-secondary btn-sm" onClick={close}>Log in</Link>
               <Link to="/signup" className="btn btn-primary btn-sm" onClick={close}>Sign up</Link>
             </div>
           </div>
@@ -51,7 +53,7 @@ export default function PublicLayout() {
         <Outlet />
       </main>
 
-      <Footer />
+      {pathname !== "/" && <Footer />}
     </div>
   );
 }

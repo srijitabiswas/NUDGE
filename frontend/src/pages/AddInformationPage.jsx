@@ -120,11 +120,11 @@ export default function AddInformationPage() {
       {message && <div className="callout callout-danger" role="alert">{message}</div>}
 
       {stage === "detect" && (
-        <form className="card stack" onSubmit={handleDetect} noValidate>
+                <form className="card stack ai-card" onSubmit={handleDetect} noValidate>
           <Field
             id="ai-text"
             as="textarea"
-            rows={6}
+            rows={4}
             maxLength={5000}
             label="Message or notice"
             hint="Paste text from WhatsApp, email, your LMS or a notice board."
@@ -137,17 +137,20 @@ export default function AddInformationPage() {
               {SOURCES.map((s) => <option key={s}>{s}</option>)}
             </Field>
           </div>
-          <div className="row">
+                    <div className="row">
             <button type="submit" className="btn btn-primary" disabled={busy}>{busy ? "Reading…" : "Detect task"}</button>
-            <button type="button" className="btn btn-secondary" disabled title="Needs the OCR module to be connected">
-              Upload screenshot (needs OCR)
+            <button type="button" className="btn btn-secondary" disabled aria-describedby="ocr-note">
+              Upload screenshot
             </button>
           </div>
+          <p id="ocr-note" className="field-hint">
+            Screenshot upload is not available yet. It needs the OCR module to be connected, so paste the message text for now.
+          </p>
         </form>
       )}
 
       {stage === "review" && draft && (
-        <form className="card stack" onSubmit={handleConfirm} noValidate>
+                <form className="card stack ai-card ai-review" onSubmit={handleConfirm} noValidate>
           <div>
             <h2>Review what was detected</h2>
             <p className="muted">
@@ -197,7 +200,7 @@ export default function AddInformationPage() {
       )}
 
       {stage === "done" && saved && (
-        <section className="card stack" role="status">
+        <section className="card stack ai-card ai-done" role="status">
           <h2>Task saved</h2>
           <p>
             <strong>{saved.title}</strong>

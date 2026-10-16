@@ -59,6 +59,7 @@ export default function AnalyticsPage() {
 
     return { open: open.length, overdue, status, type, prio, subject, week, weekMax };
   }, [tasks, subjects, today]);
+    const noSubject = data.subject.find((s) => s.label === "No subject")?.value || 0;
 
   return (
     <div className="stack">
@@ -98,6 +99,7 @@ export default function AnalyticsPage() {
           <div className="grid-2">
             <section className="card stack" aria-labelledby="an-status">
               <h2 id="an-status">By status</h2>
+                            <p className="muted small">Where every task stands in your workflow.</p>
               <BarList items={data.status} />
             </section>
             <section className="card stack" aria-labelledby="an-prio">
@@ -108,9 +110,19 @@ export default function AnalyticsPage() {
               <h2 id="an-type">Open tasks by type</h2>
               <BarList items={data.type} />
             </section>
-            <section className="card stack" aria-labelledby="an-subject">
+                        <section className="card stack" aria-labelledby="an-subject">
               <h2 id="an-subject">Open tasks by subject</h2>
               <BarList items={data.subject} />
+              {noSubject > 0 && (
+                <p className="hint-box">
+                  {noSubject} open task{noSubject === 1 ? " has" : "s have"} no subject.{" "}
+                  {subjects.length === 0 ? (
+                    <>Add your subjects in <Link to="/profile">Profile</Link> so tasks group automatically.</>
+                  ) : (
+                    <>Set a subject when editing them in <Link to="/tasks">My Tasks</Link>.</>
+                  )}
+                </p>
+              )}
             </section>
           </div>
         </>

@@ -89,7 +89,7 @@ export default function CalendarPage() {
 
       {loading && <div className="empty-state">Loading…</div>}
 
-      {view === "month" && (
+            {view === "month" && (
         <div className="cal-grid" role="grid" aria-label={heading}>
           {weekdayHeaders(weekStart).map((n) => (
             <div key={n} className="cal-head" role="columnheader">{n}</div>
@@ -100,24 +100,54 @@ export default function CalendarPage() {
             const cls = classesOn(d);
             const outside = d.getMonth() !== cursor.getMonth();
             return (
-              <button
+              <div
                 key={key}
                 role="gridcell"
+                tabIndex={0}
                 className={`cal-cell${outside ? " other" : ""}${key === today ? " today" : ""}${key === selected ? " selected" : ""}`}
                 onClick={() => setSelected(key)}
+                onKeyDown={(e) => {
+                  if ((e.key === "Enter" || e.key === " ") && e.target === e.currentTarget) {
+                    e.preventDefault();
+                    setSelected(key);
+                  }
+                }}
+                aria-selected={key === selected}
                 aria-label={`${longDate(d)}: ${list.length} task${list.length === 1 ? "" : "s"}, ${cls.length} class${cls.length === 1 ? "" : "es"}`}
-                aria-pressed={key === selected}
               >
                 <span className="cal-num">{d.getDate()}</span>
                 {list.slice(0, 2).map((t) => (
-                  <span key={t.id} className={chipClass(t)} title={t.title}>{t.title}</span>
+                  <button
+                    key={t.id}
+                    type="button"
+                    className={chipClass(t)}
+                    title={t.title}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOpenId(t.id);
+                    }}
+                  >
+                    {t.title}
+                  </button>
                 ))}
-                {list.length > 2 && <span className="cal-more">+{list.length - 2} more</span>}
+                {list.length > 2 && (
+                  <button
+                    type="button"
+                    className="cal-more"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelected(key);
+                      setTimeout(() => document.getElementById("cal-sel")?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+                    }}
+                  >
+                    +{list.length - 2} more · view all
+                  </button>
+                )}
                 {cls.length > 0 && <span className="cal-classes">{cls.length} class{cls.length === 1 ? "" : "es"}</span>}
                 {(list.length > 0 || cls.length > 0) && (
                   <span className="cal-count">{list.length + cls.length} item{list.length + cls.length === 1 ? "" : "s"}</span>
                 )}
-              </button>
+              </div>
             );
           })}
         </div>
@@ -180,7 +210,9 @@ export default function CalendarPage() {
               {selTasks.map((t) => (
                 <li key={t.id} className="row row-between">
                   <span>
-                    <strong className={t.status === "completed" ? "done-title" : ""}>{t.title}</strong>
+                    <strong className={t.status === "completed" ? "done-title" : ""}>
+                      <button type="button" className="link-btn" onClick={() => setOpenId(t.id)}>{t.title}</button>
+                    </strong>
                     <span className="muted"> · {t.due_time || "No time"} · {STATUS_LABEL[t.status] || t.status}{t.conflict ? " · Possible clash" : ""}</span>
                   </span>
                   <span className="row">

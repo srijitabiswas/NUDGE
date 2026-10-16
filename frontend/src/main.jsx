@@ -15,6 +15,7 @@ import "./styles/theme.css";
 import "./styles/shell.css";
 import "./styles/public.css";
 import "./styles/pages.css";
+import "./styles/landing.css";
 import AuthProvider from "./context/AuthProvider.jsx";
 import TaskProvider from "./context/TaskProvider.jsx";
 

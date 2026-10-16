@@ -388,3 +388,39 @@ section[aria-labelledby="an-week"] .an-col:first-child .an-col-bar { background:
 .modal-actions { flex-wrap: wrap; margin-top: var(--space-2); }
 
 .input::placeholder { color: #7a6350; }
+
+/* ===== R8: review fixes ===== */
+
+/* Smaller lower-section headings */
+.app-content section > h2, .app-content .stack > h2 { font-size: var(--text-lg); margin-bottom: var(--space-1); }
+
+/* Academics: equal-height tracker panels and rows, scannable timetable */
+.tracker { align-items: stretch; }
+.tracker-col { display: flex; flex-direction: column; }
+.tracker-item { min-height: 4rem; align-items: center; }
+.tt-slot { display: flex; flex-direction: column; gap: 1px; margin: 0.5rem 0.625rem; padding: 0.25rem 0 0.25rem 0.5rem; }
+.tt-slot span:first-of-type { order: -1; font-weight: 700; color: var(--espresso); font-size: var(--text-xs); letter-spacing: 0.04em; }
+.tt-slot strong { font-size: var(--text-sm); }
+.tt-empty { color: #8a7563; }
+
+/* Calendar: chips and day cells are real controls */
+.cal-cell { cursor: pointer; }
+.cal-chip { cursor: pointer; font: inherit; font-size: var(--text-xs); text-align: left; }
+.cal-chip:hover { filter: brightness(0.96); text-decoration: underline; text-underline-offset: 2px; }
+.cal-more { padding: 0; border: 0; background: none; font: inherit; font-size: var(--text-xs); font-weight: 700; color: var(--brown); cursor: pointer; text-align: left; text-decoration: underline; text-underline-offset: 2px; }
+.cal-more:hover { color: var(--espresso); }
+#cal-sel { scroll-margin-top: 96px; }
+
+/* Add Information: calmer width, clear states */
+.stepper { max-width: 760px; }
+.ai-card { max-width: 760px; margin-inline: 0; }
+.ai-review { border-top: 4px solid var(--brown); }
+.ai-review > .row:last-child { padding-top: var(--space-3); border-top: 1px solid var(--color-border); }
+.ai-done { border-top: 4px solid var(--color-success); }
+.ai-done h2 { color: var(--color-success); }
+
+/* Analytics */
+.hint-box { margin: var(--space-2) 0 0; padding: 0.625rem 0.875rem; background: var(--sand-soft); border-left: 3px solid var(--brown); border-radius: var(--radius-sm); font-size: var(--text-sm); color: var(--espresso); }
+.risk-action { margin: 6px 0 0; font-size: var(--text-sm); color: var(--espresso); }
+.risk-action a { font-weight: 700; color: var(--brown); }
+.risk-panel { border-left: 4px solid var(--sand); }
