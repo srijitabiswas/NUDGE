@@ -9,6 +9,15 @@ import Icon from "../components/Icon";
 import logoImg from "../assets/nudge-logo.png";
 import { setLenis, smoothScrollTo } from "../lib/lenis";
 import HeroDemo from "../components/HeroDemo";
+import Stickers from "../components/Stickers";
+import HeroMontage from "../components/HeroMontage";
+
+// Curved divider: painted in the previous section's colour at the top of the next one.
+const Curve = ({ from }) => (
+  <svg className={`ld-curve ld-curve-${from}`} viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 0H1440V64C1290 112 1110 116 930 84C750 52 610 18 420 30C250 40 120 78 0 100Z" fill="currentColor" />
+  </svg>
+);
 
 gsap.registerPlugin(ScrollTrigger, CustomEase);
 CustomEase.create("reveal", "0.16, 1, 0.3, 1");
@@ -35,12 +44,12 @@ const FEATURES = [
 ];
 
 const HX = [
-  { label: "Messages", text: "Bring scattered messages together in one place", icon: "add", c: "sage" },
-  { label: "Deadlines", text: "Catch deadline changes before they catch you", icon: "bell", c: "peach" },
-  { label: "Priorities", text: "See what to do first, and why", icon: "tasks", c: "butter" },
-  { label: "Clashes", text: "Spot clashes between exams and submissions", icon: "analytics", c: "rose" },
-  { label: "Timetable", text: "Keep classes and deadlines on one calendar", icon: "calendar", c: "sky" },
-  { label: "Subjects", text: "Track assignments and exams by subject", icon: "academics", c: "sand" },
+  { label: "Messages", text: "Bring scattered messages together in one place", img: "messages", c: "sage" },
+  { label: "Deadlines", text: "Catch deadline changes before they catch you", img: "deadline", c: "peach" },
+  { label: "Priorities", text: "See what to do first, and why", img: "priorities", c: "butter" },
+  { label: "Timetable", text: "Keep classes and deadlines on one calendar", img: "calendar", c: "sky" },
+  { label: "Clashes", text: "Spot clashes between exams and submissions", img: "clashes", c: "rose" },
+  { label: "Subjects", text: "Track assignments and exams by subject", img: "coursework", c: "sand" },
 ];
 const HX_STATS = [
   { n: "1", t: "place for every deadline" },
@@ -111,21 +120,37 @@ export default function LandingPage() {
       mm.add("(min-width: 900px) and (min-height: 620px)", () => {
         const pin = one(".hx-pin");
         if (!pin) return undefined;
+        const geo = { s: 0.34, y: 0 };
+        const measure = () => {
+          const fr = one(".hx-frame");
+          if (!fr) return;
+          const H = pin.clientHeight;
+          const w = fr.offsetWidth;
+          const h = fr.offsetHeight;
+          geo.s = Math.min(0.34, (H * 0.24) / h);
+          const top = H * 0.47;
+          geo.y = top - fr.offsetTop;
+          pin.style.setProperty("--vw", `${w * geo.s}px`);
+          pin.style.setProperty("--vh", `${h * geo.s}px`);
+          pin.style.setProperty("--vt", `${top}px`);
+        };
+        measure();
+        ScrollTrigger.addEventListener("refreshInit", measure);
         gsap.set(".hx-card", { opacity: 0, y: 36, scale: 0.92 });
         gsap.set(".hx-mid", { opacity: 0, y: 24 });
         gsap.set(".hx-stat", { opacity: 0, y: 24 });
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: pin, start: "top 72px", end: "+=230%", scrub: 1, pin: true, anticipatePin: 1 },
+          scrollTrigger: { trigger: pin, start: "top 72px", end: "+=230%", scrub: 1, pin: true, anticipatePin: 1, invalidateOnRefresh: true },
         });
         tl.to(".hx-copy", { opacity: 0, y: -40, filter: "blur(14px)", duration: 0.9, ease: "none" }, 0)
-          .to(".hx-frame", { scale: 0.34, y: 60, duration: 1.4, ease: "power2.inOut" }, 0.1)
+          .to(".hx-frame", { scale: () => geo.s, y: () => geo.y, duration: 1.4, ease: "power2.inOut" }, 0.1)
           .to(".hd-steps", { opacity: 0, duration: 0.4, ease: "none" }, 0.1)
           .to(".hx-pill", { opacity: 0, scale: 0.8, y: -30, duration: 0.7, stagger: 0.04, ease: "none" }, 0.3)
           .to(".hx-card", { opacity: 1, y: 0, scale: 1, duration: 0.9, stagger: 0.1, ease: "none" }, 0.7)
           .to(".hx-mid", { opacity: 1, y: 0, duration: 0.8, ease: "none" }, 1.3)
           .to(".hx-stat", { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "none" }, 1.9)
           .to({}, { duration: 0.8 });
-        return () => tl.scrollTrigger?.kill();
+        return () => { ScrollTrigger.removeEventListener("refreshInit", measure); tl.scrollTrigger?.kill(); };
       });
 
       // problem: headline reveal, channel chips drift in and keep floating
@@ -137,13 +162,6 @@ export default function LandingPage() {
         opacity: 0, scale: 0.7, x: () => gsap.utils.random(-140, 140), y: () => gsap.utils.random(40, 120),
         rotate: () => gsap.utils.random(-14, 14), duration: 1.2, stagger: 0.09, ease: "reveal",
         scrollTrigger: { trigger: ".ld-chips-wrap", start: "top 85%", toggleActions: "play none none reverse" },
-      });
-      q(".ld-ch").forEach((c, i) => {
-        gsap.to(c, { y: i % 2 ? 8 : -8, duration: 2.4 + (i % 3) * 0.5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: i * 0.2 });
-      });
-      gsap.to(".ld-problem-glow", {
-        yPercent: 30, ease: "none",
-        scrollTrigger: { trigger: ".ld-problem", start: "top bottom", end: "bottom top", scrub: true },
       });
 
       // solution: heading + pulsing core
@@ -192,8 +210,7 @@ export default function LandingPage() {
         .to(chips, { x: 0, y: 0, scale: 0.6, duration: 2, stagger: 0.05, ease: "none" }, 4.2)
         .to(".ld-p2", { opacity: 0, duration: 0.6, ease: "none" }, 6.2);
 
-      tl.to(".ld-p3", { opacity: 1, duration: 1, ease: "none" }, 6.6)
-        .to(".ld-core-glow", { scale: 1.15, opacity: 0.9, duration: 1.2, ease: "none" }, 6.6);
+      tl.to(".ld-p3", { opacity: 1, duration: 1, ease: "none" }, 6.6);
       words.forEach((w, i) => {
         const s = 7.8 + i * 0.7;
         tl.to(w, { opacity: 1, duration: 0.3, ease: "none" }, s).to(w, { opacity: 0, duration: 0.3, ease: "none" }, s + 0.55);
@@ -219,7 +236,6 @@ export default function LandingPage() {
         y: 60, opacity: 0, duration: 1, stagger: 0.14, ease: "reveal",
         scrollTrigger: { trigger: ".ld-final", start: "top 70%", toggleActions: "play none none reverse" },
       });
-      gsap.to(".ld-final-orb", { y: -20, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut" });
       gsap.from(".ld-foot .ld-rise", {
         y: 50, opacity: 0, duration: 0.9, stagger: 0.1, ease: "reveal",
         scrollTrigger: { trigger: ".ld-foot", start: "top 90%", toggleActions: "play none none none" },
@@ -271,7 +287,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="hx-frame"><HeroDemo /></div>
+          <div className="hx-frame"><HeroMontage><HeroDemo /></HeroMontage></div>
 
           <div className="hx-pills" aria-hidden="true">
             {HX.map((h, i) => (
@@ -286,10 +302,14 @@ export default function LandingPage() {
           <ul className="hx-cards">
             {HX.map((h, i) => (
               <li key={h.label} className={`hx-card hx-${h.c} hx-c${i}`}>
-                <span className="hx-thumb"><Icon name={h.icon} size={20} /></span>
+                <img className="hx-img" src={`/media/${h.img}.png`} alt="" width="104" height="104" loading="lazy" decoding="async"
+                  onError={(e) => { e.currentTarget.style.display = "none"; }} />
                 <span className="hx-card-text">{h.text}</span>
               </li>
             ))}
+            <li className="hx-card hx-teal hx-c6">
+              <span className="hx-card-text">Turn everyday reminders into timely action</span>
+            </li>
           </ul>
 
           <ul className="hx-stats">
@@ -301,8 +321,8 @@ export default function LandingPage() {
       </section>
 
       {/* PROBLEM */}
-      <section id="problem" className="ld-problem">
-        <div className="ld-problem-glow" aria-hidden="true" />
+      <section id="problem" className="ld-problem ld-light">
+        <Curve from="dark" />
         <div className="ld-wrap ld-center">
           <div className="ld-problem-head">
             <p className="ld-eyebrow">The problem</p>
@@ -327,6 +347,7 @@ export default function LandingPage() {
 
       {/* SOLUTION */}
       <section id="solution" className="ld-sol">
+        <Curve from="light" />
         <div className="ld-wrap ld-center">
           <div className="ld-sol-head">
             <p className="ld-eyebrow">Our solution</p>
@@ -355,9 +376,9 @@ export default function LandingPage() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how-it-works" className="ld-how">
+      <section id="how-it-works" className="ld-how ld-light">
+        <Curve from="dark" />
         <div className="ld-hpin2">
-          <div className="ld-core-glow" aria-hidden="true" />
           {Array.from({ length: 10 }, (_, i) => (
             <span
               key={i}
@@ -416,57 +437,56 @@ export default function LandingPage() {
 
       {/* CALL TO ACTION */}
       <section className="ld-final">
-        <div className="ld-final-orb" aria-hidden="true" />
-        <div className="ld-wrap ld-center">
-          <p className="ld-eyebrow ld-rise">Start your academic journey</p>
-          <h2 className="ld-h2 ld-rise">
-            Built for students.<br />
-            <span className="ld-grad">Powered by NUDGE.</span><br />
-            Driven by intelligence.
-          </h2>
-          <p className="ld-lead ld-rise">
-            A calmer, smarter way to manage academic life: deadlines in one place, clear priorities and early warnings.
-          </p>
-          <div className="ld-cta-row ld-cta-center ld-rise">
-            {cta}
-            {!user && <Link className="ld-btn ld-btn-ghost" to="/login">Log in</Link>}
+        <Curve from="light" />
+        <div className="ld-final-inner">
+          <div className="ld-final-copy">
+            <h2 className="ld-rise">Let's make student life simpler.</h2>
+            <p className="ld-rise">
+              Deadlines in one place, clear priorities and early warnings, so you always know what to do next.
+            </p>
+            <Link className="ld-outline ld-rise" to={user ? "/dashboard" : "/signup"}>
+              {user ? "Go to dashboard" : "Get started"}
+            </Link>
           </div>
+          <Stickers />
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer id="contact" className="ld-foot">
-        <div className="ld-wrap">
-          <p className="ld-wordmark ld-rise" aria-hidden="true">NUDGE</p>
-          <p className="ld-foot-tag ld-rise">From Messages to Actions: the intelligent student life management platform.</p>
-          <div className="ld-foot-grid ld-rise">
-            <div>
-              <h3 className="ld-foot-h">Navigation</h3>
-              <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/#solution">Solution</Link></li>
-                <li><Link to="/#how-it-works">How it works</Link></li>
-                <li><Link to="/#contact">Contact</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="ld-foot-h">Resources</h3>
-              <ul>
-                <li><a href="https://github.com/srijitabiswas/NUDGE" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="ld-foot-h">Get started</h3>
-              <ul>
-                <li><Link to="/signup">Sign up</Link></li>
-                <li><Link to="/login">Log in</Link></li>
-              </ul>
-            </div>
+      <footer id="contact" className="ld-foot ld-light">
+        <Curve from="dark" />
+        <div className="ld-foot-grid">
+          <div className="ld-foot-brand">
+            <a className="ld-foot-logo" href="#top" onClick={(e) => { e.preventDefault(); smoothScrollTo("#top", 0); }}>
+              <img src={logoImg} alt="" width="52" height="52" />
+              <span>NUDGE</span>
+            </a>
+            <p className="ld-foot-tag">From Messages to Actions: the intelligent student life management platform.</p>
+            <Link className="ld-outline" to={user ? "/dashboard" : "/signup"}>
+              {user ? "Go to dashboard" : "Get started"}
+            </Link>
           </div>
-          <div className="ld-foot-bottom ld-rise">
-            <span>© {year} NUDGE. B.Tech CSE final year project.</span>
-            <span className="ld-mono">Built with intelligence, for students.</span>
+
+          <div className="ld-foot-col">
+            <ul>
+              <li><a href="#top" onClick={(e) => { e.preventDefault(); smoothScrollTo("#top", 0); }}>Home</a></li>
+              <li><Link to="/#solution">Solution</Link></li>
+              <li><Link to="/#how-it-works">How it works</Link></li>
+              <li><Link to="/#contact">Contact</Link></li>
+            </ul>
           </div>
+
+          <div className="ld-foot-col">
+            <ul>
+              <li><Link to="/signup">Sign up</Link></li>
+              <li><Link to="/login">Log in</Link></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="ld-foot-bottom ld-rise">
+          <span>© {year} NUDGE. All rights reserved.</span>
+          <span>Built for students.</span>
         </div>
       </footer>
     </div>

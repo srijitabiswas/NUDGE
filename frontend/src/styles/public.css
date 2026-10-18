@@ -5,6 +5,9 @@
   background: var(--espresso); border-bottom: 1px solid var(--espresso-2); color: var(--ivory-text);
 }
 .site-header-inner { min-height: 72px; }
+/* Match the logged-in shell: logo sits at the left edge and actions at the right edge, full width */
+.site-header .site-header-inner { max-width: none; margin: 0; padding-left: calc(var(--space-3) * 2); padding-right: var(--space-5); }
+@media (max-width: 720px) { .site-header .site-header-inner { padding-left: var(--space-3); padding-right: var(--space-3); } }
 .site-header .logo, .site-footer-public .logo { color: #fff; font-family: var(--font-display); font-size: var(--text-xl); letter-spacing: 0.06em; }
 .site-header .icon-btn { color: var(--ivory-text); }
 .site-header .icon-btn:hover { background: var(--espresso-2); }

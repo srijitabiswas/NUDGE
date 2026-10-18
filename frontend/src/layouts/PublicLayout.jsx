@@ -16,6 +16,15 @@ export default function PublicLayout() {
 
   const close = () => setOpen(false);
 
+  // Already on the landing page: the route doesn't change, so scroll to the hero ourselves.
+  const goHome = (e) => {
+    close();
+    if (pathname === "/" && !hash) {
+      e.preventDefault();
+      smoothScrollTo("#top", 0);
+    }
+  };
+
   return (
     <div className="public-shell">
       <a href="#main-content" className="skip-link">Skip to main content</a>
@@ -36,7 +45,7 @@ export default function PublicLayout() {
 
           <div id="site-menu" className={`site-collapsible ${open ? "open" : ""}`}>
             <nav className="site-nav" aria-label="Main">
-              <Link className="nav-link" to="/" onClick={close}>Home</Link>
+              <Link className="nav-link" to="/" onClick={goHome}>Home</Link>
               <Link className="nav-link" to="/#solution" onClick={close}>Solution</Link>
               <Link className="nav-link" to="/#how-it-works" onClick={close}>How it works</Link>
               <Link className="nav-link" to="/#contact" onClick={close}>Contact</Link>
