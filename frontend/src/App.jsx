@@ -1,4 +1,5 @@
-import { Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import PublicLayout from "./layouts/PublicLayout";
 import AppLayout from "./layouts/AppLayout";
 import { RequireAuth, PublicOnly } from "./components/RouteGuards";
@@ -18,8 +19,38 @@ import NotificationsPage from "./pages/NotificationsPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingsPage from "./pages/SettingsPage";
 
+const TITLES = {
+  "/": "NUDGE | From Messages to Actions",
+  "/signup": "Sign up",
+  "/login": "Log in",
+  "/privacy": "Privacy Policy",
+  "/terms": "Terms of Use",
+  "/profile-setup": "Set up your profile",
+  "/dashboard": "Dashboard",
+  "/tasks": "My Tasks",
+  "/academics": "Assignments and Exams",
+  "/calendar": "Calendar",
+  "/add-information": "Add Information",
+  "/analytics": "Priorities and Analytics",
+  "/notifications": "Notifications",
+  "/profile": "Student Profile",
+  "/settings": "Settings",
+};
+
+// Keeps the browser tab title in step with the current page.
+function PageTitle() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const t = TITLES[pathname];
+    document.title = !t ? "Page not found | NUDGE" : pathname === "/" ? t : `${t} | NUDGE`;
+  }, [pathname]);
+  return null;
+}
+
 export default function App() {
   return (
+    <>
+    <PageTitle />
     <Routes>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<LandingPage />} />
@@ -47,5 +78,6 @@ export default function App() {
         </Route>
       </Route>
     </Routes>
+    </>
   );
 }
