@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
+import { CONTACT_EMAIL } from "../config";
 
 export default function Footer({ variant = "public" }) {
   const year = new Date().getFullYear();
@@ -45,8 +46,12 @@ export default function Footer({ variant = "public" }) {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© {year} NUDGE. Intelligent Student Life Management Platform.</span>
-          <span>B.Tech CSE final year project</span>
+          <span>© {year} NUDGE. All rights reserved.</span>
+          <span className="row">
+            <Link to="/privacy">Privacy</Link>
+            <Link to="/terms">Terms</Link>
+            {CONTACT_EMAIL && <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>}
+          </span>
         </div>
       </div>
     </footer>

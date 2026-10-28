@@ -11,6 +11,7 @@ import { setLenis, smoothScrollTo } from "../lib/lenis";
 import HeroDemo from "../components/HeroDemo";
 import Stickers from "../components/Stickers";
 import HeroMontage from "../components/HeroMontage";
+import { CONTACT_EMAIL } from "../config";
 
 // Curved divider: painted in the previous section's colour at the top of the next one.
 const Curve = ({ from }) => (
@@ -486,7 +487,11 @@ export default function LandingPage() {
 
         <div className="ld-foot-bottom ld-rise">
           <span>© {year} NUDGE. All rights reserved.</span>
-          <span>Built for students.</span>
+          <span className="ld-foot-legal">
+            <Link to="/privacy">Privacy</Link>
+            <Link to="/terms">Terms</Link>
+            {CONTACT_EMAIL && <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>}
+          </span>
         </div>
       </footer>
     </div>

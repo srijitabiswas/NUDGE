@@ -371,7 +371,7 @@
 .ld-words { position: relative; height: 40px; width: 100%; display: flex; justify-content: center; align-items: center; }
 .ld-word { position: absolute; font: 600 clamp(1.3rem, 3vw, 2rem) var(--font-display); }
 .ld-act-area { position: relative; width: min(448px, 100%); height: 360px; }
-.ld-act { position: absolute; left: 50%; top: 50%; width: 220px; margin: -55px 0 0 -110px; padding: 16px; border-radius: 16px; text-align: left;
+.ld-act { --aw: clamp(150px, 42vw, 220px); position: absolute; left: 50%; top: 50%; width: var(--aw); margin: -55px 0 0 calc(var(--aw) / -2); padding: 16px; border-radius: 16px; text-align: left;
   border: 1px solid var(--ld-line); background: #3a2d22; box-shadow: none;
   display: flex; flex-direction: column; gap: 6px; }
 .ld-act-tag { align-self: flex-start; padding: 2px 9px; border-radius: 999px; background: rgba(201, 183, 156, 0.18); color: var(--ld-g1);
@@ -441,3 +441,7 @@
 .ld-reduced .ld-word { position: static; opacity: 1 !important; }
 .ld-reduced .ld-act-area { height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .ld-reduced .ld-act { position: static; margin: 0; width: auto; opacity: 1 !important; transform: none !important; filter: none !important; }
+
+.ld-foot-legal { display: inline-flex; flex-wrap: wrap; gap: 6px 20px; }
+.ld-foot-legal a { color: var(--ld-muted); text-decoration: none; }
+.ld-foot-legal a:hover { color: var(--ld-text); text-decoration: underline; }

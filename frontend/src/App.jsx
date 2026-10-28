@@ -4,6 +4,7 @@ import AppLayout from "./layouts/AppLayout";
 import { RequireAuth, PublicOnly } from "./components/RouteGuards";
 import LandingPage from "./pages/LandingPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import LegalPage from "./pages/LegalPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import ProfileSetupPage from "./pages/ProfileSetupPage";
@@ -22,6 +23,8 @@ export default function App() {
     <Routes>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/privacy" element={<LegalPage kind="privacy" />} />
+        <Route path="/terms" element={<LegalPage kind="terms" />} />
         <Route element={<PublicOnly />}>
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
