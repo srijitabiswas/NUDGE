@@ -128,8 +128,8 @@ export default function LandingPage() {
           const H = pin.clientHeight;
           const w = fr.offsetWidth;
           const h = fr.offsetHeight;
-          geo.s = Math.min(0.34, (H * 0.24) / h);
-          const top = H * 0.47;
+          geo.s = Math.min(0.3, (H * 0.2) / h);
+          const top = H * 0.45;
           geo.y = top - fr.offsetTop;
           pin.style.setProperty("--vw", `${w * geo.s}px`);
           pin.style.setProperty("--vh", `${h * geo.s}px`);
@@ -137,6 +137,18 @@ export default function LandingPage() {
         };
         measure();
         ScrollTrigger.addEventListener("refreshInit", measure);
+        // the video can change the frame height after load, so re-measure when it resizes
+        let lastH = one(".hx-frame")?.offsetHeight;
+        let rt;
+        const ro = new ResizeObserver(() => {
+          const nh = one(".hx-frame")?.offsetHeight;
+          if (nh === lastH) return;
+          lastH = nh;
+          clearTimeout(rt);
+          rt = setTimeout(() => ScrollTrigger.refresh(), 150);
+        });
+        const frEl = one(".hx-frame");
+        if (frEl) ro.observe(frEl);
         gsap.set(".hx-card", { opacity: 0, y: 36, scale: 0.92 });
         gsap.set(".hx-mid", { opacity: 0, y: 24 });
         gsap.set(".hx-stat", { opacity: 0, y: 24 });
@@ -146,12 +158,11 @@ export default function LandingPage() {
         tl.to(".hx-copy", { opacity: 0, y: -40, filter: "blur(14px)", duration: 0.9, ease: "none" }, 0)
           .to(".hx-frame", { scale: () => geo.s, y: () => geo.y, duration: 1.4, ease: "power2.inOut" }, 0.1)
           .to(".hd-steps", { opacity: 0, duration: 0.4, ease: "none" }, 0.1)
-          .to(".hx-pill", { opacity: 0, scale: 0.8, y: -30, duration: 0.7, stagger: 0.04, ease: "none" }, 0.3)
           .to(".hx-card", { opacity: 1, y: 0, scale: 1, duration: 0.9, stagger: 0.1, ease: "none" }, 0.7)
           .to(".hx-mid", { opacity: 1, y: 0, duration: 0.8, ease: "none" }, 1.3)
           .to(".hx-stat", { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "none" }, 1.9)
           .to({}, { duration: 0.8 });
-        return () => { ScrollTrigger.removeEventListener("refreshInit", measure); tl.scrollTrigger?.kill(); };
+        return () => { ro.disconnect(); clearTimeout(rt); ScrollTrigger.removeEventListener("refreshInit", measure); tl.scrollTrigger?.kill(); };
       });
 
       // problem: headline reveal, channel chips drift in and keep floating
@@ -290,11 +301,6 @@ export default function LandingPage() {
 
           <div className="hx-frame"><HeroMontage><HeroDemo /></HeroMontage></div>
 
-          <div className="hx-pills" aria-hidden="true">
-            {HX.map((h, i) => (
-              <span key={h.label} className={`hx-pill hx-${h.c} hx-p${i}`}><i />{h.label}</span>
-            ))}
-          </div>
 
           <div className="hx-mid">
             <h2>We turn the noise of student life<br />into clear next steps.</h2>

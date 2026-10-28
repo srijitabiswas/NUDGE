@@ -73,9 +73,6 @@
 .hx-rose { --t: #f3cfd0; --d: #c2525c; }
 .hx-sky { --t: #cfe0ea; --d: #3f7fa8; }
 .hx-sand { --t: #e9dcc6; --d: #8a6a43; }
-.hx-pills { display: none; }
-.hx-pill { position: absolute; display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px 10px 12px; border-radius: 12px; background: var(--t); color: #2b2118; font: 600 1rem var(--font-body); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3); }
-.hx-pill i { width: 18px; height: 18px; border-radius: 6px; background: var(--d); }
 .hx-cards { list-style: none; margin: 0; padding: 0; width: min(920px, 100%); display: grid; grid-template-columns: 1fr; gap: 12px; }
 .hx-teal { --t: #c4e4df; --d: #2f8f8a; }
 .hx-card { display: flex; align-items: stretch; gap: 10px; color: #2b2118; }
@@ -97,15 +94,6 @@
   .ld-hero .ld-lead { max-width: none; white-space: nowrap; }
   .hx-frame { position: absolute; left: 50%; top: clamp(250px, 47vh, 340px); translate: -50% 0; width: min(920px, calc(100% - 64px)); }
   .hx-frame .hd { font-size: clamp(11.5px, min(1.65cqw, 1.9vh), 16px); }
-  .hx-pills { display: block; position: absolute; inset: 0; z-index: 4; pointer-events: none; }
-  /* pills hug the video: some overlap its edges, some sit just outside (fw = video width, ft = video top) */
-  .hx-pills { --fw: min(920px, calc(100% - 64px)); --ft: clamp(250px, 47vh, 340px); --fl: calc(50% - var(--fw) / 2); }
-  .hx-p0 { left: max(10px, calc(var(--fl) - 76px)); top: calc(var(--ft) + 44px); }
-  .hx-p1 { left: max(10px, calc(var(--fl) - 150px)); top: calc(var(--ft) + 190px); }
-  .hx-p2 { left: max(10px, calc(var(--fl) - 40px)); top: calc(var(--ft) + 330px); }
-  .hx-p3 { right: max(10px, calc(var(--fl) - 120px)); top: calc(var(--ft) + 70px); }
-  .hx-p4 { right: max(10px, calc(var(--fl) - 40px)); top: calc(var(--ft) + 220px); }
-  .hx-p5 { right: max(10px, calc(var(--fl) - 150px)); top: calc(var(--ft) + 340px); }
   .hx-mid { position: absolute; top: 23%; left: 0; right: 0; z-index: 3; pointer-events: none; }
   .hx-mid h2 { font-size: clamp(1.15rem, min(5vw, 4.3vh), 2.6rem); }
   .hx-pin { --u: clamp(58px, min(10.5vh, 6.6vw), 104px); --fs: clamp(0.8rem, min(1.9vh, 1.3vw), 1.08rem); }
@@ -116,7 +104,7 @@
   .hx-c2 { left: 1.5%; top: 34%; } .hx-c3 { right: 1.5%; top: 32%; }
   .hx-c4 { left: 4%; top: 70%; } .hx-c5 { right: 4%; top: 70%; }
   /* last card sits beside the shrunk video (--vw/--vh/--vt are set from JS) */
-  .hx-c6 { left: calc(50% + var(--vw, 300px) / 2 + 22px); top: calc(var(--vt, 50%) + var(--vh, 160px) / 2); translate: 0 -50%; }
+  .hx-c6 { left: 50%; top: calc(var(--vt, 50%) + var(--vh, 160px) + 20px); translate: -50% 0; }
   .hx-stats { position: absolute; left: 50%; bottom: 2.5%; translate: -50% 0; z-index: 3; pointer-events: none; }
 }
 
