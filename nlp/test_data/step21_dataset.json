@@ -1,0 +1,394 @@
+{
+  "_meta": {
+    "name": "NUDGE NLP Step 21 representative dataset",
+    "converted_from": "NUDGE_NLP_Step21_Representative_Dataset.xlsx (sheet 'Test Dataset')",
+    "conversion_notes": [
+      "Blank expected cells are stored as null (meaning: unavailable, do not guess).",
+      "reference_date is the same for every case (see 'reference_date' below), as the workbook's 'Read Me' sheet says.",
+      "In 8 rows the note had been typed into the reference_date column; those notes were moved to 'notes'."
+    ],
+    "category_values": [
+      "task",
+      "event",
+      "general_notice"
+    ]
+  },
+  "reference_date": "2026-10-28",
+  "cases": [
+    {
+      "case_id": "NLP-01",
+      "source": "LMS",
+      "raw_message": "Please submit Machine Learning Assignment 2 on Moodle by 5 November 2026 at 5:00 PM.",
+      "expected": {
+        "task_title": "Submit Machine Learning Assignment 2",
+        "task_type": "assignment",
+        "subject": "Machine Learning",
+        "due_date": "2026-11-05",
+        "due_time": "17:00",
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Explicit date and time."
+    },
+    {
+      "case_id": "NLP-02",
+      "source": "WhatsApp",
+      "raw_message": "Reminder: Data Structures assignment is due on 7 November.",
+      "expected": {
+        "task_title": "Submit Data Structures assignment",
+        "task_type": "assignment",
+        "subject": "Data Structures",
+        "due_date": "2026-11-07",
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Date only; year assumed 2026 for this fixed dataset."
+    },
+    {
+      "case_id": "NLP-03",
+      "source": "WhatsApp",
+      "raw_message": "Submit your DBMS lab record by 6 PM today.",
+      "expected": {
+        "task_title": "Submit DBMS lab record",
+        "task_type": null,
+        "subject": "DBMS",
+        "due_date": "2026-10-28",
+        "due_time": "18:00",
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Relative date plus time; task type not explicit."
+    },
+    {
+      "case_id": "NLP-04",
+      "source": "University Notice",
+      "raw_message": "The Operating Systems mid-semester exam will be held on 10 November 2026 at 10:30 AM.",
+      "expected": {
+        "task_title": "Operating Systems mid-semester exam",
+        "task_type": "exam",
+        "subject": "Operating Systems",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-10T10:30:00"
+      },
+      "expected_category": "event",
+      "notes": "Scheduled exam uses event_datetime."
+    },
+    {
+      "case_id": "NLP-05",
+      "source": "WhatsApp",
+      "raw_message": "Statistics quiz on Friday at 2 PM. Room details will follow.",
+      "expected": {
+        "task_title": "Statistics quiz",
+        "task_type": "quiz",
+        "subject": "Statistics",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-10-30T14:00:00"
+      },
+      "expected_category": "event",
+      "notes": "Friday means 2026-10-30 using reference date."
+    },
+    {
+      "case_id": "NLP-06",
+      "source": "LMS",
+      "raw_message": "Project proposal for the Smart Campus project must be uploaded by 12 November 2026.",
+      "expected": {
+        "task_title": "Upload Smart Campus project proposal",
+        "task_type": "project",
+        "subject": "Smart Campus",
+        "due_date": "2026-11-12",
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Explicit date only."
+    },
+    {
+      "case_id": "NLP-07",
+      "source": "WhatsApp",
+      "raw_message": "Our Software Engineering lecture starts tomorrow at 9:00 AM in Lab 3.",
+      "expected": {
+        "task_title": "Software Engineering lecture",
+        "task_type": "class",
+        "subject": "Software Engineering",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-10-29T09:00:00"
+      },
+      "expected_category": "event",
+      "notes": "Relative date and time."
+    },
+    {
+      "case_id": "NLP-08",
+      "source": "WhatsApp",
+      "raw_message": "Team meeting for the final-year project next Monday at 11 AM.",
+      "expected": {
+        "task_title": "Final-year project team meeting",
+        "task_type": "meeting",
+        "subject": "Final-year project",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-02T11:00:00"
+      },
+      "expected_category": "event",
+      "notes": "Next Monday means 2026-11-02."
+    },
+    {
+      "case_id": "NLP-09",
+      "source": "LMS",
+      "raw_message": "Please finish the Computer Networks assignment by tomorrow.",
+      "expected": {
+        "task_title": "Finish Computer Networks assignment",
+        "task_type": "assignment",
+        "subject": "Computer Networks",
+        "due_date": "2026-10-29",
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Relative date only."
+    },
+    {
+      "case_id": "NLP-10",
+      "source": "University Notice",
+      "raw_message": "The department seminar is scheduled for 13 November 2026 at 3:15 PM.",
+      "expected": {
+        "task_title": "Department seminar",
+        "task_type": "event",
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-13T15:15:00"
+      },
+      "expected_category": "event",
+      "notes": "No subject identifiable."
+    },
+    {
+      "case_id": "NLP-11",
+      "source": "Email",
+      "raw_message": "Please attend the project review meeting at 4 PM.",
+      "expected": {
+        "task_title": "Project review meeting",
+        "task_type": "meeting",
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "event",
+      "notes": "Time only; date unavailable, so event_datetime is null."
+    },
+    {
+      "case_id": "NLP-12",
+      "source": "LMS",
+      "raw_message": "The Data Mining assignment deadline is Monday.",
+      "expected": {
+        "task_title": "Submit Data Mining assignment",
+        "task_type": "assignment",
+        "subject": "Data Mining",
+        "due_date": "2026-11-02",
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Monday means next Monday, 2026-11-02."
+    },
+    {
+      "case_id": "NLP-13",
+      "source": "University Notice",
+      "raw_message": "The college cultural fest will take place next week. More details soon.",
+      "expected": {
+        "task_title": "College cultural fest",
+        "task_type": "event",
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "event",
+      "notes": "Next week is too broad for a specific date."
+    },
+    {
+      "case_id": "NLP-14",
+      "source": "LMS",
+      "raw_message": "Prepare and submit the Artificial Intelligence mini-project. The deadline has not been announced yet.",
+      "expected": {
+        "task_title": "Prepare and submit Artificial Intelligence mini-project",
+        "task_type": "project",
+        "subject": "Artificial Intelligence",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Deadline unknown; do not infer."
+    },
+    {
+      "case_id": "NLP-15",
+      "source": "University Notice",
+      "raw_message": "The Physics practical viva is on 18 November 2026 at 1 PM.",
+      "expected": {
+        "task_title": "Physics practical viva",
+        "task_type": "viva",
+        "subject": "Physics",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-18T13:00:00"
+      },
+      "expected_category": "event",
+      "notes": "Scheduled viva."
+    },
+    {
+      "case_id": "NLP-16",
+      "source": "Email",
+      "raw_message": "Submit the internship report by 20 November 2026.",
+      "expected": {
+        "task_title": "Submit internship report",
+        "task_type": null,
+        "subject": null,
+        "due_date": "2026-11-20",
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Task type and subject not explicit."
+    },
+    {
+      "case_id": "NLP-17",
+      "source": "LMS",
+      "raw_message": "Update: the Web Technologies project deadline has moved from 8 November to 12 November 2026.",
+      "expected": {
+        "task_title": "Web Technologies project deadline change",
+        "task_type": "project",
+        "subject": "Web Technologies",
+        "due_date": "2026-11-12",
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Expected current deadline is the new date; test change metadata separately."
+    },
+    {
+      "case_id": "NLP-18",
+      "source": "WhatsApp",
+      "raw_message": "The Computer Architecture quiz originally planned for 9 November is now rescheduled to 11 November 2026 at 12 PM.",
+      "expected": {
+        "task_title": "Computer Architecture quiz rescheduled",
+        "task_type": "quiz",
+        "subject": "Computer Architecture",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-11T12:00:00"
+      },
+      "expected_category": "event",
+      "notes": "Use new event date/time."
+    },
+    {
+      "case_id": "NLP-19",
+      "source": "University Notice",
+      "raw_message": "Notice: the library will remain closed on 2 November 2026 for maintenance.",
+      "expected": {
+        "task_title": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "general_notice",
+      "notes": "General notice, not a task or academic event."
+    },
+    {
+      "case_id": "NLP-20",
+      "source": "University Notice",
+      "raw_message": "All students are informed that semester registration opens tomorrow. Please check the portal for details.",
+      "expected": {
+        "task_title": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "general_notice",
+      "notes": "Informational notice; no explicit action deadline."
+    },
+    {
+      "case_id": "NLP-21",
+      "source": "WhatsApp",
+      "raw_message": "Reminder: bring your ID card to campus tomorrow.",
+      "expected": {
+        "task_title": "Bring ID card to campus",
+        "task_type": null,
+        "subject": null,
+        "due_date": "2026-10-29",
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Action item; task type and subject unknown."
+    },
+    {
+      "case_id": "NLP-22",
+      "source": "LMS",
+      "raw_message": "The exam timetable has been published on the student portal.",
+      "expected": {
+        "task_title": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "general_notice",
+      "notes": "Announcement only; no specific exam date."
+    },
+    {
+      "case_id": "NLP-23",
+      "source": "LMS",
+      "raw_message": "Please complete the Discrete Mathematics quiz before 7 PM.",
+      "expected": {
+        "task_title": "Complete Discrete Mathematics quiz",
+        "task_type": "quiz",
+        "subject": "Discrete Mathematics",
+        "due_date": null,
+        "due_time": "19:00",
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Time only; date unknown."
+    },
+    {
+      "case_id": "NLP-24",
+      "source": "WhatsApp",
+      "raw_message": "Can everyone attend the placement preparation workshop on 16 November at 10 AM?",
+      "expected": {
+        "task_title": "Placement preparation workshop",
+        "task_type": "event",
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-16T10:00:00"
+      },
+      "expected_category": "event",
+      "notes": "Year assumed 2026 for this fixed dataset."
+    },
+    {
+      "case_id": "NLP-25",
+      "source": "Email",
+      "raw_message": "Please submit your assignment soon. The exact deadline will be announced by the instructor.",
+      "expected": {
+        "task_title": "Submit assignment",
+        "task_type": "assignment",
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null
+      },
+      "expected_category": "task",
+      "notes": "Deadline and subject unknown."
+    }
+  ]
+}

@@ -354,3 +354,62 @@ The task/storage layer is responsible for persistence, task identity, authoritat
 The intelligence layer is responsible for priority scoring, workload analysis, productivity analysis, and risk signals.
 
 This interface serves as the contract between the NLP module and the downstream system components.
+
+## 14. Phase 2 Implementation Notes (Roadmap Steps 14-21)
+
+This section records how `nlp/parser.py` applies the interface above. It adds no new output fields.
+
+### Message categories
+
+Every message is treated as one of three categories. The category is not an output field; `classify_message_category()` returns it for testing.
+
+| Category | Meaning | Output |
+|---|---|---|
+| `task` | The student must do something (submit, complete, bring, register ...) or a deadline is stated. | `due_date` / `due_time`. |
+| `event` | Something is scheduled (exam, quiz, viva, class, meeting, seminar, workshop, fest ...) and nothing must be handed in. | `event_datetime`; `due_date` and `due_time` stay `null`. |
+| `general_notice` | An announcement (timetable published, closure, registration opens, holiday) or chatter. | Every extracted field is `null`, `confidence` is `0.0`. |
+
+An explicit action word beats an event word, so "Complete the quiz before 7 PM" is a task and "Quiz on Friday at 2 PM" is an event. "Attend" keeps an event an event.
+
+### Dates and times
+
+- An explicit calendar date beats a relative word (`tomorrow`, `today`, `tonight`, a weekday). If several explicit dates appear, the last one wins, so "moved from 8 November to 12 November" gives 12 November.
+- A date written without a year uses the year that is nearest to the reference date ("5th January" written in December means next year). A written year is always used.
+- A weekday means its next occurrence. `next week` is too vague: it gives no date.
+- A time range ("10 AM to 12 PM") uses the start time. A change ("moved from 3 PM to 5 PM") uses the new time. `noon` is 12:00.
+- Impossible values (31 February, 13 PM) are `null`, never corrected.
+
+### Events that are only partly known
+
+`event_datetime` needs both a date and a time. With only one of them it stays `null` (nothing is invented), and the literal words are still kept in `date_time_expression`, for example `"12 November"` or `"4 PM"`.
+
+### date_time_expression and description
+
+- `date_time_expression` is the literal date/time wording, for example `"15th October at 5:00 PM"` or `"tomorrow at 11:59 PM"`. It is `null` when the message gives no date or time, or says the deadline is unknown.
+- `description` holds notes the title does not: the submission platform ("Submit on Moodle"), the room ("Location: Room 204") and any extra sentences that are not greetings and do not repeat the date or time. It is `null` when there is nothing to add.
+
+### Subject
+
+A subject is first looked up in the `SUBJECTS` list at the top of `nlp/parser.py`. If it is not listed, capitalised words in front of "assignment", "quiz", "exam", "viva", "lab", "lecture", "class" or "project" are used ("Embedded Systems Assignment 2"). Event names such as "placement preparation workshop" are not subjects. The `SUBJECTS` list should be replaced by the real course list.
+
+### Confidence
+
+`confidence` is 0.25 for each core fact found: a title, a type, a date and a time (an event's `event_datetime` supplies both date and time). A message that states its deadline is unknown therefore scores at most 0.5 even though the extraction is correct. This is a baseline score for how complete the extraction is, not a probability.
+
+### Known limitations
+
+- `change_information` is always `[]`. Change detection is roadmap Steps 41-42. Change wording only shapes the title ("... rescheduled", "... deadline change").
+- Numeric dates such as `5/11/2026` are not parsed (day/month order must be agreed first). `next Friday` is read like `Friday`. `midnight` is not read. Further relative-date work is Steps 38-39.
+- One message produces one task or event. A message that lists several tasks gets only the first signal's title and the last date and time.
+- OCR text is processed in the same way, but the OCR-to-NLP connection is Steps 36-37.
+
+### Running the tests
+
+From the repository root:
+
+```
+python -m unittest discover -s nlp -p "test_*.py" -v
+python -m nlp.evaluate_step21
+```
+
+The second command scores the 25 Step 21 dataset cases stored in `nlp/test_data/step21_dataset.json`. The dataset is owned by the Step 21 / Step 66 evaluation work; the JSON file is a copy of the workbook's "Test Dataset" sheet. Pass `--xlsx FILE` to read the original Excel file instead (needs `pip install openpyxl`).
