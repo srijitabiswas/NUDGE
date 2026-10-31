@@ -1,0 +1,95 @@
+{
+    "source": "screenshot 5.jpeg",
+    "raw_text": "Employabilitylife\nFederation\nDosigning succossful dlgital caroors\nUniversity\nWelvv ou\nThe Future of Work in Australia:\nAre You Ready for 2028?\nAssociate Prof: Paul Pang\nAssociate Professor; Cyber Security, Federation University Australia\nJune\n4.30-5.30 PM\nMicrosoft\n05\nIST\nTeams\nScan QR Code to\nRegister Now\n5123\nMll\nMt\nZutrdo\n512",
+    "cleaned_text": "Employabilitylife\nFederation\nDosigning succossful dlgital caroors\nUniversity\nWelvv ou\nThe Future of Work in Australia:\nAre You Ready for 2028?\nAssociate Prof: Paul Pang\nAssociate Professor; Cyber Security, Federation University Australia\nJune\n4.30-5.30 PM\nMicrosoft\n05\nIST\nTeams\nScan QR Code to\nRegister Now\n5123\nMll\nMt\nZutrdo\n512",
+    "confidence": [
+        {
+            "text": "Employabilitylife",
+            "score": 0.9994
+        },
+        {
+            "text": "Federation",
+            "score": 1.0
+        },
+        {
+            "text": "Dosigning succossful dlgital caroors",
+            "score": 0.3482
+        },
+        {
+            "text": "University",
+            "score": 0.7959
+        },
+        {
+            "text": "Welvv ou",
+            "score": 0.4057
+        },
+        {
+            "text": "The Future of Work in Australia:",
+            "score": 0.6977
+        },
+        {
+            "text": "Are You Ready for 2028?",
+            "score": 0.959
+        },
+        {
+            "text": "Associate Prof: Paul Pang",
+            "score": 0.8187
+        },
+        {
+            "text": "Associate Professor; Cyber Security, Federation University Australia",
+            "score": 0.541
+        },
+        {
+            "text": "June",
+            "score": 0.936
+        },
+        {
+            "text": "4.30-5.30 PM",
+            "score": 0.7519
+        },
+        {
+            "text": "Microsoft",
+            "score": 0.9999
+        },
+        {
+            "text": "05",
+            "score": 0.9999
+        },
+        {
+            "text": "IST",
+            "score": 0.9983
+        },
+        {
+            "text": "Teams",
+            "score": 0.9999
+        },
+        {
+            "text": "Scan QR Code to",
+            "score": 0.7159
+        },
+        {
+            "text": "Register Now",
+            "score": 0.9992
+        },
+        {
+            "text": "5123",
+            "score": 0.9705
+        },
+        {
+            "text": "Mll",
+            "score": 0.4057
+        },
+        {
+            "text": "Mt",
+            "score": 0.1388
+        },
+        {
+            "text": "Zutrdo",
+            "score": 0.0261
+        },
+        {
+            "text": "512",
+            "score": 0.9925
+        }
+    ]
+}

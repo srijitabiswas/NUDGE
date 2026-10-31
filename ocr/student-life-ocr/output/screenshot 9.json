@@ -1,0 +1,143 @@
+{
+    "source": "screenshot 9.jpeg",
+    "raw_text": "~IEEE\n68\nIEEE| IEee\n04 ,\nstudents\nKT\nTo\nstudents\nOn\nP R E $ E NT $\nAN INVITED TALK ON\nDESIGNING\nGen\nINDUSTRIAL lot\nJilk\nAT UNDERGRADUATE LEVEL\nby\nDr PRAVIN WANKHEDE\nAssoclate Protesscr; CSMSS Chh. Shahu College of Engineenng;\nAurangabad\nVke Chair\nIEEE Industrial Electronic > Chapter\nMaharashtra Stction\nEEE Senior Merber\nREGISTER NOW\n9th October\n8.00 PM\nMode: Online\nPlatform: Webex\nScan thc QR codc t0\nrogister:\nOrganized by, IEEE Student Branch, Academy of Technology (STB13681), Hooghly, West Bengal, India\nwwaot eduin\npo",
+    "cleaned_text": "~IEEE\n68\nIEEE| IEee\n04 ,\nstudents\nKT\nTo\nstudents\nOn\nP R E $ E NT $\nAN INVITED TALK ON\nDESIGNING\nGen\nINDUSTRIAL lot\nJilk\nAT UNDERGRADUATE LEVEL\nby\nDr PRAVIN WANKHEDE\nAssoclate Protesscr; CSMSS Chh. Shahu College of Engineenng;\nAurangabad\nVke Chair\nIEEE Industrial Electronic > Chapter\nMaharashtra Stction\nEEE Senior Merber\nREGISTER NOW\n9th October\n8.00 PM\nMode: Online\nPlatform: Webex\nScan thc QR codc t0\nrogister:\nOrganized by, IEEE Student Branch, Academy of Technology (STB13681), Hooghly, West Bengal, India\nwwaot eduin\npo",
+    "confidence": [
+        {
+            "text": "~IEEE",
+            "score": 0.6539
+        },
+        {
+            "text": "68",
+            "score": 0.318
+        },
+        {
+            "text": "IEEE| IEee",
+            "score": 0.3682
+        },
+        {
+            "text": "04 ,",
+            "score": 0.0457
+        },
+        {
+            "text": "students",
+            "score": 0.9925
+        },
+        {
+            "text": "KT",
+            "score": 0.4223
+        },
+        {
+            "text": "To",
+            "score": 0.0254
+        },
+        {
+            "text": "students",
+            "score": 0.9339
+        },
+        {
+            "text": "On",
+            "score": 0.0407
+        },
+        {
+            "text": "P R E $ E NT $",
+            "score": 0.4402
+        },
+        {
+            "text": "AN INVITED TALK ON",
+            "score": 0.8847
+        },
+        {
+            "text": "DESIGNING",
+            "score": 0.9994
+        },
+        {
+            "text": "Gen",
+            "score": 0.0479
+        },
+        {
+            "text": "INDUSTRIAL lot",
+            "score": 0.4579
+        },
+        {
+            "text": "Jilk",
+            "score": 0.1551
+        },
+        {
+            "text": "AT UNDERGRADUATE LEVEL",
+            "score": 0.8209
+        },
+        {
+            "text": "by",
+            "score": 0.997
+        },
+        {
+            "text": "Dr PRAVIN WANKHEDE",
+            "score": 0.6675
+        },
+        {
+            "text": "Assoclate Protesscr; CSMSS Chh. Shahu College of Engineenng;",
+            "score": 0.5419
+        },
+        {
+            "text": "Aurangabad",
+            "score": 0.983
+        },
+        {
+            "text": "Vke Chair",
+            "score": 0.6572
+        },
+        {
+            "text": "IEEE Industrial Electronic > Chapter",
+            "score": 0.5701
+        },
+        {
+            "text": "Maharashtra Stction",
+            "score": 0.7044
+        },
+        {
+            "text": "EEE Senior Merber",
+            "score": 0.4825
+        },
+        {
+            "text": "REGISTER NOW",
+            "score": 0.934
+        },
+        {
+            "text": "9th October",
+            "score": 0.9688
+        },
+        {
+            "text": "8.00 PM",
+            "score": 0.9926
+        },
+        {
+            "text": "Mode: Online",
+            "score": 0.9696
+        },
+        {
+            "text": "Platform: Webex",
+            "score": 0.9522
+        },
+        {
+            "text": "Scan thc QR codc t0",
+            "score": 0.7071
+        },
+        {
+            "text": "rogister:",
+            "score": 0.2603
+        },
+        {
+            "text": "Organized by, IEEE Student Branch, Academy of Technology (STB13681), Hooghly, West Bengal, India",
+            "score": 0.7249
+        },
+        {
+            "text": "wwaot eduin",
+            "score": 0.7089
+        },
+        {
+            "text": "po",
+            "score": 0.0519
+        }
+    ]
+}

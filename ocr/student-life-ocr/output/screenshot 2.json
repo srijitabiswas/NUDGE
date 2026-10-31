@@ -1,0 +1,63 @@
+{
+    "source": "screenshot 2.jpeg",
+    "raw_text": "SESSION ALERT\nNetwork\n&\nNetwork Security\nDATE:\nTH\nJANUARY\nTIME:\n7 PM\nMODE:\nONLINE\nZER\nGway\na uia 0 c e",
+    "cleaned_text": "SESSION ALERT\nNetwork\n&\nNetwork Security\nDATE:\nTH\nJANUARY\nTIME:\n7 PM\nMODE:\nONLINE\nZER\nGway\na uia 0 c e",
+    "confidence": [
+        {
+            "text": "SESSION ALERT",
+            "score": 0.9388
+        },
+        {
+            "text": "Network",
+            "score": 0.7662
+        },
+        {
+            "text": "&",
+            "score": 0.8075
+        },
+        {
+            "text": "Network Security",
+            "score": 0.9986
+        },
+        {
+            "text": "DATE:",
+            "score": 0.9974
+        },
+        {
+            "text": "TH",
+            "score": 0.9953
+        },
+        {
+            "text": "JANUARY",
+            "score": 0.909
+        },
+        {
+            "text": "TIME:",
+            "score": 0.9981
+        },
+        {
+            "text": "7 PM",
+            "score": 0.8532
+        },
+        {
+            "text": "MODE:",
+            "score": 0.9965
+        },
+        {
+            "text": "ONLINE",
+            "score": 0.6197
+        },
+        {
+            "text": "ZER",
+            "score": 0.9993
+        },
+        {
+            "text": "Gway",
+            "score": 0.202
+        },
+        {
+            "text": "a uia 0 c e",
+            "score": 0.1035
+        }
+    ]
+}

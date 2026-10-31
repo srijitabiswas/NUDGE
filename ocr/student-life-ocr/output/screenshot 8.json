@@ -1,0 +1,355 @@
+{
+    "source": "screenshot 8.jpeg",
+    "raw_text": "VIT\nVellore Institute of Technology\n(Dcatuedtok UmutendytuXi *ciou\nJol UGCAc 1986)\nSchool of Mechanical Engineering\nMEE-4099 Capstone Project\nWinter Semester 2018\n19\nViva Voce\nB\nTech: Mechanical, Specialization in Energy and Production &\nIndustrial Engineering\nDate: 4th and 5th April 2019\nReporting Time:\nFN 09.00 a.m. to 01.00 p.m: &\nAN 2.00 p.m. to 6.00 p.m.\nSi. No\nProject ID\nStudents\nDate\nReporting\nVenue\nTime\nBASDAEROOI\nISBMEO903\n04-04-2019\n9.00.00 AM\nVENUES\nB A SIAEROO?\nISBME0656\n04-04-2019\n9.00.00 AM\nVENUES\nBA8DAEROOS\n1SBMEOSO3\n04-04-2019\n9.00. 00 AM\nVENUES\nB [ SIDAUTOO?\n1SBME0S78\n04-04-2019\n9.00. 00 AM\nVENUE7\n5\nB [ SIDAUTOO4\n1SBMEOO58\n04-04-2019\n9.00. 00 AM\nVENUE7\nB [ SIDCFDOO?\nISBME0193\n04-04-2019\n9.00. 00 AM\nVENUE7\nB ! SIDDSGOD3\n1SBME0779\n04-04-2019\n9,00 00 AM\nVENUES\nB ISIDDSGOOS\nISBME0288\n04-04-2019\n9.00 00 AM\nVENUES\nBASIDSGOO8\nISBMEO675\n04-04-2019\n9.00:00 AM\nVENUES\n10\nB L8IDDSGOI?\n1SBME0676\n04-04-2019\n9.00.00 AM\nVENUES\n11\nB ASIDSGO3O\n1SBMEO740\n04-04-2019\n9.00. 00 AM\nVENUES\n12\nBASDDSG034\n1SBEMOMO\n04-04-2019\n9.00. 00 AM\nVENUES",
+    "cleaned_text": "VIT\nVellore Institute of Technology\n(Dcatuedtok UmutendytuXi *ciou\nJol UGCAc 1986)\nSchool of Mechanical Engineering\nMEE-4099 Capstone Project\nWinter Semester 2018\n19\nViva Voce\nB\nTech: Mechanical, Specialization in Energy and Production &\nIndustrial Engineering\nDate: 4th and 5th April 2019\nReporting Time:\nFN 09.00 a.m. to 01.00 p.m: &\nAN 2.00 p.m. to 6.00 p.m.\nSi. No\nProject ID\nStudents\nDate\nReporting\nVenue\nTime\nBASDAEROOI\nISBMEO903\n04-04-2019\n9.00.00 AM\nVENUES\nB A SIAEROO?\nISBME0656\n04-04-2019\n9.00.00 AM\nVENUES\nBA8DAEROOS\n1SBMEOSO3\n04-04-2019\n9.00. 00 AM\nVENUES\nB [ SIDAUTOO?\n1SBME0S78\n04-04-2019\n9.00. 00 AM\nVENUE7\n5\nB [ SIDAUTOO4\n1SBMEOO58\n04-04-2019\n9.00. 00 AM\nVENUE7\nB [ SIDCFDOO?\nISBME0193\n04-04-2019\n9.00. 00 AM\nVENUE7\nB ! SIDDSGOD3\n1SBME0779\n04-04-2019\n9,00 00 AM\nVENUES\nB ISIDDSGOOS\nISBME0288\n04-04-2019\n9.00 00 AM\nVENUES\nBASIDSGOO8\nISBMEO675\n04-04-2019\n9.00:00 AM\nVENUES\n10\nB L8IDDSGOI?\n1SBME0676\n04-04-2019\n9.00.00 AM\nVENUES\n11\nB ASIDSGO3O\n1SBMEO740\n04-04-2019\n9.00. 00 AM\nVENUES\n12\nBASDDSG034\n1SBEMOMO\n04-04-2019\n9.00. 00 AM\nVENUES",
+    "confidence": [
+        {
+            "text": "VIT",
+            "score": 0.9995
+        },
+        {
+            "text": "Vellore Institute of Technology",
+            "score": 0.9672
+        },
+        {
+            "text": "(Dcatuedtok UmutendytuXi *ciou",
+            "score": 0.0076
+        },
+        {
+            "text": "Jol UGCAc 1986)",
+            "score": 0.1701
+        },
+        {
+            "text": "School of Mechanical Engineering",
+            "score": 0.653
+        },
+        {
+            "text": "MEE-4099 Capstone Project",
+            "score": 0.6346
+        },
+        {
+            "text": "Winter Semester 2018",
+            "score": 0.9954
+        },
+        {
+            "text": "19",
+            "score": 0.3474
+        },
+        {
+            "text": "Viva Voce",
+            "score": 0.9999
+        },
+        {
+            "text": "B",
+            "score": 0.9979
+        },
+        {
+            "text": "Tech: Mechanical, Specialization in Energy and Production &",
+            "score": 0.3912
+        },
+        {
+            "text": "Industrial Engineering",
+            "score": 0.6593
+        },
+        {
+            "text": "Date: 4th and 5th April 2019",
+            "score": 0.683
+        },
+        {
+            "text": "Reporting Time:",
+            "score": 0.9823
+        },
+        {
+            "text": "FN 09.00 a.m. to 01.00 p.m: &",
+            "score": 0.5909
+        },
+        {
+            "text": "AN 2.00 p.m. to 6.00 p.m.",
+            "score": 0.861
+        },
+        {
+            "text": "Si. No",
+            "score": 0.5383
+        },
+        {
+            "text": "Project ID",
+            "score": 0.9978
+        },
+        {
+            "text": "Students",
+            "score": 1.0
+        },
+        {
+            "text": "Date",
+            "score": 1.0
+        },
+        {
+            "text": "Reporting",
+            "score": 0.9103
+        },
+        {
+            "text": "Venue",
+            "score": 1.0
+        },
+        {
+            "text": "Time",
+            "score": 0.9719
+        },
+        {
+            "text": "BASDAEROOI",
+            "score": 0.7185
+        },
+        {
+            "text": "ISBMEO903",
+            "score": 0.4538
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.737
+        },
+        {
+            "text": "9.00.00 AM",
+            "score": 0.6023
+        },
+        {
+            "text": "VENUES",
+            "score": 0.8539
+        },
+        {
+            "text": "B A SIAEROO?",
+            "score": 0.1734
+        },
+        {
+            "text": "ISBME0656",
+            "score": 0.3863
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.6452
+        },
+        {
+            "text": "9.00.00 AM",
+            "score": 0.9594
+        },
+        {
+            "text": "VENUES",
+            "score": 0.9967
+        },
+        {
+            "text": "BA8DAEROOS",
+            "score": 0.273
+        },
+        {
+            "text": "1SBMEOSO3",
+            "score": 0.5207
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.9154
+        },
+        {
+            "text": "9.00. 00 AM",
+            "score": 0.8952
+        },
+        {
+            "text": "VENUES",
+            "score": 0.9967
+        },
+        {
+            "text": "B [ SIDAUTOO?",
+            "score": 0.5617
+        },
+        {
+            "text": "1SBME0S78",
+            "score": 0.4154
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.6354
+        },
+        {
+            "text": "9.00. 00 AM",
+            "score": 0.6953
+        },
+        {
+            "text": "VENUE7",
+            "score": 0.6577
+        },
+        {
+            "text": "5",
+            "score": 1.0
+        },
+        {
+            "text": "B [ SIDAUTOO4",
+            "score": 0.4841
+        },
+        {
+            "text": "1SBMEOO58",
+            "score": 0.2874
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.6073
+        },
+        {
+            "text": "9.00. 00 AM",
+            "score": 0.7642
+        },
+        {
+            "text": "VENUE7",
+            "score": 0.7984
+        },
+        {
+            "text": "B [ SIDCFDOO?",
+            "score": 0.4975
+        },
+        {
+            "text": "ISBME0193",
+            "score": 0.2468
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.8452
+        },
+        {
+            "text": "9.00. 00 AM",
+            "score": 0.4721
+        },
+        {
+            "text": "VENUE7",
+            "score": 0.8969
+        },
+        {
+            "text": "B ! SIDDSGOD3",
+            "score": 0.2343
+        },
+        {
+            "text": "1SBME0779",
+            "score": 0.4487
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.9921
+        },
+        {
+            "text": "9,00 00 AM",
+            "score": 0.3947
+        },
+        {
+            "text": "VENUES",
+            "score": 0.6478
+        },
+        {
+            "text": "B ISIDDSGOOS",
+            "score": 0.2973
+        },
+        {
+            "text": "ISBME0288",
+            "score": 0.4396
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.901
+        },
+        {
+            "text": "9.00 00 AM",
+            "score": 0.6562
+        },
+        {
+            "text": "VENUES",
+            "score": 0.9956
+        },
+        {
+            "text": "BASIDSGOO8",
+            "score": 0.446
+        },
+        {
+            "text": "ISBMEO675",
+            "score": 0.3848
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.8195
+        },
+        {
+            "text": "9.00:00 AM",
+            "score": 0.6251
+        },
+        {
+            "text": "VENUES",
+            "score": 0.9896
+        },
+        {
+            "text": "10",
+            "score": 0.9999
+        },
+        {
+            "text": "B L8IDDSGOI?",
+            "score": 0.2204
+        },
+        {
+            "text": "1SBME0676",
+            "score": 0.5013
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.9899
+        },
+        {
+            "text": "9.00.00 AM",
+            "score": 0.9571
+        },
+        {
+            "text": "VENUES",
+            "score": 0.9991
+        },
+        {
+            "text": "11",
+            "score": 0.2884
+        },
+        {
+            "text": "B ASIDSGO3O",
+            "score": 0.2333
+        },
+        {
+            "text": "1SBMEO740",
+            "score": 0.4424
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.8494
+        },
+        {
+            "text": "9.00. 00 AM",
+            "score": 0.7966
+        },
+        {
+            "text": "VENUES",
+            "score": 0.9985
+        },
+        {
+            "text": "12",
+            "score": 0.9667
+        },
+        {
+            "text": "BASDDSG034",
+            "score": 0.3359
+        },
+        {
+            "text": "1SBEMOMO",
+            "score": 0.3686
+        },
+        {
+            "text": "04-04-2019",
+            "score": 0.9971
+        },
+        {
+            "text": "9.00. 00 AM",
+            "score": 0.6484
+        },
+        {
+            "text": "VENUES",
+            "score": 0.9897
+        }
+    ]
+}
