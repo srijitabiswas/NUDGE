@@ -269,6 +269,36 @@ The NLP module should process OCR-extracted text using the same NLP interface as
 
 The `source` field should preserve that the input originated from OCR/screenshot when such metadata is available.
 
+### OCR adapter (Roadmap Step 36)
+
+`nlp/ocr_adapter.py` connects the OCR module's JSON output to `parse_message`. The shared NLP contract is not changed.
+
+Input: one OCR record per screenshot, with these fields:
+
+| Field | Meaning | Required |
+|---|---|---|
+| `source` | Image file name, e.g. `screenshot 9.jpeg` | yes (non-empty text) |
+| `cleaned_text` | Whitespace-normalised OCR text; the only text given to the parser | yes (may be empty) |
+| `overall_confidence` | Average OCR confidence from 0 to 1, or `null` if no text was found | key required, value may be `null` |
+| `confidence` | List of `{"text": ..., "score": 0-1}`, one per text line | yes (may be an empty list) |
+| `raw_text` | Original OCR text; ignored by the adapter | no |
+
+Functions: `parse_ocr_record(record, reference_date=None)` and `parse_ocr_file(path, reference_date=None)`. Both return:
+
+    {
+      "task": { ...normal parse_message output, "source" = "Screenshot/OCR"... },
+      "ocr":  {
+        "image_filename": "screenshot 9.jpeg",
+        "overall_confidence": 0.6024,
+        "line_confidences": [{"text": "...", "score": 0.65}, ...]
+      }
+    }
+
+- `reference_date` is passed to `parse_message` unchanged.
+- The NLP `confidence` inside `task` measures how many fields were found. The OCR confidence measures how sure the OCR engine was about the text. They are stored in different places and never mixed or used to change each other.
+- Empty OCR text is accepted. `task` is then the normal empty "general notice" result, and `ocr` is still returned.
+- A missing required field or an invalid value raises `OCRRecordError` (a `ValueError`) whose message names the field.
+
 ## 11. Example: Message to Structured Output
 
 ### Input
