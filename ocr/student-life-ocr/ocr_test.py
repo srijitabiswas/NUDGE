@@ -39,8 +39,10 @@ def clean_text(raw_text):
     return "\n".join(cleaned_lines)
 
 # Project folders
-INPUT_DIR = Path("input")
-OUTPUT_DIR = Path("output")
+BASE_DIR = Path(__file__).resolve().parent
+
+INPUT_DIR = BASE_DIR / "input"
+OUTPUT_DIR = BASE_DIR / "output"
 
 # Create output folder if it doesn't exist
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -82,12 +84,22 @@ else:
             for detection in results
             ]
 
+            overall_confidence = (
+                round(
+                    sum(item["score"] for item in confidence_scores)
+                    / len(confidence_scores),
+                    4
+                )
+            if confidence_scores else None
+            )
+
             cleaned_text = clean_text(raw_text)
 
             output_data = {
                 "source": image_path.name,
                 "raw_text": raw_text,
                 "cleaned_text": cleaned_text,
+                "overall_confidence": overall_confidence,
                 "confidence": confidence_scores
             }
 

@@ -2,6 +2,7 @@
     "source": "screenshot 2.jpeg",
     "raw_text": "SESSION ALERT\nNetwork\n&\nNetwork Security\nDATE:\nTH\nJANUARY\nTIME:\n7 PM\nMODE:\nONLINE\nZER\nGway\na uia 0 c e",
     "cleaned_text": "SESSION ALERT\nNetwork\n&\nNetwork Security\nDATE:\nTH\nJANUARY\nTIME:\n7 PM\nMODE:\nONLINE\nZER\nGway\na uia 0 c e",
+    "overall_confidence": 0.7989,
     "confidence": [
         {
             "text": "SESSION ALERT",
