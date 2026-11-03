@@ -285,18 +285,69 @@ class TestConstraintValidation(BaseDatabaseTestCase):
         with self.assertRaises(sqlite3.IntegrityError):
             insert_task(task_object_json, db_path=self.db_path)
 
-    def test_empty_required_text_rejection(self):
-        """Whitespace-only or empty strings for required fields violate length(trim(...)) > 0."""
-        # Empty title
-        task_empty_title = {
-            "task_title": "   ",
-            "task_type": "assignment",
-            "source": "LMS",
-            "raw_text": "Sample text",
+    def test_general_notice_payload_rejection(self):
+        """NLP general notice payload (task_title=None, task_type=None) is rejected with descriptive ValueError."""
+        # Exact output shape produced by nlp/parser.py for non-task messages
+        nlp_general_notice = {
+            "task_title": None,
+            "description": None,
+            "task_type": None,
+            "subject": None,
+            "due_date": None,
+            "due_time": None,
+            "event_datetime": None,
+            "source": "LMS Notice",
+            "raw_text": "Notice: the library will remain closed on 2 November 2026 for maintenance.",
+            "date_time_expression": None,
+            "confidence": 0.0,
+            "change_information": [],
         }
-        with self.assertRaises(sqlite3.IntegrityError):
-            insert_task(task_empty_title, db_path=self.db_path)
+        with self.assertRaises(ValueError) as ctx:
+            insert_task(nlp_general_notice, db_path=self.db_path)
 
+        self.assertIn("task_title", str(ctx.exception))
+        self.assertIn(
+            "General notices and non-actionable messages must be filtered",
+            str(ctx.exception),
+        )
+
+    def test_missing_and_empty_required_fields_rejection(self):
+        """Verify missing, None, non-string, empty, and whitespace-only strings for title and type raise ValueError."""
+        base_valid = {
+            "task_title": "Valid Title",
+            "task_type": "assignment",
+            "source": "LMS Notice",
+            "raw_text": "Submit homework by tomorrow.",
+        }
+
+        invalid_values = [None, "", "   ", "\t\n", 123, True, []]
+
+        # Test task_title variations
+        for bad_title in invalid_values:
+            with self.subTest(bad_title=bad_title):
+                task = dict(base_valid, task_title=bad_title)
+                with self.assertRaises(ValueError) as ctx:
+                    insert_task(task, db_path=self.db_path)
+                self.assertIn("task_title", str(ctx.exception))
+                self.assertIn(
+                    "General notices and non-actionable messages must be filtered",
+                    str(ctx.exception),
+                )
+
+        # Test task_type variations
+        for bad_type in invalid_values:
+            with self.subTest(bad_type=bad_type):
+                task = dict(base_valid, task_type=bad_type)
+                with self.assertRaises(ValueError) as ctx:
+                    insert_task(task, db_path=self.db_path)
+                self.assertIn("task_type", str(ctx.exception))
+                self.assertIn(
+                    "General notices and non-actionable messages must be filtered",
+                    str(ctx.exception),
+                )
+
+    def test_empty_raw_text_and_source_rejection(self):
+        """Whitespace-only or empty strings for source and raw_text violate database CHECK constraints."""
         # Empty raw_text
         task_empty_raw = {
             "task_title": "Valid Title",
@@ -306,6 +357,16 @@ class TestConstraintValidation(BaseDatabaseTestCase):
         }
         with self.assertRaises(sqlite3.IntegrityError):
             insert_task(task_empty_raw, db_path=self.db_path)
+
+        # Empty source
+        task_empty_source = {
+            "task_title": "Valid Title",
+            "task_type": "assignment",
+            "source": "   ",
+            "raw_text": "Valid raw text",
+        }
+        with self.assertRaises(sqlite3.IntegrityError):
+            insert_task(task_empty_source, db_path=self.db_path)
 
     def test_negative_effort_rejection(self):
         """Negative estimated effort violates CHECK (estimated_effort >= 0)."""

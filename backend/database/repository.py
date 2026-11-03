@@ -139,6 +139,21 @@ def insert_task(
 
     Returns the generated task_id.
     """
+    # Validate required task content (task_title and task_type)
+    task_title = task_data.get("task_title")
+    if task_title is None or not isinstance(task_title, str) or not task_title.strip():
+        raise ValueError(
+            "Cannot insert task: 'task_title' is missing, non-string, or empty. "
+            "General notices and non-actionable messages must be filtered before database insertion."
+        )
+
+    task_type = task_data.get("task_type")
+    if task_type is None or not isinstance(task_type, str) or not task_type.strip():
+        raise ValueError(
+            "Cannot insert task: 'task_type' is missing, non-string, or empty. "
+            "General notices and non-actionable messages must be filtered before database insertion."
+        )
+
     due_date = task_data.get("due_date")
     due_time = task_data.get("due_time")
     normalized_due = normalize_due_datetime(
