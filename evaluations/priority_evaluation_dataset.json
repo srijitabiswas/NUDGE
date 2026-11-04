@@ -1,0 +1,541 @@
+{
+  "dataset_name": "NUDGE Priority Evaluation Cases",
+  "dataset_version": "1.0",
+  "purpose": "Step 68 evaluation cases derived from the shared task contract, inspected priority-engine implementation and tests, and Sresthita's confirmed decisions.",
+  "case_count": 31,
+  "evaluation_time_policy": "Fixed naive datetime 2026-10-12T10:00:00 for deterministic task-level fixtures. This is not a product timezone convention.",
+  "scope_note": "27 newly authored cases, not Sresthita's original 23. P20 is the overdue in_progress case; LB01-LB04 are label-boundary cases.",
+  "expected_results_policy": "Expected values are specification-derived, not actual execution results.",
+  "cases": [
+    {
+      "case_id": "P01",
+      "title": "Overdue pending deadline",
+      "category": "deadline_boundary",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P01",
+        "status": "pending",
+        "due_datetime": "2026-10-12T09:59:59"
+      },
+      "expected": {
+        "priority_score": 100,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Strictly overdue deadline scores 100."
+    },
+    {
+      "case_id": "P02",
+      "title": "Deadline at current time",
+      "category": "deadline_boundary",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P02",
+        "status": "pending",
+        "due_datetime": "2026-10-12T10:00:00"
+      },
+      "expected": {
+        "priority_score": 95,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Zero hours remaining is within the <=24-hour band."
+    },
+    {
+      "case_id": "P03",
+      "title": "Exactly 24 hours remaining",
+      "category": "deadline_boundary",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P03",
+        "status": "pending",
+        "due_datetime": "2026-10-13T10:00:00"
+      },
+      "expected": {
+        "priority_score": 95,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "The 24-hour boundary is inclusive."
+    },
+    {
+      "case_id": "P04",
+      "title": "Just over 24 hours remaining",
+      "category": "deadline_boundary",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P04",
+        "status": "pending",
+        "due_datetime": "2026-10-13T10:00:01"
+      },
+      "expected": {
+        "priority_score": 75,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Just over 24 hours enters the <=72-hour band."
+    },
+    {
+      "case_id": "P05",
+      "title": "Exactly 72 hours remaining",
+      "category": "deadline_boundary",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P05",
+        "status": "pending",
+        "due_datetime": "2026-10-15T10:00:00"
+      },
+      "expected": {
+        "priority_score": 75,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "The 72-hour boundary is inclusive."
+    },
+    {
+      "case_id": "P06",
+      "title": "Just over 72 hours remaining",
+      "category": "deadline_boundary",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P06",
+        "status": "pending",
+        "due_datetime": "2026-10-15T10:00:01"
+      },
+      "expected": {
+        "priority_score": 50,
+        "priority_label": "Medium"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Just over 72 hours enters the <=168-hour band."
+    },
+    {
+      "case_id": "P07",
+      "title": "Exactly 168 hours remaining",
+      "category": "deadline_boundary",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P07",
+        "status": "pending",
+        "due_datetime": "2026-10-19T10:00:00"
+      },
+      "expected": {
+        "priority_score": 50,
+        "priority_label": "Medium"
+      },
+      "basis": "confirmed_rule",
+      "notes": "The 168-hour boundary is inclusive."
+    },
+    {
+      "case_id": "P08",
+      "title": "Just over 168 hours remaining",
+      "category": "deadline_boundary",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P08",
+        "status": "pending",
+        "due_datetime": "2026-10-19T10:00:01"
+      },
+      "expected": {
+        "priority_score": 25,
+        "priority_label": "Low"
+      },
+      "basis": "confirmed_rule",
+      "notes": "More than 168 hours scores 25."
+    },
+    {
+      "case_id": "P09",
+      "title": "All three scoring signals",
+      "category": "weighted_scoring",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P09",
+        "status": "pending",
+        "due_datetime": "2026-10-12T09:59:59",
+        "importance": "medium",
+        "task_type": "project"
+      },
+      "expected": {
+        "priority_score": 84.0,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "(100*0.50 + 60*0.30 + 80*0.20) = 84.00."
+    },
+    {
+      "case_id": "P10",
+      "title": "Deadline and task type with normalized weights",
+      "category": "weighted_scoring",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P10",
+        "status": "pending",
+        "due_datetime": "2026-10-12T09:59:59",
+        "task_type": "project"
+      },
+      "expected": {
+        "priority_score": 94.29,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Available weights 0.50 and 0.20 are renormalized."
+    },
+    {
+      "case_id": "P11",
+      "title": "Importance-only: high",
+      "category": "importance_mapping",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P11",
+        "status": "pending",
+        "importance": "high"
+      },
+      "expected": {
+        "priority_score": 100.0,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "High importance maps to 100."
+    },
+    {
+      "case_id": "P12",
+      "title": "Importance-only: medium",
+      "category": "importance_mapping",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P12",
+        "status": "pending",
+        "importance": "medium"
+      },
+      "expected": {
+        "priority_score": 60.0,
+        "priority_label": "Medium"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Medium importance maps to 60."
+    },
+    {
+      "case_id": "P13",
+      "title": "Importance-only: low",
+      "category": "importance_mapping",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P13",
+        "status": "pending",
+        "importance": "low"
+      },
+      "expected": {
+        "priority_score": 30.0,
+        "priority_label": "Low"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Low importance maps to 30."
+    },
+    {
+      "case_id": "P14",
+      "title": "Task-type-only: exam",
+      "category": "task_type_mapping",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P14",
+        "status": "pending",
+        "task_type": "exam"
+      },
+      "expected": {
+        "priority_score": 100.0,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Exam maps to 100."
+    },
+    {
+      "case_id": "P15",
+      "title": "Task-type-only: assignment",
+      "category": "task_type_mapping",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P15",
+        "status": "pending",
+        "task_type": "assignment"
+      },
+      "expected": {
+        "priority_score": 80.0,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Assignment maps to 80."
+    },
+    {
+      "case_id": "P16",
+      "title": "Task-type-only: quiz",
+      "category": "task_type_mapping",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P16",
+        "status": "pending",
+        "task_type": "quiz"
+      },
+      "expected": {
+        "priority_score": 65.0,
+        "priority_label": "Medium"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Quiz maps to 65."
+    },
+    {
+      "case_id": "P17",
+      "title": "Task-type-only: project",
+      "category": "task_type_mapping",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P17",
+        "status": "pending",
+        "task_type": "project"
+      },
+      "expected": {
+        "priority_score": 80.0,
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Project maps to 80."
+    },
+    {
+      "case_id": "P18",
+      "title": "No valid scoring signals",
+      "category": "missing_data",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P18",
+        "status": "pending"
+      },
+      "expected": {
+        "priority_score": null,
+        "priority_label": "Unavailable"
+      },
+      "basis": "confirmed_rule",
+      "notes": "No valid deadline, importance, or task-type signal."
+    },
+    {
+      "case_id": "P19",
+      "title": "Unrecognized importance and task type",
+      "category": "missing_data",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P19",
+        "status": "pending",
+        "importance": "critical",
+        "task_type": "workshop"
+      },
+      "expected": {
+        "priority_score": null,
+        "priority_label": "Unavailable"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Unrecognized values do not contribute scoring signals."
+    },
+    {
+      "case_id": "LB01",
+      "title": "Priority label boundary at 39.99",
+      "category": "label_boundary",
+      "current_time": null,
+      "input_function": "get_priority_label",
+      "input": {
+        "priority_score": 39.99
+      },
+      "expected": {
+        "priority_label": "Low"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Low <40; Medium >=40 and <70; High >=70."
+    },
+    {
+      "case_id": "LB02",
+      "title": "Priority label boundary at 40",
+      "category": "label_boundary",
+      "current_time": null,
+      "input_function": "get_priority_label",
+      "input": {
+        "priority_score": 40
+      },
+      "expected": {
+        "priority_label": "Medium"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Low <40; Medium >=40 and <70; High >=70."
+    },
+    {
+      "case_id": "LB03",
+      "title": "Priority label boundary at 69.99",
+      "category": "label_boundary",
+      "current_time": null,
+      "input_function": "get_priority_label",
+      "input": {
+        "priority_score": 69.99
+      },
+      "expected": {
+        "priority_label": "Medium"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Low <40; Medium >=40 and <70; High >=70."
+    },
+    {
+      "case_id": "LB04",
+      "title": "Priority label boundary at 70",
+      "category": "label_boundary",
+      "current_time": null,
+      "input_function": "get_priority_label",
+      "input": {
+        "priority_score": 70
+      },
+      "expected": {
+        "priority_label": "High"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Low <40; Medium >=40 and <70; High >=70."
+    },
+    {
+      "case_id": "P20",
+      "title": "P20 - Overdue in-progress task with no other signals",
+      "category": "status_rule",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P20",
+        "status": "in_progress",
+        "due_datetime": "2026-10-12T09:59:59"
+      },
+      "expected": {
+        "priority_score": null,
+        "priority_label": "Unavailable"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Overdue in-progress task must not receive pending-task overdue score; no other signals means Unavailable."
+    },
+    {
+      "case_id": "P21",
+      "title": "Completed task excluded",
+      "category": "status_rule",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P21",
+        "status": "completed",
+        "importance": "high",
+        "task_type": "exam"
+      },
+      "expected": {
+        "priority_score": null,
+        "priority_label": "Unavailable"
+      },
+      "basis": "confirmed_rule",
+      "notes": "Completed tasks receive no active priority recommendation."
+    },
+    {
+      "case_id": "P22",
+      "title": "Cancelled task excluded",
+      "category": "status_rule",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P22",
+        "status": "cancelled",
+        "importance": "high",
+        "task_type": "exam"
+      },
+      "expected": {
+        "priority_score": null,
+        "priority_label": "Unavailable"
+      },
+      "basis": "confirmed_decision_engine_gap",
+      "notes": "Confirmed expected behavior; inspected engine does not yet implement this exclusion."
+    },
+    {
+      "case_id": "P23",
+      "title": "Event task with event_datetime only",
+      "category": "event_handling",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "P23",
+        "status": "pending",
+        "task_type": "event",
+        "event_datetime": "2026-10-13T10:00:00"
+      },
+      "expected": {
+        "priority_score": null,
+        "priority_label": "Unavailable"
+      },
+      "basis": "confirmed_rule",
+      "notes": "event_datetime is separate from due_datetime; event type is not scored."
+    },
+    {
+      "case_id": "FT01",
+      "title": "Full task just below High threshold",
+      "category": "full_task_threshold_neighbour",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "FT01",
+        "status": "pending",
+        "due_datetime": "2026-10-13T10:00:00",
+        "importance": "low",
+        "task_type": "quiz"
+      },
+      "expected": {
+        "priority_score": 69.5,
+        "priority_label": "Medium"
+      },
+      "basis": "derived_from_confirmed_weights",
+      "notes": "Full-task threshold-neighbour case."
+    },
+    {
+      "case_id": "FT02",
+      "title": "Full task just above High threshold",
+      "category": "full_task_threshold_neighbour",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "FT02",
+        "status": "pending",
+        "due_datetime": "2026-10-13T10:00:00",
+        "importance": "low"
+      },
+      "expected": {
+        "priority_score": 70.62,
+        "priority_label": "High"
+      },
+      "basis": "derived_from_confirmed_weights",
+      "notes": "Full-task threshold-neighbour case."
+    },
+    {
+      "case_id": "FT03",
+      "title": "Full task just below Medium threshold",
+      "category": "full_task_threshold_neighbour",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "FT03",
+        "status": "pending",
+        "due_datetime": "2026-10-22T10:00:00",
+        "importance": "medium"
+      },
+      "expected": {
+        "priority_score": 38.12,
+        "priority_label": "Low"
+      },
+      "basis": "derived_from_confirmed_weights",
+      "notes": "Full-task threshold-neighbour case."
+    },
+    {
+      "case_id": "FT04",
+      "title": "Full task just above Medium threshold",
+      "category": "full_task_threshold_neighbour",
+      "current_time": "2026-10-12T10:00:00",
+      "task": {
+        "task_id": "FT04",
+        "status": "pending",
+        "due_datetime": "2026-10-22T10:00:00",
+        "task_type": "assignment"
+      },
+      "expected": {
+        "priority_score": 40.71,
+        "priority_label": "Medium"
+      },
+      "basis": "derived_from_confirmed_weights",
+      "notes": "Full-task threshold-neighbour case."
+    }
+  ]
+}
