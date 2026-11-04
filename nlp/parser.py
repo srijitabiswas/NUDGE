@@ -309,10 +309,35 @@ _DAY_RANGE_RE = re.compile(
     re.IGNORECASE,
 )
 _TODAY_TOMORROW_RE = re.compile(r"\b(?:tomorrow|today|tonight)\b", re.IGNORECASE)
-_WEEKDAY_RE = re.compile(
-    r"\b(?:next\s+)?(?P<wd>monday|tuesday|wednesday|thursday|friday|"
-    r"saturday|sunday)\b",
+# Step 38: more ways to say a day.
+_AFTER_TOMORROW_RE = re.compile(r"(?:\bthe\s+)?\bday\s+after\s+tomorrow\b", re.IGNORECASE)
+_NUMBER_WORDS = {
+    "a": 1, "an": 1, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+    "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
+    "twelve": 12,
+}
+_IN_N_RE = re.compile(
+    r"\bin\s+(?P<n>\d{1,3}|a|an|one|two|three|four|five|six|seven|eight|nine|"
+    r"ten|eleven|twelve)\s+(?P<u>days?|weeks?)\b",
     re.IGNORECASE,
+)
+# "Friday", "this Friday", "next Friday", "next week on Friday"
+_WEEKDAY_RE = re.compile(
+    r"\b(?:(?P<q>next|this|coming)\s+(?:week\s*,?\s*(?:on\s+)?)?)?"
+    r"(?P<wd>monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b",
+    re.IGNORECASE,
+)
+_NEXT_WEEK_WEEKDAY_RE = re.compile(
+    r"\bnext\s+week\s*,?\s*(?:on\s+)?(?:monday|tuesday|wednesday|thursday|"
+    r"friday|saturday|sunday)\b",
+    re.IGNORECASE,
+)
+_DAY_PART_RE = re.compile(r"\s+(?:night|evening|morning|afternoon)\b", re.IGNORECASE)
+_MIDNIGHT_BEFORE_RE = re.compile(r"\bmidnight\s+(?:on\s+|of\s+)?$", re.IGNORECASE)
+_MIDNIGHT_AFTER_RE = re.compile(r"^\s*(?:at\s+|by\s+)?midnight\b", re.IGNORECASE)
+# DD/MM/YYYY (Indian order, never swapped)
+_SLASH_DATE_RE = re.compile(
+    r"(?<![\d/])(?P<d>\d{1,2})/(?P<mo>\d{1,2})/(?P<y>(?:19|20)\d{2})(?![\d/])"
 )
 _NEXT_WEEK_RE = re.compile(r"\bnext week\b", re.IGNORECASE)
 _VAGUE_PERIOD_RE = re.compile(
@@ -355,6 +380,15 @@ def _absolute_dates(text: str, ref: date) -> list[tuple[int, int, date]]:
         except ValueError:
             continue
 
+    for match in _SLASH_DATE_RE.finditer(text):
+        try:
+            found.append((
+                match.start(), match.end(),
+                date(int(match["y"]), int(match["mo"]), int(match["d"])),
+            ))
+        except ValueError:
+            continue  # 31/02/2026 or 12/25/2026: not a real DD/MM/YYYY date
+
     for pattern in (_DAY_RANGE_RE, _DAY_MONTH_RE, _MONTH_DAY_RE):
         for match in pattern.finditer(text):
             if pattern is _DAY_RANGE_RE and _CHANGE_VERB_RE.search(
@@ -379,18 +413,62 @@ def _absolute_dates(text: str, ref: date) -> list[tuple[int, int, date]]:
     return kept
 
 
+def _weekday_date(weekday: str, qualifier: str | None, ref: date) -> date:
+    """plain "Friday": the nearest upcoming one (a week away if today is Friday).
+    "this/coming Friday": the upcoming one (today counts).
+    "next Friday": Friday of the FOLLOWING week (weeks run Monday to Sunday)."""
+    target = _WEEKDAYS[weekday.lower()]
+    qualifier = (qualifier or "").lower()
+    if qualifier == "next":
+        return ref - timedelta(days=ref.weekday()) + timedelta(days=7 + target)
+    ahead = (target - ref.weekday()) % 7
+    if qualifier in ("this", "coming"):
+        return ref + timedelta(days=ahead)
+    return ref + timedelta(days=ahead or 7)
+
+
+def _midnight_shift(text: str, start: int, end: int) -> int:
+    """"midnight tonight", "tomorrow midnight", "midnight on Sunday" mean 00:00
+    at the END of that day, i.e. the next calendar day."""
+    if _MIDNIGHT_BEFORE_RE.search(text[max(0, start - 20):start]):
+        return 1
+    if _MIDNIGHT_AFTER_RE.match(text[end:end + 20]):
+        return 1
+    return 0
+
+
 def _relative_dates(text: str, ref: date) -> list[tuple[int, int, date]]:
     found = []
 
+    def free(start, end):
+        return not any(start < f_end and f_start < end for f_start, f_end, _ in found)
+
+    def add(start, end, day):
+        found.append((start, end, day + timedelta(days=_midnight_shift(text, start, end))))
+
+    for match in _AFTER_TOMORROW_RE.finditer(text):
+        add(match.start(), match.end(), ref + timedelta(days=2))
+
+    for match in _IN_N_RE.finditer(text):
+        count = match["n"].lower()
+        count = int(count) if count.isdigit() else _NUMBER_WORDS[count]
+        days = count * (7 if match["u"].lower().startswith("week") else 1)
+        add(match.start(), match.end(), ref + timedelta(days=days))
+
     for match in _TODAY_TOMORROW_RE.finditer(text):
-        offset = 1 if match.group(0).lower() == "tomorrow" else 0
-        found.append((match.start(), match.end(), ref + timedelta(days=offset)))
+        if not free(match.start(), match.end()):
+            continue  # the "tomorrow" inside "day after tomorrow"
+        word = match.group(0).lower()
+        end = match.end()
+        if word == "tomorrow":
+            part = _DAY_PART_RE.match(text, end)
+            end = part.end() if part else end
+        add(match.start(), end, ref + timedelta(days=1 if word == "tomorrow" else 0))
 
     for match in _WEEKDAY_RE.finditer(text):
-        days_ahead = (_WEEKDAYS[match["wd"].lower()] - ref.weekday()) % 7
-        if days_ahead == 0:
-            days_ahead = 7
-        found.append((match.start(), match.end(), ref + timedelta(days=days_ahead)))
+        part = _DAY_PART_RE.match(text, match.end())  # "Sunday night"
+        end = part.end() if part else match.end()
+        add(match.start(), end, _weekday_date(match["wd"], match["q"], ref))
 
     return found
 
@@ -406,7 +484,7 @@ def _find_date(text: str, ref: date):
         start, end, found = max(absolute, key=lambda item: item[0])
         return found.isoformat(), start, end
 
-    if _NEXT_WEEK_RE.search(text):
+    if _NEXT_WEEK_RE.search(text) and not _NEXT_WEEK_WEEKDAY_RE.search(text):
         return None  # too vague to be a specific date
 
     relative = _relative_dates(text, ref)
@@ -446,6 +524,7 @@ _24H_RE = re.compile(
     re.IGNORECASE,
 )
 _NOON_RE = re.compile(r"\bnoon\b", re.IGNORECASE)
+_MIDNIGHT_RE = re.compile(r"\bmidnight\b", re.IGNORECASE)
 _RANGE_GAP_RE = re.compile(r"^\s*(?:to|till|until|-|–|—)\s*$", re.IGNORECASE)
 _CHANGE_VERB_RE = re.compile(
     r"\b(rescheduled|postponed|preponed|moved|shifted|extended|advanced|changed)\b",
@@ -499,6 +578,10 @@ def _time_matches(text: str) -> list[tuple[int, int, str]]:
     for match in _NOON_RE.finditer(text):
         if free(match.start(), match.end()):
             found.append((match.start(), match.end(), "12:00"))
+
+    for match in _MIDNIGHT_RE.finditer(text):
+        if free(match.start(), match.end()):
+            found.append((match.start(), match.end(), "00:00"))
 
     found.sort(key=lambda item: item[0])
     return found

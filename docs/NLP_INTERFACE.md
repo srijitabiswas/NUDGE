@@ -448,10 +448,31 @@ read with a few extra rules. One-line chat messages behave as before.
   empty and the words stay in `date_time_expression`; "next week" gives no
   date (Steps 38-39); `change_information` stays `[]` (Steps 41-42).
 
+### Relative dates (Step 38)
+
+Relative words are turned into a date from the reference date. The output
+fields do not change.
+
+| Written | Meaning |
+|---|---|
+| `in 2 days`, `in 3 weeks`, `in a week` | that many days / weeks after the reference date |
+| `day after tomorrow` | reference date + 2 days |
+| `Friday` | nearest upcoming Friday (a week away if today is Friday) |
+| `this Friday`, `coming Friday` | the upcoming Friday (today counts) |
+| `next Friday`, `next week on Friday` | Friday of the following week (weeks run Monday to Sunday) |
+| `15/11/2026` | DD/MM/YYYY always (Indian order, never swapped); an impossible date such as `31/02/2026` or `12/25/2026` gives no date |
+| `midnight tonight`, `midnight on Sunday` | 00:00 at the end of that day, i.e. the next calendar day |
+| `Sunday night`, `tomorrow evening` | the date only; no time is invented (the words stay in `date_time_expression`) |
+
+Still not read: `next week` on its own (no date), `within 3 days`, `this weekend`,
+and `midnight` next to an explicit calendar date (it stays on that date at 00:00).
+"Tomorrow", weekday and "by Friday" refinements belong to Step 39; change
+detection (`change_information`) belongs to Steps 41-42.
+
 ### Known limitations
 
 - `change_information` is always `[]`. Change detection is roadmap Steps 41-42. Change wording only shapes the title ("... rescheduled", "... deadline change").
-- Numeric dates such as `5/11/2026` are not parsed (day/month order must be agreed first). `next Friday` is read like `Friday`. `midnight` is not read. Further relative-date work is Steps 38-39.
+- Numeric dates are supported in DD/MM/YYYY format. `next Friday` refers to Friday of the following week, and midnight expressions are supported as described in Step 38.
 - One message produces one task or event. A message that lists several tasks gets only the first signal's title and the last date and time.
 - OCR text is processed in the same way, but the OCR-to-NLP connection is Steps 36-37.
 
