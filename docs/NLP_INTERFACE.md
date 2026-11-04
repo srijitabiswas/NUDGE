@@ -426,6 +426,28 @@ A subject is first looked up in the `SUBJECTS` list at the top of `nlp/parser.py
 
 `confidence` is 0.25 for each core fact found: a title, a type, a date and a time (an event's `event_datetime` supplies both date and time). A message that states its deadline is unknown therefore scores at most 0.5 even though the extraction is correct. This is a baseline score for how complete the extraction is, not a probability.
 
+### Notice and poster text (Step 40)
+
+Text with three or more lines (typical OCR of a notice, circular or poster) is
+read with a few extra rules. One-line chat messages behave as before.
+
+- Words such as webinar, session, debate, distribution, orientation, hackathon
+  and "an invited talk" make an event only when a date or time is also present.
+- "Register now" style buttons and past mentions ("meeting held on ...") are
+  ignored when deciding the type. A label such as "Last date for payment: ..."
+  makes a task with that date.
+- The title comes from the headline (for example "Payment of Fees" gives "Pay
+  fees"). An obvious OCR slip in it is fixed only when another line of the same
+  text shows the right word; `raw_text` is never changed.
+- Times: `8.00 PM`, `09.00 a.m.`, and ranges sharing one am/pm
+  (`4.30-5.30 PM`) are read; the start time is used. Day ranges
+  (`4th and 5th April 2019`) use the first day and stay in the description.
+- Two or more separate dates with no deadline label leave the date empty; all
+  are listed in `description`.
+- Unchanged: an event with only a time (or only a date) keeps `event_datetime`
+  empty and the words stay in `date_time_expression`; "next week" gives no
+  date (Steps 38-39); `change_information` stays `[]` (Steps 41-42).
+
 ### Known limitations
 
 - `change_information` is always `[]`. Change detection is roadmap Steps 41-42. Change wording only shapes the title ("... rescheduled", "... deadline change").

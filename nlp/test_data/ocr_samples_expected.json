@@ -1,0 +1,91 @@
+{
+  "description": "Expected NLP results for the nine OCR sample files in ocr_samples/ (roadmap Steps 37 and 40). Labels were read from the original screenshots and approved by Prakriti. A null means the parser must leave that field empty. OCR damage is NOT corrected here: where the OCR lost or scrambled a date, the date must stay empty.",
+  "reference_date": "2026-10-28",
+  "labels": {
+    "payment_notice.json": {
+      "category": "task",
+      "task_title": "Pay next semester fees",
+      "task_type": null,
+      "due_date": "2026-11-04",
+      "due_time": null,
+      "event_datetime": null,
+      "note": "Last date for payment is 4 November 2026. The OCR wrote 'Nert'; the title uses 'next' from 'your next semester' in the same text."
+    },
+    "screenshot 2.json": {
+      "category": "event",
+      "task_title": "Network & Network Security session",
+      "task_type": "event",
+      "due_date": null,
+      "due_time": null,
+      "event_datetime": null,
+      "expression_contains": "7 PM",
+      "note": "The image says 11 January, 7 PM. The OCR lost the '11', so no date can be read and event_datetime stays empty. The 7 PM is kept in date_time_expression because the contract keeps an event's time there when the date is unknown."
+    },
+    "screenshot 3.json": {
+      "category": "event",
+      "task_title": "Grade Card Distribution for Semester",
+      "task_type": "event",
+      "due_date": null,
+      "due_time": null,
+      "event_datetime": null,
+      "description_contains": ["October 27th", "October 30th", "Room No. 201"],
+      "note": "Two separate dates (27 and 30 October 2026), so no single date is chosen; both are kept in the description. The OCR moved '6th' away from the title."
+    },
+    "screenshot 4.json": {
+      "category": "event",
+      "title_contains": "automation reduces errors",
+      "task_type": "event",
+      "due_date": null,
+      "due_time": null,
+      "event_datetime": "2026-10-09T15:30:00",
+      "note": "Debate on 9 October 2026 at 3:30 PM (a date before the reference date is still an event)."
+    },
+    "screenshot 5.json": {
+      "category": "event",
+      "title_contains": "Future of Work in Australia",
+      "task_type": "event",
+      "due_date": null,
+      "due_time": null,
+      "event_datetime": null,
+      "expression_contains": "4.30-5.30 PM",
+      "note": "Webinar on 5 June, 4:30-5:30 PM IST. The OCR separated 'June' from '05', so the date is not reliable and stays empty."
+    },
+    "screenshot 6.json": {
+      "category": "general_notice",
+      "task_title": null,
+      "task_type": null,
+      "due_date": null,
+      "due_time": null,
+      "event_datetime": null,
+      "note": "Informational notice with no instruction. 'Meeting held on ...' is a past mention, not an event."
+    },
+    "screenshot 7.json": {
+      "category": "task",
+      "title_contains": "Core Team",
+      "task_type": null,
+      "due_date": null,
+      "due_time": null,
+      "event_datetime": null,
+      "note": "The image says last date 9 Sep 2026, but the OCR scattered '9th', '2026' and 'Sep'. The date cannot be read reliably, so it stays empty."
+    },
+    "screenshot 8.json": {
+      "category": "event",
+      "task_title": "Viva Voce",
+      "task_type": "viva",
+      "due_date": null,
+      "due_time": null,
+      "event_datetime": "2019-04-04T09:00:00",
+      "description_contains": ["4th and 5th April 2019"],
+      "note": "Viva on 4th and 5th April 2019, reporting from 09.00 a.m. The start date is used and the range is kept in the description. A past date is still an event."
+    },
+    "screenshot 9.json": {
+      "category": "event",
+      "title_contains": "Invited talk on Designing Industrial",
+      "task_type": "event",
+      "due_date": null,
+      "due_time": null,
+      "event_datetime": "2026-10-09T20:00:00",
+      "note": "Invited talk on 9 October at 8:00 PM (no year on the poster; the nearest year is used). The OCR wrote 'lot' for 'IoT'; that is not corrected because the text gives nothing to correct it from."
+    }
+  }
+}

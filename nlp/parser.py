@@ -190,7 +190,7 @@ def classify_task_type(text: str) -> str | None:
 # An explicit action means the message is a task, even if it mentions an exam.
 _EXPLICIT_ACTION_RE = re.compile(
     r"\b(?:submit|complete|finish|upload|prepare|study|revise|solve|read|"
-    r"bring|register|apply)\b"
+    r"bring|register|apply|pay|collect)\b"
 )
 # "must be submitted", "has to be uploaded" ...
 _PASSIVE_ACTION_RE = re.compile(
@@ -202,6 +202,13 @@ _DEADLINE_WORD_RE = re.compile(r"\b(?:deadline|due)\b(?!\s+to\b)")
 _EVENT_KEYWORD_RE = re.compile(
     r"\b(?:meeting|seminar|workshop|lecture|class|viva|cultural fest|"
     r"college fest|festival|quiz|exam|examination)\b"
+)
+# Step 40: poster and notice words. They announce an event only when the text
+# also says WHEN (a date or a time); "talk" must look like a noun ("an invited
+# talk", "talk on ..."), because "talk to your advisor" is an instruction.
+_SCHEDULED_EVENT_RE = re.compile(
+    r"\b(?:webinar|session|debate|distribution|orientation|hackathon)\b"
+    r"|\b(?:an?|the|invited|guest|expert)\s+(?:\w+\s+)?talk\b|\btalk\s+on\b"
 )
 
 _NOTICE_PATTERNS = [
@@ -252,7 +259,7 @@ def is_event_message(text: str) -> bool:
     """
     text_lower = text.lower()
 
-    if not _EVENT_KEYWORD_RE.search(text_lower):
+    if not (_EVENT_KEYWORD_RE.search(text_lower) or _scheduled_event_word(text)):
         return False
 
     # An explicit task action generally indicates a task, even when the
@@ -286,12 +293,19 @@ _WEEKDAYS = {
 _ISO_DATE_RE = re.compile(r"\b(?P<y>\d{4})-(?P<mo>\d{1,2})-(?P<d>\d{1,2})\b")
 _DAY_MONTH_RE = re.compile(
     rf"\b(?P<d>\d{{1,2}})(?:st|nd|rd|th)?\s+(?:of\s+)?(?P<m>{_MONTH})(?![a-z])\.?"
-    r"(?:,?\s+(?P<y>20\d{2})\b)?",
+    r"(?:\s*,?\s*(?P<y>20\d{2})\b)?",
     re.IGNORECASE,
 )
 _MONTH_DAY_RE = re.compile(
     rf"\b(?P<m>{_MONTH})(?![a-z])\.?\s+(?P<d>\d{{1,2}})(?:st|nd|rd|th)?\b"
-    r"(?!\s*(?:am|pm)\b)(?!:\d)(?:,?\s+(?P<y>20\d{2})\b)?",
+    r"(?!\s*(?:am|pm)\b)(?![:.]\d)(?:\s*,?\s*(?P<y>20\d{2})\b)?",
+    re.IGNORECASE,
+)
+# "4th and 5th April 2019": a range of days. The START day is the date.
+_DAY_RANGE_RE = re.compile(
+    rf"\b(?P<d>\d{{1,2}})(?:st|nd|rd|th)?\s*(?:and|&|to|-|\u2013|\u2014)\s*"
+    rf"\d{{1,2}}(?:st|nd|rd|th)?\s+(?:of\s+)?(?P<m>{_MONTH})(?![a-z])\.?"
+    r"(?:\s*,?\s*(?P<y>20\d{2})\b)?",
     re.IGNORECASE,
 )
 _TODAY_TOMORROW_RE = re.compile(r"\b(?:tomorrow|today|tonight)\b", re.IGNORECASE)
@@ -341,8 +355,12 @@ def _absolute_dates(text: str, ref: date) -> list[tuple[int, int, date]]:
         except ValueError:
             continue
 
-    for pattern in (_DAY_MONTH_RE, _MONTH_DAY_RE):
+    for pattern in (_DAY_RANGE_RE, _DAY_MONTH_RE, _MONTH_DAY_RE):
         for match in pattern.finditer(text):
+            if pattern is _DAY_RANGE_RE and _CHANGE_VERB_RE.search(
+                text[max(0, match.start() - 60):match.start()]
+            ):
+                continue  # "moved from 8 to 12 November" is a change, not a range
             resolved = _resolve_day_month(
                 int(match["d"]),
                 _MONTH_NUMBERS[match["m"].lower()],
@@ -412,8 +430,15 @@ def extract_date(
 # TIME EXTRACTION
 # --------------------------------------------------
 
+_MERIDIEM = r"(?P<p>a\.?m\.?|p\.?m\.?)(?![a-z])"
 _AMPM_RE = re.compile(
-    r"(?<![\d:])(?P<h>\d{1,2})(?::(?P<m>\d{2}))?\s*(?P<p>am|pm)\b",
+    r"(?<![\d:.])(?P<h>\d{1,2})(?:[:.](?P<m>\d{2}))?\s*" + _MERIDIEM,
+    re.IGNORECASE,
+)
+# "4.30-5.30 PM": one am/pm shared by both ends of a range.
+_SHARED_RANGE_RE = re.compile(
+    r"(?<![\d:.])(?P<h1>\d{1,2})[:.](?P<m1>\d{2})\s*(?:-|\u2013|\u2014|to|till|until)\s*"
+    r"(?P<h2>\d{1,2})(?:[:.](?P<m2>\d{2}))?\s*" + _MERIDIEM,
     re.IGNORECASE,
 )
 _24H_RE = re.compile(
@@ -428,28 +453,52 @@ _CHANGE_VERB_RE = re.compile(
 )
 
 
+def _to_24h(hour: int, minute: int, pm: bool) -> str:
+    if pm and hour != 12:
+        hour += 12
+    elif not pm and hour == 12:
+        hour = 0
+    return f"{hour:02d}:{minute:02d}"
+
+
 def _time_matches(text: str) -> list[tuple[int, int, str]]:
     found = []
+    taken = []  # spans already used by a shared-meridiem range
+
+    for match in _SHARED_RANGE_RE.finditer(text):
+        first, last = int(match["h1"]), int(match["h2"])
+        minute1, minute2 = int(match["m1"]), int(match["m2"] or 0)
+        if not (1 <= first <= 12 and 1 <= last <= 12 and minute1 <= 59 and minute2 <= 59):
+            continue
+        pm = match["p"].lower().startswith("p")
+        # "11.00-1.00 PM" and "10.00-12.00 PM" start in the morning.
+        start_pm = pm and (first == 12 or not (first > last or last == 12))
+        found.append((match.start(), match.end(), _to_24h(first, minute1, start_pm)))
+        taken.append((match.start(), match.end()))
+
+    def free(start, end):
+        return not any(start < t_end and t_start < end for t_start, t_end in taken)
 
     for match in _AMPM_RE.finditer(text):
         hour = int(match["h"])
         minute = int(match["m"] or 0)
-        if not 1 <= hour <= 12 or minute > 59:
+        if not 1 <= hour <= 12 or minute > 59 or not free(match.start(), match.end()):
             continue
-        if match["p"].lower() == "pm" and hour != 12:
-            hour += 12
-        elif match["p"].lower() == "am" and hour == 12:
-            hour = 0
-        found.append((match.start(), match.end(), f"{hour:02d}:{minute:02d}"))
-
-    for match in _24H_RE.finditer(text):
         found.append((
             match.start(), match.end(),
-            f"{int(match['h']):02d}:{match['m']}",
+            _to_24h(hour, minute, match["p"].lower().startswith("p")),
         ))
 
+    for match in _24H_RE.finditer(text):
+        if free(match.start(), match.end()):
+            found.append((
+                match.start(), match.end(),
+                f"{int(match['h']):02d}:{match['m']}",
+            ))
+
     for match in _NOON_RE.finditer(text):
-        found.append((match.start(), match.end(), "12:00"))
+        if free(match.start(), match.end()):
+            found.append((match.start(), match.end(), "12:00"))
 
     found.sort(key=lambda item: item[0])
     return found
@@ -478,12 +527,13 @@ def _time_items(text: str) -> list[tuple[int, int, str]]:
     return items
 
 
-def _find_time(text: str):
-    """Return (HH:MM, start, end) for the last time mentioned, or None."""
+def _find_time(text: str, first: bool = False):
+    """Return (HH:MM, start, end) for the last time mentioned, or None.
+    A notice or poster (first=True) gives the START time, i.e. the first one."""
     items = _time_items(text)
     if not items:
         return None
-    start, end, value = items[-1]
+    start, end, value = items[0] if first else items[-1]
     return value, start, end
 
 
@@ -833,6 +883,338 @@ def calculate_confidence(
 
 
 # --------------------------------------------------
+# NOTICE AND POSTER TEXT (roadmap Step 40)
+# --------------------------------------------------
+# Notices, circulars and posters (typed or read by OCR) have no "please do X"
+# sentence. They announce a talk, a distribution or a last date. Rules that
+# depend on layout (headlines, several dates, the first time) apply only to
+# multi-line text, so a one-line chat message is parsed exactly as before.
+
+_WEEKDAY_NAMES = r"(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)"
+_SMALL_WORDS = {"a", "an", "the", "of", "for", "in", "on", "at", "to", "and", "or", "by", "with"}
+
+
+def _lines(text: str) -> list[str]:
+    return [line.strip() for line in text.splitlines() if line.strip()]
+
+
+def _is_layout_text(text: str) -> bool:
+    """Multi-line text such as a notice or poster (3 or more non-empty lines)."""
+    return len(_lines(text)) >= 3
+
+
+# Buttons and sign-up prompts are not tasks: "Register Now", "Scan the QR code
+# to register". Past mentions are not announcements: "Meeting held on 5 August".
+_CTA_RE = re.compile(
+    r"\b(?:register|apply|enrol+|rsvp)\s+(?:now|here|today)\b"
+    r"|\bscan\b[\s\S]{0,40}?\bto\s+(?:register|apply|join)\b",
+    re.IGNORECASE,
+)
+_PAST_MENTION_RE = re.compile(
+    r"\b(?:meeting|exam|examination|class|lecture|quiz|viva|workshop|seminar)\s+"
+    r"(?:was\s+|were\s+)?held\s+(?:on|in|at)\b",
+    re.IGNORECASE,
+)
+# A platform name on a poster ("Microsoft ... Teams" may be split by OCR).
+_PLATFORM_EVENT_RE = re.compile(
+    r"\bmicrosoft(?:\W+\w+){0,3}?\W+teams\b|\bms\s+teams\b|\bzoom\b|\bwebex\b"
+    r"|\bgoogle\s+meet\b",
+    re.IGNORECASE,
+)
+
+
+def _signal_text(text: str, layout: bool) -> str:
+    """The text used to decide task / event / notice. For multi-line text the
+    sign-up buttons and past mentions are removed first."""
+    if not layout:
+        return text
+    return _PAST_MENTION_RE.sub(" ", _CTA_RE.sub(" ", text))
+
+
+def _has_schedule(text: str) -> bool:
+    today = datetime.now().date()
+    return bool(
+        _absolute_dates(text, today) or _time_matches(text) or _relative_dates(text, today)
+    )
+
+
+def _scheduled_event_word(text: str) -> bool:
+    return bool(_SCHEDULED_EVENT_RE.search(text.lower())) and _has_schedule(text)
+
+
+def _is_platform_session(signal: str, text: str) -> bool:
+    """A scheduled online session whose title word was lost by the OCR."""
+    return bool(_PLATFORM_EVENT_RE.search(signal)) and _has_schedule(text)
+
+
+# "Last date for payment: 4 November", "before 15 November": a labelled deadline.
+_DEADLINE_LABEL_RE = re.compile(
+    r"\b(?:last\s+date(?:\s+(?:to|for|of)\s+[a-z ]{1,25}?\b)?|due\s+date|deadline|"
+    r"(?:on\s+or\s+)?before|no\s+later\s+than)\s*[:\-–]?\s*",
+    re.IGNORECASE,
+)
+_LABEL_GAP_RE = re.compile(
+    rf"^(?:(?:the|on)\s+)?(?:{_WEEKDAY_NAMES},?\s*)?$", re.IGNORECASE
+)
+
+
+def _find_deadline_date(text: str, ref: date):
+    """(YYYY-MM-DD, start, end) of the date written right after a deadline
+    label, or None. The label must be followed by the date itself (only "the",
+    "on" or a weekday may sit in between), so a far-away date is never used."""
+    dates = _absolute_dates(text, ref)
+    best = None
+    for label in _DEADLINE_LABEL_RE.finditer(text):
+        for start, end, found in dates:
+            if start < label.end():
+                continue
+            if _LABEL_GAP_RE.match(text[label.end():start].strip()):
+                best = (found.isoformat(), start, end)
+            break
+    return best
+
+
+def _within_one_edit(a: str, b: str) -> bool:
+    if a == b or abs(len(a) - len(b)) > 1:
+        return False
+    if len(a) == len(b):
+        return sum(x != y for x, y in zip(a, b)) == 1
+    short, long_ = (a, b) if len(a) < len(b) else (b, a)
+    return any(long_[:i] + long_[i + 1:] == short for i in range(len(long_)))
+
+
+def _context_fix(phrase: str, text: str) -> str:
+    """Fix an obvious OCR slip in a headline using the rest of the text: a word
+    that appears once, with a word one letter away on ANOTHER line ("Nert" in
+    the headline, "your next semester" in the body), becomes that word. Nothing
+    is changed when the text offers no such word. Used once per title."""
+    lines = [line.lower() for line in text.splitlines()]
+    total = {}
+    for token in re.findall(r"[a-z]{4,}", text.lower()):
+        total[token] = total.get(token, 0) + 1
+
+    fixed = []
+    for word in phrase.split():
+        core = word.strip(".,:;!?()")
+        lower = core.lower()
+        if core.isalpha() and len(core) >= 4 and total.get(lower) == 1:
+            body = {}
+            for line in lines:
+                if re.search(rf"\b{lower}\b", line):
+                    continue
+                for token in re.findall(r"[a-z]{4,}", line):
+                    body[token] = body.get(token, 0) + 1
+            near = sorted(
+                (t for t in body if _within_one_edit(t, lower)), key=lambda t: -body[t]
+            )
+            if near and (len(near) == 1 or body[near[0]] > body[near[1]]):
+                replacement = near[0].capitalize() if core[0].isupper() else near[0]
+                word = word.replace(core, replacement)
+        fixed.append(word)
+    return " ".join(fixed)
+
+
+def _title_case_caps(text: str) -> str:
+    """ALL-CAPS poster text becomes Title Case; mixed-case words are kept."""
+    letters = [c for c in text if c.isalpha()]
+    if not letters or sum(c.isupper() for c in letters) / len(letters) < 0.6:
+        return text
+    words = []
+    for index, word in enumerate(text.split()):
+        if word.isupper() and any(c.isalpha() for c in word):
+            word = word.title() if index == 0 or word.lower() not in _SMALL_WORDS else word.lower()
+        words.append(word)
+    return " ".join(words)
+
+
+_ANNOUNCE_RE = re.compile(
+    r"^(?:notice|circular)(?:\s*[:\-–]\s*(?P<rest>.+)|\s*)$", re.IGNORECASE
+)
+_ALERT_RE = re.compile(r"^(?P<kind>session|event|webinar|workshop|seminar)\s+alert$", re.IGNORECASE)
+_DEBATE_RE = re.compile(r"^debate\s+topic\s*:?\s*(?P<rest>.*)$", re.IGNORECASE)
+_KIND_ON_RE = re.compile(
+    r"^(?:an?\s+)?(?P<kind>(?:invited\s+|guest\s+|expert\s+)?"
+    r"(?:talk|webinar|session|seminar|workshop|lecture))\s+on\b\s*(?P<rest>.*)$",
+    re.IGNORECASE,
+)
+_APPLICATIONS_RE = re.compile(r"\bapplications?\s+(?:are\s+)?(?:live|open)", re.IGNORECASE)
+_STOP_LINE_RE = re.compile(
+    r"^(?:by\b|dr\.?\s|prof\.?\s|mr\.?\s|mrs\.?\s|ms\.?\s|associate\b|assistant\b|"
+    r"scan\b|register\b)",
+    re.IGNORECASE,
+)
+_LABEL_LINE_RE = re.compile(r"^[A-Za-z][A-Za-z ]{0,15}:$")
+
+
+def _ends_block(line: str) -> bool:
+    today = datetime.now().date()
+    return bool(
+        _STOP_LINE_RE.match(line)
+        or _LABEL_LINE_RE.match(line)
+        or _time_matches(line)
+        or _absolute_dates(line, today)
+    )
+
+
+def _is_junk_line(line: str) -> bool:
+    """A lone short word (OCR noise such as "Gen"); "&" and small words stay."""
+    return bool(re.fullmatch(r"[A-Za-z]{1,4}", line)) and line.lower() not in _SMALL_WORDS
+
+
+def _following_lines(lines: list[str], start: int, limit: int) -> list[str]:
+    taken = []
+    for line in lines[start:]:
+        if _ends_block(line):
+            break
+        if _is_junk_line(line):
+            continue
+        taken.append(line)
+        if len(taken) >= limit:
+            break
+    return taken
+
+
+def _headline_after_notice(lines: list[str], index: int) -> str | None:
+    """The line after a bare "NOTICE", joined with the next one when it ends
+    in a connector ("Grade Card Distribution for" + "Semester")."""
+    following = _following_lines(lines, index + 1, 3)
+    if not following:
+        return None
+    headline = following[0]
+    for extra in following[1:]:
+        if headline.split()[-1].lower() in _SMALL_WORDS:
+            headline = f"{headline} {extra}"
+        else:
+            break
+    return headline if len(headline.split()) <= 10 else None
+
+
+def _layout_title(text: str) -> str | None:
+    """A title taken from the headline of a notice or poster, or None."""
+    lines = _lines(text)
+    title = None
+    payment_title = False
+
+    for index, line in enumerate(lines):
+        alert = _ALERT_RE.match(line)
+        debate = _DEBATE_RE.match(line)
+        if alert:
+            name = " ".join(_following_lines(lines, index + 1, 4))
+            title = f"{name} {alert['kind'].lower()}" if name else None
+        elif debate:
+            topic = debate["rest"].strip() or " ".join(_following_lines(lines, index + 1, 3))
+            title = f"Debate: {topic}" if topic else None
+        if title:
+            break
+
+    if not title:
+        for index, line in enumerate(lines):
+            announce = _ANNOUNCE_RE.match(line)
+            if not announce:
+                continue
+            headline = (announce["rest"] or "").strip() or _headline_after_notice(lines, index)
+            if not headline:
+                continue
+            payment = re.match(r"payment of\s+(.+)$", headline, re.IGNORECASE)
+            if payment:
+                title = "Pay " + payment.group(1)
+                payment_title = True
+            else:
+                title = headline
+            break
+
+    if not title:
+        for index, line in enumerate(lines):
+            match = _KIND_ON_RE.match(line)
+            if not match:
+                continue
+            rest = match["rest"].strip()
+            topic = rest if rest else " ".join(_following_lines(lines, index + 1, 4))
+            if topic and not _has_schedule(topic) and len(topic.split()) <= 14:
+                title = f"{match['kind'].capitalize()} on {_title_case_caps(topic)}"
+                break
+
+    if not title:
+        for index, line in enumerate(lines):
+            if not _APPLICATIONS_RE.search(line):
+                continue
+            before = line[:_APPLICATIONS_RE.search(line).start()].strip()
+            parts = [before] if before else []
+            for earlier in reversed(lines[max(0, index - 2):index]):
+                if earlier.upper() == earlier and any(c.isalpha() for c in earlier):
+                    parts.insert(0, earlier)
+                else:
+                    break
+            if parts:
+                title = "Apply for " + _title_case_caps(" ".join(parts))
+                break
+
+    if not title:
+        # A poster headline written as a question: "The Future of Work:" / "Are You Ready?"
+        for index, line in enumerate(lines):
+            if line.endswith("?") and sum(len(re.sub(r"\W", "", w)) >= 3 for w in line.split()) >= 3:
+                previous = lines[index - 1] if index else ""
+                title = f"{previous} {line}" if previous.endswith(":") else line
+                break
+
+    if not title:
+        return None
+    title = re.sub(r"\s+", " ", title).strip(" .,:;")
+    title = _context_fix(title, text)
+    if payment_title:  # "Pay Next Semester Fees" -> "Pay next semester fees"
+        words = title.split()
+        title = " ".join(words[:1] + [w.lower() if w.istitle() else w for w in words[1:]])
+    return _capitalise(title) if title else None
+
+
+_LAYOUT_PLATFORMS = (
+    ("microsoft", "Microsoft Teams"), ("ms teams", "MS Teams"), ("zoom", "Zoom"),
+    ("webex", "Webex"), ("google", "Google Meet"),
+)
+
+
+def _date_literal(text: str, start: int, end: int) -> str:
+    """The date as written, with the weekday in front of it when there is one."""
+    weekday = re.search(rf"{_WEEKDAY_NAMES},?\s*$", text[:start], re.IGNORECASE)
+    literal = text[weekday.start():end] if weekday else text[start:end]
+    return _tidy(re.sub(r"\s+,", ",", re.sub(r"\s+", " ", literal)))
+
+
+def _layout_description(text: str, listed_dates: list) -> str | None:
+    """Useful notes for a notice or poster: every date when no single one can
+    be chosen, a date range, the platform, the mode and the venue. OCR noise
+    lines are not copied."""
+    parts = []
+
+    if listed_dates:
+        literals = [_date_literal(text, s, e) for s, e, _ in listed_dates]
+        parts.append("Dates: " + "; ".join(literals) + ".")
+    else:
+        date_range = _DAY_RANGE_RE.search(text)
+        if date_range and not _CHANGE_VERB_RE.search(text[max(0, date_range.start() - 60):date_range.start()]):
+            parts.append(f"Dates: {_tidy(date_range.group(0))}.")
+
+    platform = _PLATFORM_EVENT_RE.search(text)
+    if platform:
+        lowered = platform.group(0).lower()
+        name = next(label for key, label in _LAYOUT_PLATFORMS if lowered.startswith(key))
+        parts.append(f"Platform: {name}.")
+
+    mode = re.search(r"\bmode\s*:\s*(online|offline|hybrid)\b", text, re.IGNORECASE)
+    if mode:
+        parts.append(f"Mode: {mode.group(1).capitalize()}.")
+
+    location = _LOCATION_RE.search(text)
+    venue = re.search(r"\bvenue\s*:\s*\n?\s*([^\n]{3,60})", text, re.IGNORECASE)
+    if location:
+        parts.append(f"Location: {_capitalise(location.group(1).strip())}.")
+    elif venue:
+        parts.append(f"Location: {venue.group(1).strip(' .')}.")
+
+    return " ".join(parts)[:300] if parts else None
+
+
+# --------------------------------------------------
 # MAIN PARSER
 # --------------------------------------------------
 
@@ -877,26 +1259,53 @@ def _parse(raw_text, source, reference_date):
     ref = _as_date(reference_date)
     text_lower = text.lower()
 
-    if is_general_notice(text):
+    # Multi-line text (a notice or poster) is read with a few extra rules.
+    layout = _is_layout_text(text)
+    signal = _signal_text(text, layout)  # the text itself for ordinary messages
+    signal_lower = signal.lower()
+    changed = bool(_CHANGE_VERB_RE.search(text))
+
+    if is_general_notice(signal):
         return result, "general_notice"
 
-    event = is_event_message(text)
-    if not (event or _has_task_signal(text_lower)):
+    event = is_event_message(signal)
+    if layout and not event and not _has_task_signal(signal_lower):
+        event = _is_platform_session(signal, text)
+
+    # "Last date for payment: 4 November" makes a task, whatever else is said.
+    deadline_hit = None if changed else _find_deadline_date(text, ref)
+    if deadline_hit:
+        event = False
+
+    if not (event or deadline_hit or _has_task_signal(signal_lower)):
         return result, "general_notice"
 
-    task_type = classify_task_type(text)
+    title = _layout_title(text) if layout else None
+    task_type = classify_task_type(title or text)
     if event and re.search(
         r"\b(?:seminar|workshop|cultural fest|college fest|festival)\b",
         text_lower,
     ):
         task_type = "event"
+    if event and task_type is None:
+        task_type = "event"
 
-    date_hit = _find_date(text, ref)
-    time_hit = _find_time(text)
+    date_hit = deadline_hit or _find_date(text, ref)
+    time_hit = _find_time(text, first=layout and not changed)
+
+    # Several separate dates and no label saying which one counts: choose none
+    # (they are kept in the description).
+    listed_dates = []
+    if layout and not changed and not deadline_hit:
+        explicit = _absolute_dates(text, ref)
+        if len({found for _, _, found in explicit}) >= 2:
+            date_hit = None
+            listed_dates = explicit
 
     # A deadline described as unknown must not be inferred.
     if _UNKNOWN_DEADLINE_RE.search(text_lower):
         date_hit = time_hit = None
+        listed_dates = []
 
     found_date = date_hit[0] if date_hit else None
     found_time = time_hit[0] if time_hit else None
@@ -911,11 +1320,14 @@ def _parse(raw_text, source, reference_date):
         due_date = None
         due_time = None
 
-    title = extract_task_title(text, is_event=event)
+    if title is None:
+        title = extract_task_title(signal if layout else text, is_event=event)
 
     result.update({
         "task_title": title,
-        "description": extract_description(text),
+        "description": (
+            _layout_description(text, listed_dates) if layout else extract_description(text)
+        ),
         "task_type": task_type,
         "subject": extract_subject(text),
         "due_date": due_date,
