@@ -191,9 +191,10 @@ class UnchangedBehaviourTests(unittest.TestCase):
         self.assertIsNone(r["due_time"])
         self.assertEqual(r["date_time_expression"], "4 PM")
 
-    def test_change_detection_is_untouched(self):
+    def test_a_change_message_still_gives_the_new_date(self):
+        # Change detection itself is Steps 41-42 (nlp/test_step41_*, test_step42_*).
         r = parse("Project deadline moved from 5 November to 8 November for Smart Campus")
-        self.assertEqual(r["change_information"], [])
+        self.assertEqual(r["due_date"], "2026-11-08")
 
     def test_the_output_keys_are_the_contract_keys(self):
         self.assertEqual(set(parse("Submit in 2 days")), set(parse("hello")))

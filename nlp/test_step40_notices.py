@@ -105,7 +105,11 @@ class DateRangeTests(unittest.TestCase):
     def test_a_change_is_not_read_as_a_range(self):
         r = parse_message("Quiz moved from 8 to 12 November", "Chat", REF)
         self.assertEqual(extract_date("Quiz moved from 8 to 12 November", REF), "2026-11-12")
-        self.assertIsNone(r["change_information"] or None)
+        # Step 41-42: it is a change to 12 November; the bare "8" is not a date.
+        self.assertEqual(
+            [(c["change_type"], c["old_value"], c["new_value"]) for c in r["change_information"]],
+            [("date", None, "12 November")],
+        )
 
 
 class DeadlineLabelTests(unittest.TestCase):
@@ -239,9 +243,10 @@ class UnchangedBehaviourTests(unittest.TestCase):
     def test_next_week_is_still_no_date(self):
         self.assertIsNone(parse_message("Submit the report next week", "Chat", REF)["due_date"])
 
-    def test_change_detection_is_untouched(self):
+    def test_a_change_message_still_gives_the_new_date(self):
+        # Change detection itself is Steps 41-42 (nlp/test_step41_*, test_step42_*).
         r = parse_message("Project deadline moved from 5 November to 8 November for Smart Campus", "Chat", REF)
-        self.assertEqual(r["change_information"], [])
+        self.assertEqual(r["due_date"], "2026-11-08")
 
     def test_output_keys_are_the_contract_keys(self):
         keys = set(parse_message("hello", "Chat", REF))

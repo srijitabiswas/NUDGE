@@ -308,9 +308,15 @@ _DAY_RANGE_RE = re.compile(
     r"(?:\s*,?\s*(?P<y>20\d{2})\b)?",
     re.IGNORECASE,
 )
-_TODAY_TOMORROW_RE = re.compile(r"\b(?:tomorrow|today|tonight)\b", re.IGNORECASE)
+_TODAY_TOMORROW_RE = re.compile(
+    r"\b(?:tomorrow|tomorow|tommorow|tmrw|tmr|today|tonight)\b", re.IGNORECASE
+)
+_THIS_PART_RE = re.compile(r"\bthis\s+(?:morning|afternoon|evening)\b", re.IGNORECASE)
 # Step 38: more ways to say a day.
-_AFTER_TOMORROW_RE = re.compile(r"(?:\bthe\s+)?\bday\s+after\s+tomorrow\b", re.IGNORECASE)
+_AFTER_TOMORROW_RE = re.compile(
+    r"(?:\bthe\s+)?\bday\s+after\s+(?:tomorrow|tomorow|tommorow|tmrw|tmr)\b",
+    re.IGNORECASE,
+)
 _NUMBER_WORDS = {
     "a": 1, "an": 1, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
     "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
@@ -327,9 +333,22 @@ _WEEKDAY_RE = re.compile(
     r"(?P<wd>monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b",
     re.IGNORECASE,
 )
+_WEEKDAY_ABBREVIATIONS = {
+    "mon": 0, "tue": 1, "tues": 1, "wed": 2, "thu": 3, "thur": 3, "thurs": 3,
+    "fri": 4, "sat": 5, "sun": 6,
+}
+# "by Fri", "on Mon", "next Thurs". Short forms are accepted only after one of
+# these words, so ordinary words ("sat", "sun", "wed") are not read as days.
+_WEEKDAY_ABBR_RE = re.compile(
+    r"(?:(?P<q>next|this|coming)\s+(?:week\s*,?\s*(?:on\s+)?)?"
+    r"|(?:(?<=\bby\s)|(?<=\bon\s)|(?<=\bbefore\s)|(?<=\btill\s)"
+    r"|(?<=\buntil\s)|(?<=\bdue\s)))"
+    r"(?P<wd>mon|tues?|wed|thu(?:rs?)?|fri|sat|sun)\b",
+    re.IGNORECASE,
+)
 _NEXT_WEEK_WEEKDAY_RE = re.compile(
     r"\bnext\s+week\s*,?\s*(?:on\s+)?(?:monday|tuesday|wednesday|thursday|"
-    r"friday|saturday|sunday)\b",
+    r"friday|saturday|sunday|mon|tues?|wed|thu(?:rs?)?|fri|sat|sun)\b",
     re.IGNORECASE,
 )
 _DAY_PART_RE = re.compile(r"\s+(?:night|evening|morning|afternoon)\b", re.IGNORECASE)
@@ -417,7 +436,8 @@ def _weekday_date(weekday: str, qualifier: str | None, ref: date) -> date:
     """plain "Friday": the nearest upcoming one (a week away if today is Friday).
     "this/coming Friday": the upcoming one (today counts).
     "next Friday": Friday of the FOLLOWING week (weeks run Monday to Sunday)."""
-    target = _WEEKDAYS[weekday.lower()]
+    word = weekday.lower()
+    target = _WEEKDAYS[word] if word in _WEEKDAYS else _WEEKDAY_ABBREVIATIONS[word]
     qualifier = (qualifier or "").lower()
     if qualifier == "next":
         return ref - timedelta(days=ref.weekday()) + timedelta(days=7 + target)
@@ -460,15 +480,21 @@ def _relative_dates(text: str, ref: date) -> list[tuple[int, int, date]]:
             continue  # the "tomorrow" inside "day after tomorrow"
         word = match.group(0).lower()
         end = match.end()
-        if word == "tomorrow":
+        if word != "tonight":  # "tomorrow morning", "today evening"
             part = _DAY_PART_RE.match(text, end)
             end = part.end() if part else end
-        add(match.start(), end, ref + timedelta(days=1 if word == "tomorrow" else 0))
+        add(match.start(), end, ref + timedelta(days=0 if word in ("today", "tonight") else 1))
 
-    for match in _WEEKDAY_RE.finditer(text):
-        part = _DAY_PART_RE.match(text, match.end())  # "Sunday night"
-        end = part.end() if part else match.end()
-        add(match.start(), end, _weekday_date(match["wd"], match["q"], ref))
+    for match in _THIS_PART_RE.finditer(text):
+        add(match.start(), match.end(), ref)  # "this evening" is today
+
+    for pattern in (_WEEKDAY_RE, _WEEKDAY_ABBR_RE):
+        for match in pattern.finditer(text):
+            if not free(match.start(), match.end()):
+                continue
+            part = _DAY_PART_RE.match(text, match.end())  # "Sunday night"
+            end = part.end() if part else match.end()
+            add(match.start(), end, _weekday_date(match["wd"], match["q"], ref))
 
     return found
 
@@ -689,7 +715,8 @@ def _strip_title_prefixes(text: str) -> str:
     for _ in range(3):
         before = text
         text = re.sub(
-            r"^(?:reminder|update|notice|urgent|important|note)\s*:\s*",
+            r"^(?:reminder|update|notice(?:\s+of\s+change)?|change\s+notice|urgent|"
+            r"important|note)\s*:\s*",
             "", text, flags=re.IGNORECASE,
         )
         text = re.sub(
@@ -1298,6 +1325,189 @@ def _layout_description(text: str, listed_dates: list) -> str | None:
 
 
 # --------------------------------------------------
+# CHANGE DETECTION (roadmap Step 41)
+# --------------------------------------------------
+
+# Words that announce that something already announced has changed. The
+# ambiguous verbs ("moved", "advanced", "changed" ...) count only in a changing
+# shape ("moved to", "has been moved"), so "Advanced Algorithms lecture" or
+# "I changed my phone number" are not changes. "reschedule" as a request
+# ("please reschedule") is not a change either; only "rescheduled" is.
+_CHANGE_PHRASE_RE = re.compile(
+    r"\b(?:re-?scheduled|postponed|preponed)\b"
+    r"|\b(?:moved|shifted|extended|advanced|changed|revised|pushed)\s+"
+    r"(?:from|to|till|until|forward|back|ahead|up|by)\b"
+    r"|\b(?:has|have|had|is|are|was|were|been|now)\s+(?:been\s+)?"
+    r"(?:moved|shifted|extended|advanced|changed|revised|pushed)\b"
+    r"|\bnotice\s+of\s+change\b"
+    r"|\b(?:date|time|venue|deadline|schedule|location|room)\s+"
+    r"(?:change|changed|revised)\b"
+    r"|\bchange\s+(?:in|of)\s+(?:the\s+)?"
+    r"(?:date|time|venue|deadline|schedule|location)\b",
+    re.IGNORECASE,
+)
+_VENUE_CHANGE_RE = re.compile(
+    r"\b(?:venue|room|location|hall)\s+(?:change|changed|revised)\b"
+    r"|\b(?:moved|shifted|changed)\s+(?:from|to)\s+(?:room|hall|auditorium|lab|"
+    r"laboratory|block|building|classroom|seminar hall)\b",
+    re.IGNORECASE,
+)
+# A "change notice" about a submission is a task even with no action verb.
+_CHANGE_SUBJECT_RE = re.compile(
+    r"\b(?:submission|assignment|report|proposal|project|form|fees?|payment)\b",
+    re.IGNORECASE,
+)
+_SCHEDULE_VERB_RE = re.compile(r"\b(?:re-?scheduled|postponed|preponed|advanced)\b", re.IGNORECASE)
+
+
+def _schedule_items(text: str, ref: date):
+    """(dates, times) mentioned in the text, each as a set of distinct values."""
+    dates = {found for _, _, found in _absolute_dates(text, ref)}
+    dates |= {found for _, _, found in _relative_dates(text, ref)}
+    times = {value for _, _, value in _time_matches(text)}
+    return dates, times
+
+
+def _change_kinds(text: str, ref: date, is_event: bool) -> list[str]:
+    """Which properties changed: deadline, date, time, location or other."""
+    venue = bool(_VENUE_CHANGE_RE.search(text))
+    old_segment, new_segment = _old_and_new_segments(text, ref)
+    old_date, old_time = _first_values(old_segment, ref)
+    new_date, new_time = _first_values(new_segment, ref)
+
+    kinds = []
+    if venue:
+        kinds.append("location")
+        if not (old_date or old_time):
+            return kinds  # "moved to Auditorium on 12 November": only the place
+
+    if not is_event:
+        if not (venue and not new_date and not new_time):
+            kinds.append("deadline")
+        return kinds
+
+    if (old_date and new_date and old_date != new_date) or (
+        new_date and not old_date and not old_time
+    ):
+        kinds.append("date")
+    if (old_time and new_time and old_time != new_time) or (
+        new_time and not old_time and not new_date and not old_date
+    ):
+        kinds.append("time")
+    if not kinds:
+        if _SCHEDULE_VERB_RE.search(text) or new_date:
+            kinds.append("date")
+        else:
+            kinds.append("other")
+    return kinds
+
+
+# --------------------------------------------------
+# OLD AND NEW VALUES (roadmap Step 42)
+# --------------------------------------------------
+
+_FROM_TO_RE = re.compile(
+    r"\bfrom\b(?P<old>.+?)\b(?:to|till|until)\b(?P<new>.*)$", re.IGNORECASE | re.DOTALL
+)
+_TO_FROM_RE = re.compile(
+    r"^\W*(?:to|till|until|for)\b(?P<new>.+?)\bfrom\b(?P<old>.+)$", re.IGNORECASE | re.DOTALL
+)
+
+
+def _sentence_around(text: str, position: int) -> tuple[str, int]:
+    """The sentence that contains `position`, and where it starts in `text`."""
+    start = 0
+    for boundary in re.finditer(r"[.;]\s|\n", text):
+        if boundary.end() <= position:
+            start = boundary.end()
+        else:
+            return text[start:boundary.start()], start
+    return text[start:], start
+
+
+def _first_values(segment: str, ref: date):
+    """(date, time) of the first date and the first time in the segment."""
+    dates = _absolute_dates(segment, ref) or _relative_dates(segment, ref)
+    times = _time_items(segment)
+    return (
+        min(dates, key=lambda item: item[0])[2] if dates else None,
+        min(times, key=lambda item: item[0])[2] if times else None,
+    )
+
+
+def _first_literal(segment: str, kind: str, ref: date) -> str | None:
+    """The first date and/or time in the segment, as the text wrote it."""
+    date_item = None
+    if kind in ("deadline", "date"):
+        items = _absolute_dates(segment, ref) or _relative_dates(segment, ref)
+        date_item = min(items, key=lambda item: item[0])[:2] if items else None
+    time_item = None
+    if kind in ("deadline", "time"):
+        items = _time_items(segment)
+        time_item = min(items, key=lambda item: item[0])[:2] if items else None
+
+    spans = sorted(span for span in (date_item, time_item) if span)
+    if not spans:
+        return None
+    if len(spans) == 1:
+        return _tidy(segment[spans[0][0]:spans[0][1]])
+    (start_a, end_a), (start_b, end_b) = spans
+    gap = segment[end_a:start_b]
+    if len(gap) <= 15 and not re.search(r"[.;!?\n]", gap):
+        return _tidy(segment[start_a:end_b])
+    return f"{_tidy(segment[start_a:end_a])}, {_tidy(segment[start_b:end_b])}"
+
+
+def _old_and_new_segments(text: str, ref: date) -> tuple[str, str]:
+    """The part of the sentence that describes the OLD schedule and the part
+    that describes the NEW one. Either may be empty."""
+    match = _CHANGE_PHRASE_RE.search(text)
+    sentence, offset = _sentence_around(text, match.start())
+    verb = match.start() - offset
+    before, after = sentence[:verb], sentence[verb:]
+
+    # "postponed from 10 November to 15 November": old and new are both stated.
+    pair = _FROM_TO_RE.search(after)
+    if pair and not any(_schedule_items(after[:pair.start()], ref)):
+        return pair["old"], pair["new"]
+
+    rest = sentence[match.end() - offset:]
+    # "rescheduled to 12 November from 10 November": the other order.
+    reverse = _TO_FROM_RE.match(rest)
+    if reverse and _first_values(reverse["old"], ref)[0] is not None:
+        return reverse["old"], reverse["new"]
+
+    # "quiz originally at 10 AM moved to 12 PM": the old schedule comes first.
+    return before, rest
+
+
+def _change_values(text: str, ref: date, kind: str) -> tuple[str | None, str | None]:
+    if kind not in ("deadline", "date", "time"):
+        return None, None  # places and "other" changes are not read in Step 42
+    old_segment, new_segment = _old_and_new_segments(text, ref)
+    return (
+        _first_literal(old_segment, kind, ref),
+        _first_literal(new_segment, kind, ref),
+    )
+
+
+def _detect_changes(text: str, ref: date, is_event: bool) -> list[dict]:
+    """The change_information list for a message ([] when nothing changed)."""
+    if not _CHANGE_PHRASE_RE.search(text):
+        return []
+    changes = []
+    for kind in _change_kinds(text, ref, is_event):
+        old_value, new_value = _change_values(text, ref, kind)
+        changes.append({
+            "is_changed": True,
+            "change_type": kind,
+            "old_value": old_value,
+            "new_value": new_value,
+        })
+    return changes
+
+
+# --------------------------------------------------
 # MAIN PARSER
 # --------------------------------------------------
 
@@ -1360,7 +1570,16 @@ def _parse(raw_text, source, reference_date):
     if deadline_hit:
         event = False
 
-    if not (event or deadline_hit or _has_task_signal(signal_lower)):
+    # "Project proposal submission moved from Friday to Monday": a changed
+    # deadline is a task even though the notice has no action verb.
+    change_task = (
+        not event
+        and _CHANGE_PHRASE_RE.search(text) is not None
+        and _CHANGE_SUBJECT_RE.search(text) is not None
+        and any(_schedule_items(text, ref))
+    )
+
+    if not (event or deadline_hit or change_task or _has_task_signal(signal_lower)):
         return result, "general_notice"
 
     title = _layout_title(text) if layout else None
@@ -1418,6 +1637,7 @@ def _parse(raw_text, source, reference_date):
         "event_datetime": event_datetime,
         "date_time_expression": _build_expression(text, date_hit, time_hit),
         "confidence": calculate_confidence(title, task_type, found_date, found_time),
+        "change_information": _detect_changes(text, ref, event),
     })
     return result, ("event" if event else "task")
 
