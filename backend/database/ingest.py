@@ -10,9 +10,16 @@ What it does
   skip, a ``reason_code`` and a human-readable ``reason``.
 - ``category`` ("task", "event" or "general_notice") is optional. When it is
   not given, the decision is made from the record's own fields.
-- OCR confidence is stored in a separate ``ocr_metadata`` table. The ``tasks``
-  table and the ``insert_task`` contract are not changed. The NLP
-  ``confidence`` stays in ``tasks.confidence`` and is never mixed with OCR.
+- task_type may be null (agreed with the NLP owner: some action items do not
+  fit a supported category). Only task_title decides whether a message is a
+  task. A blank task_type is stored as NULL by insert_task.
+- OCR confidence is stored in a separate ``ocr_metadata`` table, so adding it
+  does not change the ``tasks`` columns. (The nullable ``task_type`` above is
+  a separate schema change.) The NLP ``confidence`` stays in
+  ``tasks.confidence`` and is never mixed with OCR.
+- If no connection is passed, the schema is created first (``init_db``), so a
+  new database file works. An in-memory path (":memory:") is not supported
+  that way; pass your own connection instead.
 - The database owns ``task_id`` and ``created_at``. If the input carries them,
   they are ignored.
 
@@ -35,7 +42,7 @@ import math
 import sqlite3
 from typing import Any, Dict, Optional
 
-from backend.database.connection import get_connection
+from backend.database.connection import get_connection, init_db
 from backend.database.repository import VALID_STATUSES, insert_task
 
 VALID_CATEGORIES = ("task", "event", "general_notice")
@@ -106,12 +113,9 @@ def _check_task(task: Any, category: Optional[str]):
             "task_title is missing or empty. This usually means a general "
             "notice or a non-actionable message.",
         )
-    if not _nonempty_str(task.get("task_type")):
-        return (
-            "missing_task_type",
-            "task_type is missing or empty. This usually means a general "
-            "notice or a non-actionable message.",
-        )
+    task_type = task.get("task_type")
+    if task_type is not None and not isinstance(task_type, str):
+        return "invalid_task_type", "task_type must be null or a string."
     if not _nonempty_str(task.get("source")):
         return "missing_source", "source is missing or empty."
     if not _nonempty_str(task.get("raw_text")):
@@ -221,6 +225,19 @@ def _insert_ocr_row(connection: sqlite3.Connection, task_id: int, ocr: Dict[str,
     connection.commit()
 
 
+def _open(db_path, connection):
+    """Return (connection, owns_connection).
+
+    When the caller passes no connection, the schema is created first with
+    ``init_db`` (safe to repeat), because ``get_connection`` alone does not
+    create tables. A new database file therefore works without extra setup.
+    """
+    if connection is not None:
+        return connection, False
+    init_db(db_path)
+    return get_connection(db_path), True
+
+
 # ------------------------------------------------------------- public API
 
 def ingest_task(
@@ -234,8 +251,7 @@ def ingest_task(
     if problem:
         return _skip(*problem)
 
-    owns_connection = connection is None
-    con = connection or get_connection(db_path)
+    con, owns_connection = _open(db_path, connection)
     try:
         task_id = insert_task(_storable(task), connection=con)
     finally:
@@ -279,8 +295,7 @@ def ingest_ocr_result(
         skipped["ocr_stored"] = False
         return skipped
 
-    owns_connection = connection is None
-    con = connection or get_connection(db_path)
+    con, owns_connection = _open(db_path, connection)
     try:
         ensure_ocr_metadata_table(con)
         task_id = insert_task(_storable(task), connection=con)
@@ -311,8 +326,7 @@ def get_ocr_metadata(
     connection: Optional[sqlite3.Connection] = None,
 ) -> Optional[Dict[str, Any]]:
     """Return the OCR details stored for a task, or None if there are none."""
-    owns_connection = connection is None
-    con = connection or get_connection(db_path)
+    con, owns_connection = _open(db_path, connection)
     try:
         ensure_ocr_metadata_table(con)
         row = con.execute(

@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS tasks (
     -- 2. Core Content & Classification (NLP Module)
     task_title              TEXT NOT NULL CHECK (length(trim(task_title)) > 0),
     description             TEXT,                                                -- Nullable: context / instructions
-    task_type               TEXT NOT NULL CHECK (length(trim(task_type)) > 0),    -- 'assignment', 'exam', 'quiz', 'project', 'event', etc.
+    task_type               TEXT CHECK (task_type IS NULL OR length(trim(task_type)) > 0),    -- 'assignment', 'exam', 'quiz', 'project', 'event', etc.
     subject                 TEXT,                                                -- Nullable: course name or subject code
 
     -- 3. Temporal Extractions & Normalization (NLP + Storage Layer)

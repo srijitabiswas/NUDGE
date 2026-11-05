@@ -312,7 +312,7 @@ class TestConstraintValidation(BaseDatabaseTestCase):
         )
 
     def test_missing_and_empty_required_fields_rejection(self):
-        """Verify missing, None, non-string, empty, and whitespace-only strings for title and type raise ValueError."""
+        """Verify missing, None, non-string, empty, and whitespace-only strings raise ValueError for title; a null or blank type is stored as NULL."""
         base_valid = {
             "task_title": "Valid Title",
             "task_type": "assignment",
@@ -334,17 +334,21 @@ class TestConstraintValidation(BaseDatabaseTestCase):
                     str(ctx.exception),
                 )
 
-        # Test task_type variations
-        for bad_type in invalid_values:
+        # Test task_type variations: null or blank is stored as NULL
+        for blank_type in (None, "", "   ", "\t\n"):
+            with self.subTest(blank_type=blank_type):
+                task = dict(base_valid, task_type=blank_type)
+                task_id = insert_task(task, db_path=self.db_path)
+                stored = get_task_by_id(task_id, db_path=self.db_path)
+                self.assertIsNone(stored["task_type"])
+
+        # Non-string task_type values are still rejected
+        for bad_type in (123, True, []):
             with self.subTest(bad_type=bad_type):
                 task = dict(base_valid, task_type=bad_type)
                 with self.assertRaises(ValueError) as ctx:
                     insert_task(task, db_path=self.db_path)
                 self.assertIn("task_type", str(ctx.exception))
-                self.assertIn(
-                    "General notices and non-actionable messages must be filtered",
-                    str(ctx.exception),
-                )
 
     def test_empty_raw_text_and_source_rejection(self):
         """Whitespace-only or empty strings for source and raw_text violate database CHECK constraints."""

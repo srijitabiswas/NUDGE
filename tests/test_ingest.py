@@ -8,6 +8,7 @@ output. Assumptions are marked "ASSUMPTION".
 
 import sqlite3
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -193,7 +194,6 @@ class IngestTaskTests(unittest.TestCase):
     def test_missing_required_fields_are_skipped_with_specific_codes(self):
         cases = {
             "task_title": "missing_task_title",
-            "task_type": "missing_task_type",
             "source": "missing_source",
             "raw_text": "missing_raw_text",
         }
@@ -265,6 +265,65 @@ class IngestTaskTests(unittest.TestCase):
         self.assertNotEqual(result["task_id"], 999)
         stored = get_task_by_id(result["task_id"], connection=self.con)
         self.assertNotEqual(stored["created_at"], "1999-01-01T00:00:00")
+
+    def test_null_task_type_is_stored_as_null(self):
+        # Shape of Step 21 case NLP-03 from the parser run: title, date and
+        # time present, task_type null. ASSUMPTION: source and raw_text are
+        # invented; only the title, date and time were seen.
+        task = task_with_date_and_time()
+        task.update({
+            "task_title": "Submit DBMS lab record",
+            "task_type": None,
+            "subject": None,
+            "due_date": "2026-10-28",
+            "due_time": "18:00",
+            "raw_text": "Submit the DBMS lab record by 6 PM today.",
+        })
+        result = ingest_task(task, connection=self.con)
+        self.assertEqual(result["status"], "inserted")
+        stored = get_task_by_id(result["task_id"], connection=self.con)
+        self.assertIsNone(stored["task_type"])
+        self.assertEqual(stored["due_datetime"], "2026-10-28T18:00:00")
+
+    def test_blank_task_type_is_stored_as_null(self):
+        for blank in ("", "   "):
+            with self.subTest(blank=blank):
+                task = task_with_date_and_time()
+                task["task_type"] = blank
+                result = ingest_task(task, connection=self.con)
+                self.assertEqual(result["status"], "inserted")
+                stored = get_task_by_id(result["task_id"], connection=self.con)
+                self.assertIsNone(stored["task_type"])
+
+    def test_non_string_task_type_is_skipped(self):
+        for bad in (123, True, []):
+            with self.subTest(bad=bad):
+                task = task_with_date_and_time()
+                task["task_type"] = bad
+                self.assertEqual(
+                    ingest_task(task, connection=self.con)["reason_code"],
+                    "invalid_task_type",
+                )
+
+    def test_missing_title_still_skipped_when_type_is_null(self):
+        result = ingest_task(general_notice(), connection=self.con)
+        self.assertEqual(result["reason_code"], "missing_task_title")
+
+    def test_new_database_file_is_created_with_schema(self):
+        with tempfile.TemporaryDirectory() as folder:
+            db_path = str(Path(folder) / "new.db")
+            result = ingest_task(task_with_date_and_time(), db_path=db_path)
+            self.assertEqual(result["status"], "inserted")
+            stored = get_task_by_id(result["task_id"], db_path=db_path)
+            self.assertEqual(stored["task_title"], "Submit Machine Learning Assignment 2")
+
+    def test_ocr_result_works_on_a_new_database_file(self):
+        with tempfile.TemporaryDirectory() as folder:
+            db_path = str(Path(folder) / "new_ocr.db")
+            result = ingest_ocr_result(ocr_result(), db_path=db_path)
+            self.assertEqual(result["status"], "inserted")
+            meta = get_ocr_metadata(result["task_id"], db_path=db_path)
+            self.assertEqual(meta["overall_confidence"], 0.6024)
 
 
 class IngestOcrTests(unittest.TestCase):
