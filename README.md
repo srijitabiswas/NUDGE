@@ -1,7 +1,11 @@
-
 # NUDGE frontend
 
 React 19 + Vite. From Messages to Actions: the student life management platform.
+
+## Design
+
+Figma file with the prototype, components and mood board:
+[NUDGE-PROJECT on Figma](https://www.figma.com/design/BK3CHWwcyt51jlTZP3Wblz/NUDGE-PROJECT)
 
 ## Run it
 
