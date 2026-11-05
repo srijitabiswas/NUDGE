@@ -1,0 +1,1833 @@
+{
+  "_meta": {
+    "description": "Real parse_ocr_file output for the archived OCR JSON files.",
+    "parser_commit": "6c10f1c07f9b1063f86e29f70396a899cc97c05c",
+    "generated_on": "2026-11-05",
+    "ocr_samples": "nlp/test_data/ocr_samples",
+    "reference_date": "2026-10-28",
+    "reference_date_note": "Same as the Step 21 dataset unless given explicitly. The screenshots have no stated reference date.",
+    "record_count": 9
+  },
+  "records": [
+    {
+      "image": "payment_notice.png",
+      "category": "task",
+      "task": {
+        "task_title": "Pay next semester fees",
+        "description": null,
+        "task_type": null,
+        "subject": "End",
+        "due_date": "2026-11-04",
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Screenshot/OCR",
+        "raw_text": "NOTICE: Payment of Nert Semester Fees\nDear Students,\nPlease be informed that the semester fees for your next semester must be\nbefore\nthe beginning of the End Semester Examination; which will be held from November\n25,2026.\nAs per the Academic Calendar:\nFee payment starts: October 27, 2026\nLast date for payment: November 4, 2026\nImportant points to note:\n1\nThe Admit Card for the End Semester Examination will be issued\nto those\nstudents who\ntheir fees within the stipulated time.\n2\nStudents who have bank loans are requested to collect the Demand Letter now\nonwards from the\nreception counter by submitting:\nA copy of the sanction letter\nThe prescribed form\nAlL students are advised to treat this notice with the utmost urgency and ensure timely\npaid\nonly\npaid\nhave",
+        "date_time_expression": "November 4, 2026",
+        "confidence": 0.5,
+        "change_information": []
+      },
+      "ocr": {
+        "image_filename": "payment_notice.png",
+        "overall_confidence": 0.8946,
+        "line_confidences": [
+          {
+            "text": "NOTICE: Payment of Nert Semester Fees",
+            "score": 0.7525
+          },
+          {
+            "text": "Dear Students,",
+            "score": 0.7373
+          },
+          {
+            "text": "Please be informed that the semester fees for your next semester must be",
+            "score": 0.7412
+          },
+          {
+            "text": "before",
+            "score": 1.0
+          },
+          {
+            "text": "the beginning of the End Semester Examination; which will be held from November",
+            "score": 0.6473
+          },
+          {
+            "text": "25,2026.",
+            "score": 0.9904
+          },
+          {
+            "text": "As per the Academic Calendar:",
+            "score": 0.9364
+          },
+          {
+            "text": "Fee payment starts: October 27, 2026",
+            "score": 0.8884
+          },
+          {
+            "text": "Last date for payment: November 4, 2026",
+            "score": 0.9657
+          },
+          {
+            "text": "Important points to note:",
+            "score": 0.9843
+          },
+          {
+            "text": "1",
+            "score": 0.9476
+          },
+          {
+            "text": "The Admit Card for the End Semester Examination will be issued",
+            "score": 0.6511
+          },
+          {
+            "text": "to those",
+            "score": 0.9974
+          },
+          {
+            "text": "students who",
+            "score": 0.982
+          },
+          {
+            "text": "their fees within the stipulated time.",
+            "score": 0.9438
+          },
+          {
+            "text": "2",
+            "score": 1.0
+          },
+          {
+            "text": "Students who have bank loans are requested to collect the Demand Letter now",
+            "score": 0.6587
+          },
+          {
+            "text": "onwards from the",
+            "score": 0.9336
+          },
+          {
+            "text": "reception counter by submitting:",
+            "score": 0.8595
+          },
+          {
+            "text": "A copy of the sanction letter",
+            "score": 0.9816
+          },
+          {
+            "text": "The prescribed form",
+            "score": 0.9699
+          },
+          {
+            "text": "AlL students are advised to treat this notice with the utmost urgency and ensure timely",
+            "score": 0.6952
+          },
+          {
+            "text": "paid",
+            "score": 1.0
+          },
+          {
+            "text": "only",
+            "score": 0.9998
+          },
+          {
+            "text": "paid",
+            "score": 0.9954
+          },
+          {
+            "text": "have",
+            "score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "image": "screenshot 2.jpeg",
+      "category": "event",
+      "task": {
+        "task_title": "Network & Network Security session",
+        "description": "Mode: Online.",
+        "task_type": "event",
+        "subject": "Network Security",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Screenshot/OCR",
+        "raw_text": "SESSION ALERT\nNetwork\n&\nNetwork Security\nDATE:\nTH\nJANUARY\nTIME:\n7 PM\nMODE:\nONLINE\nZER\nGway\na uia 0 c e",
+        "date_time_expression": "7 PM",
+        "confidence": 0.75,
+        "change_information": []
+      },
+      "ocr": {
+        "image_filename": "screenshot 2.jpeg",
+        "overall_confidence": 0.7989,
+        "line_confidences": [
+          {
+            "text": "SESSION ALERT",
+            "score": 0.9388
+          },
+          {
+            "text": "Network",
+            "score": 0.7662
+          },
+          {
+            "text": "&",
+            "score": 0.8075
+          },
+          {
+            "text": "Network Security",
+            "score": 0.9986
+          },
+          {
+            "text": "DATE:",
+            "score": 0.9974
+          },
+          {
+            "text": "TH",
+            "score": 0.9953
+          },
+          {
+            "text": "JANUARY",
+            "score": 0.909
+          },
+          {
+            "text": "TIME:",
+            "score": 0.9981
+          },
+          {
+            "text": "7 PM",
+            "score": 0.8532
+          },
+          {
+            "text": "MODE:",
+            "score": 0.9965
+          },
+          {
+            "text": "ONLINE",
+            "score": 0.6197
+          },
+          {
+            "text": "ZER",
+            "score": 0.9993
+          },
+          {
+            "text": "Gway",
+            "score": 0.202
+          },
+          {
+            "text": "a uia 0 c e",
+            "score": 0.1035
+          }
+        ]
+      }
+    },
+    {
+      "image": "screenshot 3.jpeg",
+      "category": "event",
+      "task": {
+        "task_title": "Grade Card Distribution for Semester",
+        "description": "Dates: Tuesday, October 27th, 2026; Friday, October 30th, 2026. Location: Room No. 201, Admin Desk.",
+        "task_type": "event",
+        "subject": "Artificial Intelligence",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Screenshot/OCR",
+        "raw_text": "A Satyam Roychowdhury initiative\nSNU\nSISTER NIVEDITA\nINDIA\nUNIVERSITY\n6\nNOTICE\nGrade Card Distribution for\nSemester\nB.Tech Computer Science & Engineering (Batch 2023-2027)\nDistribution of 6th Semester Grade Cards is scheduled!\nPlease note the details below for collection:\nThis\nto students of:\nB.Tech Computer Science & Engineering\nB.Tech CSE (Artificial Intelligence & Machine Learning)\nB.Tech CSE (loT, Cyber Security, Blockchain)\nB.Tech CSE (CSBS)\nAt\nDates:\nTuesday, October 27th , 2026\nFriday, October 30th, 2026\nTime:\n2.00 PM\nC\n4:00 PM\nVenue:\nRoom No. 201, Admin Desk\nFor Queries, Contact:\n?\nKrishnendu Sir & Anjan Sir\n}\n(\n6th\napplies\nGRADE\nCARD",
+        "date_time_expression": "2.00 PM",
+        "confidence": 0.75,
+        "change_information": []
+      },
+      "ocr": {
+        "image_filename": "screenshot 3.jpeg",
+        "overall_confidence": 0.817,
+        "line_confidences": [
+          {
+            "text": "A Satyam Roychowdhury initiative",
+            "score": 0.7878
+          },
+          {
+            "text": "SNU",
+            "score": 1.0
+          },
+          {
+            "text": "SISTER NIVEDITA",
+            "score": 0.8999
+          },
+          {
+            "text": "INDIA",
+            "score": 0.9129
+          },
+          {
+            "text": "UNIVERSITY",
+            "score": 1.0
+          },
+          {
+            "text": "6",
+            "score": 0.1253
+          },
+          {
+            "text": "NOTICE",
+            "score": 0.9999
+          },
+          {
+            "text": "Grade Card Distribution for",
+            "score": 0.7097
+          },
+          {
+            "text": "Semester",
+            "score": 0.9954
+          },
+          {
+            "text": "B.Tech Computer Science & Engineering (Batch 2023-2027)",
+            "score": 0.8899
+          },
+          {
+            "text": "Distribution of 6th Semester Grade Cards is scheduled!",
+            "score": 0.7375
+          },
+          {
+            "text": "Please note the details below for collection:",
+            "score": 0.8556
+          },
+          {
+            "text": "This",
+            "score": 1.0
+          },
+          {
+            "text": "to students of:",
+            "score": 0.9865
+          },
+          {
+            "text": "B.Tech Computer Science & Engineering",
+            "score": 0.8856
+          },
+          {
+            "text": "B.Tech CSE (Artificial Intelligence & Machine Learning)",
+            "score": 0.9545
+          },
+          {
+            "text": "B.Tech CSE (loT, Cyber Security, Blockchain)",
+            "score": 0.8304
+          },
+          {
+            "text": "B.Tech CSE (CSBS)",
+            "score": 0.9954
+          },
+          {
+            "text": "At",
+            "score": 0.5641
+          },
+          {
+            "text": "Dates:",
+            "score": 1.0
+          },
+          {
+            "text": "Tuesday, October 27th , 2026",
+            "score": 0.7723
+          },
+          {
+            "text": "Friday, October 30th, 2026",
+            "score": 0.915
+          },
+          {
+            "text": "Time:",
+            "score": 0.9999
+          },
+          {
+            "text": "2.00 PM",
+            "score": 0.996
+          },
+          {
+            "text": "C",
+            "score": 0.0666
+          },
+          {
+            "text": "4:00 PM",
+            "score": 0.7135
+          },
+          {
+            "text": "Venue:",
+            "score": 0.9714
+          },
+          {
+            "text": "Room No. 201, Admin Desk",
+            "score": 0.7459
+          },
+          {
+            "text": "For Queries, Contact:",
+            "score": 0.7711
+          },
+          {
+            "text": "?",
+            "score": 0.5805
+          },
+          {
+            "text": "Krishnendu Sir & Anjan Sir",
+            "score": 0.89
+          },
+          {
+            "text": "}",
+            "score": 0.3529
+          },
+          {
+            "text": "(",
+            "score": 0.3468
+          },
+          {
+            "text": "6th",
+            "score": 0.9759
+          },
+          {
+            "text": "applies",
+            "score": 1.0
+          },
+          {
+            "text": "GRADE",
+            "score": 0.9998
+          },
+          {
+            "text": "CARD",
+            "score": 0.9995
+          }
+        ]
+      }
+    },
+    {
+      "image": "screenshot 4.jpeg",
+      "category": "event",
+      "task": {
+        "task_title": "Debate: When automation reduces errors but removes human judgement, is it still an improvement?",
+        "description": "Platform: Microsoft Teams.",
+        "task_type": "event",
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-10-09T15:30:00",
+        "source": "Screenshot/OCR",
+        "raw_text": "Semployability-life\nFederation\nEL\nDesigning successtul digital carcers\nIUniversity\nCommuty\nix the\nMeet the voices behind today's debate\nFor the Motion\nAgainst the Motion\nRoshni M\nCaleb Gomes\nShruti Kumari\nAyesha Jamil\nXPro Learner; Dhanalarshm\nXPro Learner, Meghnad Saha\nXPro Learner, PES College\nXPro Learner; Meghnad Saha\nSrinivasan Unrversity\nInstitute ot Technolgy\nof Engineering\nInstitute ot Technology\nBEYOND THE ARGUMENT\nDebate Topic:\nWhen automation reduces errors but removes human judgement, is it still an improvement?\n9 Oct, 2026\n03:30 PM onwards\nMicrosoft Teams\n[dovK\nTodtwx",
+        "date_time_expression": "9 Oct, 2026, 03:30 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "ocr": {
+        "image_filename": "screenshot 4.jpeg",
+        "overall_confidence": 0.7243,
+        "line_confidences": [
+          {
+            "text": "Semployability-life",
+            "score": 0.5755
+          },
+          {
+            "text": "Federation",
+            "score": 1.0
+          },
+          {
+            "text": "EL",
+            "score": 0.9979
+          },
+          {
+            "text": "Designing successtul digital carcers",
+            "score": 0.7131
+          },
+          {
+            "text": "IUniversity",
+            "score": 0.7911
+          },
+          {
+            "text": "Commuty",
+            "score": 0.2961
+          },
+          {
+            "text": "ix the",
+            "score": 0.2276
+          },
+          {
+            "text": "Meet the voices behind today's debate",
+            "score": 0.915
+          },
+          {
+            "text": "For the Motion",
+            "score": 0.8199
+          },
+          {
+            "text": "Against the Motion",
+            "score": 0.946
+          },
+          {
+            "text": "Roshni M",
+            "score": 0.882
+          },
+          {
+            "text": "Caleb Gomes",
+            "score": 0.9993
+          },
+          {
+            "text": "Shruti Kumari",
+            "score": 0.9988
+          },
+          {
+            "text": "Ayesha Jamil",
+            "score": 0.9999
+          },
+          {
+            "text": "XPro Learner; Dhanalarshm",
+            "score": 0.221
+          },
+          {
+            "text": "XPro Learner, Meghnad Saha",
+            "score": 0.7483
+          },
+          {
+            "text": "XPro Learner, PES College",
+            "score": 0.7756
+          },
+          {
+            "text": "XPro Learner; Meghnad Saha",
+            "score": 0.5857
+          },
+          {
+            "text": "Srinivasan Unrversity",
+            "score": 0.7384
+          },
+          {
+            "text": "Institute ot Technolgy",
+            "score": 0.5767
+          },
+          {
+            "text": "of Engineering",
+            "score": 0.5126
+          },
+          {
+            "text": "Institute ot Technology",
+            "score": 0.6788
+          },
+          {
+            "text": "BEYOND THE ARGUMENT",
+            "score": 0.9872
+          },
+          {
+            "text": "Debate Topic:",
+            "score": 0.9987
+          },
+          {
+            "text": "When automation reduces errors but removes human judgement, is it still an improvement?",
+            "score": 0.9339
+          },
+          {
+            "text": "9 Oct, 2026",
+            "score": 0.936
+          },
+          {
+            "text": "03:30 PM onwards",
+            "score": 0.6597
+          },
+          {
+            "text": "Microsoft Teams",
+            "score": 0.8973
+          },
+          {
+            "text": "[dovK",
+            "score": 0.0616
+          },
+          {
+            "text": "Todtwx",
+            "score": 0.2547
+          }
+        ]
+      }
+    },
+    {
+      "image": "screenshot 5.jpeg",
+      "category": "event",
+      "task": {
+        "task_title": "The Future of Work in Australia: Are You Ready for 2028?",
+        "description": "Platform: Microsoft Teams.",
+        "task_type": "event",
+        "subject": "Cyber Security",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Screenshot/OCR",
+        "raw_text": "Employabilitylife\nFederation\nDosigning succossful dlgital caroors\nUniversity\nWelvv ou\nThe Future of Work in Australia:\nAre You Ready for 2028?\nAssociate Prof: Paul Pang\nAssociate Professor; Cyber Security, Federation University Australia\nJune\n4.30-5.30 PM\nMicrosoft\n05\nIST\nTeams\nScan QR Code to\nRegister Now\n5123\nMll\nMt\nZutrdo\n512",
+        "date_time_expression": "4.30-5.30 PM",
+        "confidence": 0.75,
+        "change_information": []
+      },
+      "ocr": {
+        "image_filename": "screenshot 5.jpeg",
+        "overall_confidence": 0.75,
+        "line_confidences": [
+          {
+            "text": "Employabilitylife",
+            "score": 0.9994
+          },
+          {
+            "text": "Federation",
+            "score": 1.0
+          },
+          {
+            "text": "Dosigning succossful dlgital caroors",
+            "score": 0.3482
+          },
+          {
+            "text": "University",
+            "score": 0.7959
+          },
+          {
+            "text": "Welvv ou",
+            "score": 0.4057
+          },
+          {
+            "text": "The Future of Work in Australia:",
+            "score": 0.6977
+          },
+          {
+            "text": "Are You Ready for 2028?",
+            "score": 0.959
+          },
+          {
+            "text": "Associate Prof: Paul Pang",
+            "score": 0.8187
+          },
+          {
+            "text": "Associate Professor; Cyber Security, Federation University Australia",
+            "score": 0.541
+          },
+          {
+            "text": "June",
+            "score": 0.936
+          },
+          {
+            "text": "4.30-5.30 PM",
+            "score": 0.7519
+          },
+          {
+            "text": "Microsoft",
+            "score": 0.9999
+          },
+          {
+            "text": "05",
+            "score": 0.9999
+          },
+          {
+            "text": "IST",
+            "score": 0.9983
+          },
+          {
+            "text": "Teams",
+            "score": 0.9999
+          },
+          {
+            "text": "Scan QR Code to",
+            "score": 0.7159
+          },
+          {
+            "text": "Register Now",
+            "score": 0.9992
+          },
+          {
+            "text": "5123",
+            "score": 0.9705
+          },
+          {
+            "text": "Mll",
+            "score": 0.4057
+          },
+          {
+            "text": "Mt",
+            "score": 0.1388
+          },
+          {
+            "text": "Zutrdo",
+            "score": 0.0261
+          },
+          {
+            "text": "512",
+            "score": 0.9925
+          }
+        ]
+      }
+    },
+    {
+      "image": "screenshot 6.jpeg",
+      "category": "general_notice",
+      "task": {
+        "task_title": null,
+        "description": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Screenshot/OCR",
+        "raw_text": "NOTICE\nBTech/ BCA Honours with Research\nEligibility and Cuidelines\nAlL concerned students of the B.Tech and BCA programmes are hereby informed about the\nprovision for Honours with Research.\nAs per the BTech and BCA programme curriculum, completing a Project is a mandatory\nrequirement for all students\nAs recommended in the Departmental Council\nMeeting held on Sth August 2026 , students\nfulfilling the prescribed academic criteria may be given an opportunity to Opt for B.Tech/BCA\nHonours with Research\nas\napplicable.\nEligibility and Requirements\nStudents who have secured an average GPA of 7.5 or above Up to the end of the Third Year\n(Semester I to Semester VI) may be given an opportunity to opt for BTech/BCA Honours\nwith Research. Eligible students may earn 4 additional credits by carrying Out research work\nand successfully publishing at least one research paper in an indexed conference Or journal\nduring the entire Fourth Year. Eligible students whose research\npapers are accepted\nor\npublished based on their research work may be considered for the award of B.Tech/BCA\nHonours with Research\nas\napplicable\nFrequently Asked Questions (FAQ)\n1: Is the Project compulsory for every B.Tech/BCA student?\nYes: As per the curriculum; the Project is a mandatory component of the BTech and BCA\ndegree programmes_\n2. Who is eligible to opt for Honours with Research?\nStudents\nan average GPA of 7.5 0r above Up to the end of Semester VI may be\nconsidered eligible to opt for BTech/BCA\nHonours with\nResearch; subject to\napplicable\nacademic rules_\n3. Is Honours with Research compulsory for eligible students?\nNo. It is\nan\nadditional academic opportunity for eligible students:\nThe\nregular Project\nrequirement remains mandatory for all students\n4. How many additional credits can be earned?\nAn eligible student may earn\nadditional credits through the prescribed research work for\nHonours with Research_\n5. Is publication of a research paper compulsory?\nFor consideration for Honours with Research , the student is required to have at least one\nresearch paper accepted or published in an indexed conference Or journal , subject t0 the\napplicable academic requirements_\n6. Is acceptance of the paper sufficient; Or must it already be published?\nA research paper that is accepted or published, subject to verification and applicable academic\nrequirements, may be considered.\n7. Can any research paper be used for Honours with Research?\nThe paper should be based on the research work carried out by the student as part of the\nprogramme and should satisfy the prescribed academic and publication requirements_\n8. Can a paper\n'published before the Fourth Year be considered?\nThe requirement specifically relates to research work undertaken for Honours with Research\nthe prescribed programme period. Eligibility of any earlier work will be subject to\nverification and approval by the DepartmentUniversity as per applicable rules_\n9_\nDoes having\na\nGPA of 7.5 or above automatically give\na\nstudent Honours with\nResearch?\nNo: A GPA of 7.5 or above provides eligibility to be considered for Opting for Honours with\nResearch\nThe final award depends on successful completion of all prescribed requirements\nsuch as research\npublication.\nhaving\nduring",
+        "date_time_expression": null,
+        "confidence": 0.0,
+        "change_information": []
+      },
+      "ocr": {
+        "image_filename": "screenshot 6.jpeg",
+        "overall_confidence": 0.7983,
+        "line_confidences": [
+          {
+            "text": "NOTICE",
+            "score": 0.9999
+          },
+          {
+            "text": "BTech/ BCA Honours with Research",
+            "score": 0.9009
+          },
+          {
+            "text": "Eligibility and Cuidelines",
+            "score": 0.7613
+          },
+          {
+            "text": "AlL concerned students of the B.Tech and BCA programmes are hereby informed about the",
+            "score": 0.6607
+          },
+          {
+            "text": "provision for Honours with Research.",
+            "score": 0.877
+          },
+          {
+            "text": "As per the BTech and BCA programme curriculum, completing a Project is a mandatory",
+            "score": 0.7137
+          },
+          {
+            "text": "requirement for all students",
+            "score": 0.9932
+          },
+          {
+            "text": "As recommended in the Departmental Council",
+            "score": 0.7156
+          },
+          {
+            "text": "Meeting held on Sth August 2026 , students",
+            "score": 0.9649
+          },
+          {
+            "text": "fulfilling the prescribed academic criteria may be given an opportunity to Opt for B.Tech/BCA",
+            "score": 0.7486
+          },
+          {
+            "text": "Honours with Research",
+            "score": 0.9726
+          },
+          {
+            "text": "as",
+            "score": 0.9895
+          },
+          {
+            "text": "applicable.",
+            "score": 0.5739
+          },
+          {
+            "text": "Eligibility and Requirements",
+            "score": 0.9616
+          },
+          {
+            "text": "Students who have secured an average GPA of 7.5 or above Up to the end of the Third Year",
+            "score": 0.6013
+          },
+          {
+            "text": "(Semester I to Semester VI) may be given an opportunity to opt for BTech/BCA Honours",
+            "score": 0.5548
+          },
+          {
+            "text": "with Research. Eligible students may earn 4 additional credits by carrying Out research work",
+            "score": 0.8034
+          },
+          {
+            "text": "and successfully publishing at least one research paper in an indexed conference Or journal",
+            "score": 0.858
+          },
+          {
+            "text": "during the entire Fourth  Year. Eligible students whose research",
+            "score": 0.4977
+          },
+          {
+            "text": "papers are accepted",
+            "score": 0.9974
+          },
+          {
+            "text": "or",
+            "score": 0.892
+          },
+          {
+            "text": "published based on their research work may be considered for the award of B.Tech/BCA",
+            "score": 0.8377
+          },
+          {
+            "text": "Honours with Research",
+            "score": 0.9556
+          },
+          {
+            "text": "as",
+            "score": 0.9896
+          },
+          {
+            "text": "applicable",
+            "score": 1.0
+          },
+          {
+            "text": "Frequently Asked Questions (FAQ)",
+            "score": 0.8165
+          },
+          {
+            "text": "1: Is the Project compulsory for every B.Tech/BCA student?",
+            "score": 0.5481
+          },
+          {
+            "text": "Yes: As per the curriculum; the Project is a mandatory component of the BTech and BCA",
+            "score": 0.6918
+          },
+          {
+            "text": "degree programmes_",
+            "score": 0.8533
+          },
+          {
+            "text": "2. Who is eligible to opt for Honours with Research?",
+            "score": 0.8507
+          },
+          {
+            "text": "Students",
+            "score": 0.9998
+          },
+          {
+            "text": "an average GPA of 7.5 0r above Up to the end of Semester VI may be",
+            "score": 0.6519
+          },
+          {
+            "text": "considered eligible to opt for BTech/BCA",
+            "score": 0.8498
+          },
+          {
+            "text": "Honours with",
+            "score": 0.877
+          },
+          {
+            "text": "Research; subject to",
+            "score": 0.6511
+          },
+          {
+            "text": "applicable",
+            "score": 1.0
+          },
+          {
+            "text": "academic rules_",
+            "score": 0.9992
+          },
+          {
+            "text": "3. Is Honours with Research compulsory for eligible students?",
+            "score": 0.7875
+          },
+          {
+            "text": "No.  It is",
+            "score": 0.3928
+          },
+          {
+            "text": "an",
+            "score": 1.0
+          },
+          {
+            "text": "additional  academic  opportunity for  eligible students:",
+            "score": 0.5583
+          },
+          {
+            "text": "The",
+            "score": 1.0
+          },
+          {
+            "text": "regular  Project",
+            "score": 0.8367
+          },
+          {
+            "text": "requirement remains mandatory for all students",
+            "score": 0.8249
+          },
+          {
+            "text": "4. How many additional credits can be earned?",
+            "score": 0.8427
+          },
+          {
+            "text": "An eligible student may earn",
+            "score": 0.9864
+          },
+          {
+            "text": "additional credits through the prescribed research work for",
+            "score": 0.7222
+          },
+          {
+            "text": "Honours with Research_",
+            "score": 0.9051
+          },
+          {
+            "text": "5. Is publication of a research paper compulsory?",
+            "score": 0.6112
+          },
+          {
+            "text": "For consideration for Honours with Research , the student is required to have at least one",
+            "score": 0.6537
+          },
+          {
+            "text": "research paper accepted or published in an indexed conference Or journal , subject t0 the",
+            "score": 0.4469
+          },
+          {
+            "text": "applicable academic requirements_",
+            "score": 0.7719
+          },
+          {
+            "text": "6. Is acceptance of the paper sufficient; Or must it already be published?",
+            "score": 0.8009
+          },
+          {
+            "text": "A research paper that is accepted or published, subject to verification and applicable academic",
+            "score": 0.6316
+          },
+          {
+            "text": "requirements, may be considered.",
+            "score": 0.9171
+          },
+          {
+            "text": "7. Can any research paper be used for Honours with Research?",
+            "score": 0.785
+          },
+          {
+            "text": "The paper should be based on the research work carried out by the student as part of the",
+            "score": 0.8199
+          },
+          {
+            "text": "programme and should satisfy the prescribed academic and publication requirements_",
+            "score": 0.7218
+          },
+          {
+            "text": "8. Can a paper",
+            "score": 0.757
+          },
+          {
+            "text": "'published before the Fourth Year be considered?",
+            "score": 0.8647
+          },
+          {
+            "text": "The requirement specifically relates to research work undertaken for Honours with Research",
+            "score": 0.7059
+          },
+          {
+            "text": "the prescribed programme period. Eligibility of any earlier work will be subject to",
+            "score": 0.6557
+          },
+          {
+            "text": "verification and approval by the DepartmentUniversity as per applicable rules_",
+            "score": 0.7413
+          },
+          {
+            "text": "9_",
+            "score": 0.2905
+          },
+          {
+            "text": "Does having",
+            "score": 0.9993
+          },
+          {
+            "text": "a",
+            "score": 0.985
+          },
+          {
+            "text": "GPA of 7.5 or above automatically give",
+            "score": 0.621
+          },
+          {
+            "text": "a",
+            "score": 0.9608
+          },
+          {
+            "text": "student  Honours with",
+            "score": 0.797
+          },
+          {
+            "text": "Research?",
+            "score": 0.9998
+          },
+          {
+            "text": "No: A GPA of 7.5 or above provides eligibility to be considered for Opting for Honours with",
+            "score": 0.6356
+          },
+          {
+            "text": "Research",
+            "score": 0.4638
+          },
+          {
+            "text": "The final award depends on successful completion of all prescribed requirements",
+            "score": 0.9674
+          },
+          {
+            "text": "such as research",
+            "score": 0.9895
+          },
+          {
+            "text": "publication.",
+            "score": 0.7892
+          },
+          {
+            "text": "having",
+            "score": 1.0
+          },
+          {
+            "text": "during",
+            "score": 0.6205
+          }
+        ]
+      }
+    },
+    {
+      "image": "screenshot 7.jpeg",
+      "category": "task",
+      "task": {
+        "task_title": "Apply for Co-Organisers & Core Team",
+        "description": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Screenshot/OCR",
+        "raw_text": "Google Developer Group\nOn Campus Sister Nivedita University\nIt's your time to carry the legacy forward.\nNew'\nCO-ORGANISERS\n& CORE TEAM\nAPPLICATIONS ARE LIVEI\nBe & port of the team that drives innovation,\norganizes impactful events, and builds & thriving\ndeveloper community at Sister Nivedita University!\nIDeAS\nPe6plE\nTEAMS YOU CAN JOIN\nWPACT\nLAST DATE TO APPLY:\n677\n0\nTech\nSccial\nCurach\nEont\nPeampit\nvidesanpll\nVikjo\nGraehi\nCcatent\n9th\n2026\nTram\nMeJy\n#anmainam\n(dong\nDesign\nFente\nAPPLY NOW\nOp\nLoedortho\nKond: on\nStl\n888\nInnjt\nnttos {fforms glc/Bx3X JE83GgWzSbXng\nOcpcrturitk:\nDpcrience\nCe -ofmitte\nCammucity\n8oogl DoPe?\nGfcu?\n0r\nCaMRUS\n0tbjrttt\nSi}#\nLe @\n16 Jmivembits\nLfaRN\nBlild\nCONNfct\nBCLcrc\nBuild\nLearn\nGrow\nTogether\nSanwe\nCorsruaityt\nPcssio litics.\nSISTER\nNivedita\nUnivERsiTy\nLEAD\nCrGanize\nCREate\nIMPACT\nGoge\nSep,",
+        "date_time_expression": null,
+        "confidence": 0.25,
+        "change_information": []
+      },
+      "ocr": {
+        "image_filename": "screenshot 7.jpeg",
+        "overall_confidence": 0.4169,
+        "line_confidences": [
+          {
+            "text": "Google Developer Group",
+            "score": 0.7946
+          },
+          {
+            "text": "On Campus Sister Nivedita University",
+            "score": 0.9246
+          },
+          {
+            "text": "It's your time to carry the legacy forward.",
+            "score": 0.7877
+          },
+          {
+            "text": "New'",
+            "score": 0.35
+          },
+          {
+            "text": "CO-ORGANISERS",
+            "score": 0.701
+          },
+          {
+            "text": "& CORE TEAM",
+            "score": 0.9899
+          },
+          {
+            "text": "APPLICATIONS ARE LIVEI",
+            "score": 0.8436
+          },
+          {
+            "text": "Be & port of the team that drives innovation,",
+            "score": 0.3949
+          },
+          {
+            "text": "organizes impactful events, and builds & thriving",
+            "score": 0.729
+          },
+          {
+            "text": "developer community at Sister Nivedita University!",
+            "score": 0.632
+          },
+          {
+            "text": "IDeAS",
+            "score": 0.2026
+          },
+          {
+            "text": "Pe6plE",
+            "score": 0.1039
+          },
+          {
+            "text": "TEAMS YOU CAN JOIN",
+            "score": 0.8681
+          },
+          {
+            "text": "WPACT",
+            "score": 0.7229
+          },
+          {
+            "text": "LAST DATE TO APPLY:",
+            "score": 0.7389
+          },
+          {
+            "text": "677",
+            "score": 0.0193
+          },
+          {
+            "text": "0",
+            "score": 0.3867
+          },
+          {
+            "text": "Tech",
+            "score": 0.2803
+          },
+          {
+            "text": "Sccial",
+            "score": 0.6353
+          },
+          {
+            "text": "Curach",
+            "score": 0.3334
+          },
+          {
+            "text": "Eont",
+            "score": 0.2733
+          },
+          {
+            "text": "Peampit",
+            "score": 0.0437
+          },
+          {
+            "text": "videsanpll",
+            "score": 0.2301
+          },
+          {
+            "text": "Vikjo",
+            "score": 0.1261
+          },
+          {
+            "text": "Graehi",
+            "score": 0.2231
+          },
+          {
+            "text": "Ccatent",
+            "score": 0.1997
+          },
+          {
+            "text": "9th",
+            "score": 0.9415
+          },
+          {
+            "text": "2026",
+            "score": 1.0
+          },
+          {
+            "text": "Tram",
+            "score": 0.2699
+          },
+          {
+            "text": "MeJy",
+            "score": 0.1439
+          },
+          {
+            "text": "#anmainam",
+            "score": 0.1397
+          },
+          {
+            "text": "(dong",
+            "score": 0.679
+          },
+          {
+            "text": "Design",
+            "score": 0.1969
+          },
+          {
+            "text": "Fente",
+            "score": 0.0015
+          },
+          {
+            "text": "APPLY NOW",
+            "score": 0.9577
+          },
+          {
+            "text": "Op",
+            "score": 0.306
+          },
+          {
+            "text": "Loedortho",
+            "score": 0.1174
+          },
+          {
+            "text": "Kond: on",
+            "score": 0.1792
+          },
+          {
+            "text": "Stl",
+            "score": 0.2944
+          },
+          {
+            "text": "888",
+            "score": 0.2753
+          },
+          {
+            "text": "Innjt",
+            "score": 0.0676
+          },
+          {
+            "text": "nttos {fforms glc/Bx3X JE83GgWzSbXng",
+            "score": 0.1989
+          },
+          {
+            "text": "Ocpcrturitk:",
+            "score": 0.6859
+          },
+          {
+            "text": "Dpcrience",
+            "score": 0.3054
+          },
+          {
+            "text": "Ce -ofmitte",
+            "score": 0.0051
+          },
+          {
+            "text": "Cammucity",
+            "score": 0.4196
+          },
+          {
+            "text": "8oogl DoPe?",
+            "score": 0.073
+          },
+          {
+            "text": "Gfcu?",
+            "score": 0.1749
+          },
+          {
+            "text": "0r",
+            "score": 0.09
+          },
+          {
+            "text": "CaMRUS",
+            "score": 0.0705
+          },
+          {
+            "text": "0tbjrttt",
+            "score": 0.0012
+          },
+          {
+            "text": "Si}#",
+            "score": 0.0676
+          },
+          {
+            "text": "Le @",
+            "score": 0.0204
+          },
+          {
+            "text": "16 Jmivembits",
+            "score": 0.042
+          },
+          {
+            "text": "LfaRN",
+            "score": 0.0491
+          },
+          {
+            "text": "Blild",
+            "score": 0.3055
+          },
+          {
+            "text": "CONNfct",
+            "score": 0.3951
+          },
+          {
+            "text": "BCLcrc",
+            "score": 0.0588
+          },
+          {
+            "text": "Build",
+            "score": 0.983
+          },
+          {
+            "text": "Learn",
+            "score": 0.9843
+          },
+          {
+            "text": "Grow",
+            "score": 0.9884
+          },
+          {
+            "text": "Together",
+            "score": 0.9993
+          },
+          {
+            "text": "Sanwe",
+            "score": 0.4309
+          },
+          {
+            "text": "Corsruaityt",
+            "score": 0.1414
+          },
+          {
+            "text": "Pcssio litics.",
+            "score": 0.2727
+          },
+          {
+            "text": "SISTER",
+            "score": 0.4713
+          },
+          {
+            "text": "Nivedita",
+            "score": 0.7036
+          },
+          {
+            "text": "UnivERsiTy",
+            "score": 0.1493
+          },
+          {
+            "text": "LEAD",
+            "score": 0.9678
+          },
+          {
+            "text": "CrGanize",
+            "score": 0.4517
+          },
+          {
+            "text": "CREate",
+            "score": 0.1651
+          },
+          {
+            "text": "IMPACT",
+            "score": 0.8162
+          },
+          {
+            "text": "Goge",
+            "score": 0.7013
+          },
+          {
+            "text": "Sep,",
+            "score": 0.554
+          }
+        ]
+      }
+    },
+    {
+      "image": "screenshot 8.jpeg",
+      "category": "event",
+      "task": {
+        "task_title": "Viva Voce",
+        "description": "Dates: 4th and 5th April 2019.",
+        "task_type": "viva",
+        "subject": "Mechanical Engineering MEE-4099 Capstone",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2019-04-04T09:00:00",
+        "source": "Screenshot/OCR",
+        "raw_text": "VIT\nVellore Institute of Technology\n(Dcatuedtok UmutendytuXi *ciou\nJol UGCAc 1986)\nSchool of Mechanical Engineering\nMEE-4099 Capstone Project\nWinter Semester 2018\n19\nViva Voce\nB\nTech: Mechanical, Specialization in Energy and Production &\nIndustrial Engineering\nDate: 4th and 5th April 2019\nReporting Time:\nFN 09.00 a.m. to 01.00 p.m: &\nAN 2.00 p.m. to 6.00 p.m.\nSi. No\nProject ID\nStudents\nDate\nReporting\nVenue\nTime\nBASDAEROOI\nISBMEO903\n04-04-2019\n9.00.00 AM\nVENUES\nB A SIAEROO?\nISBME0656\n04-04-2019\n9.00.00 AM\nVENUES\nBA8DAEROOS\n1SBMEOSO3\n04-04-2019\n9.00. 00 AM\nVENUES\nB [ SIDAUTOO?\n1SBME0S78\n04-04-2019\n9.00. 00 AM\nVENUE7\n5\nB [ SIDAUTOO4\n1SBMEOO58\n04-04-2019\n9.00. 00 AM\nVENUE7\nB [ SIDCFDOO?\nISBME0193\n04-04-2019\n9.00. 00 AM\nVENUE7\nB ! SIDDSGOD3\n1SBME0779\n04-04-2019\n9,00 00 AM\nVENUES\nB ISIDDSGOOS\nISBME0288\n04-04-2019\n9.00 00 AM\nVENUES\nBASIDSGOO8\nISBMEO675\n04-04-2019\n9.00:00 AM\nVENUES\n10\nB L8IDDSGOI?\n1SBME0676\n04-04-2019\n9.00.00 AM\nVENUES\n11\nB ASIDSGO3O\n1SBMEO740\n04-04-2019\n9.00. 00 AM\nVENUES\n12\nBASDDSG034\n1SBEMOMO\n04-04-2019\n9.00. 00 AM\nVENUES",
+        "date_time_expression": "4th and 5th April 2019, 09.00 a.m. to 01.00 p.m",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "ocr": {
+        "image_filename": "screenshot 8.jpeg",
+        "overall_confidence": 0.6805,
+        "line_confidences": [
+          {
+            "text": "VIT",
+            "score": 0.9995
+          },
+          {
+            "text": "Vellore Institute of Technology",
+            "score": 0.9672
+          },
+          {
+            "text": "(Dcatuedtok UmutendytuXi *ciou",
+            "score": 0.0076
+          },
+          {
+            "text": "Jol UGCAc 1986)",
+            "score": 0.1701
+          },
+          {
+            "text": "School of Mechanical Engineering",
+            "score": 0.653
+          },
+          {
+            "text": "MEE-4099 Capstone Project",
+            "score": 0.6346
+          },
+          {
+            "text": "Winter Semester 2018",
+            "score": 0.9954
+          },
+          {
+            "text": "19",
+            "score": 0.3474
+          },
+          {
+            "text": "Viva Voce",
+            "score": 0.9999
+          },
+          {
+            "text": "B",
+            "score": 0.9979
+          },
+          {
+            "text": "Tech: Mechanical, Specialization in Energy and Production &",
+            "score": 0.3912
+          },
+          {
+            "text": "Industrial Engineering",
+            "score": 0.6593
+          },
+          {
+            "text": "Date: 4th and 5th April 2019",
+            "score": 0.683
+          },
+          {
+            "text": "Reporting Time:",
+            "score": 0.9823
+          },
+          {
+            "text": "FN 09.00 a.m. to 01.00 p.m: &",
+            "score": 0.5909
+          },
+          {
+            "text": "AN 2.00 p.m. to 6.00 p.m.",
+            "score": 0.861
+          },
+          {
+            "text": "Si. No",
+            "score": 0.5383
+          },
+          {
+            "text": "Project ID",
+            "score": 0.9978
+          },
+          {
+            "text": "Students",
+            "score": 1.0
+          },
+          {
+            "text": "Date",
+            "score": 1.0
+          },
+          {
+            "text": "Reporting",
+            "score": 0.9103
+          },
+          {
+            "text": "Venue",
+            "score": 1.0
+          },
+          {
+            "text": "Time",
+            "score": 0.9719
+          },
+          {
+            "text": "BASDAEROOI",
+            "score": 0.7185
+          },
+          {
+            "text": "ISBMEO903",
+            "score": 0.4538
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.737
+          },
+          {
+            "text": "9.00.00 AM",
+            "score": 0.6023
+          },
+          {
+            "text": "VENUES",
+            "score": 0.8539
+          },
+          {
+            "text": "B A SIAEROO?",
+            "score": 0.1734
+          },
+          {
+            "text": "ISBME0656",
+            "score": 0.3863
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.6452
+          },
+          {
+            "text": "9.00.00 AM",
+            "score": 0.9594
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9967
+          },
+          {
+            "text": "BA8DAEROOS",
+            "score": 0.273
+          },
+          {
+            "text": "1SBMEOSO3",
+            "score": 0.5207
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.9154
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.8952
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9967
+          },
+          {
+            "text": "B [ SIDAUTOO?",
+            "score": 0.5617
+          },
+          {
+            "text": "1SBME0S78",
+            "score": 0.4154
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.6354
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.6953
+          },
+          {
+            "text": "VENUE7",
+            "score": 0.6577
+          },
+          {
+            "text": "5",
+            "score": 1.0
+          },
+          {
+            "text": "B [ SIDAUTOO4",
+            "score": 0.4841
+          },
+          {
+            "text": "1SBMEOO58",
+            "score": 0.2874
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.6073
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.7642
+          },
+          {
+            "text": "VENUE7",
+            "score": 0.7984
+          },
+          {
+            "text": "B [ SIDCFDOO?",
+            "score": 0.4975
+          },
+          {
+            "text": "ISBME0193",
+            "score": 0.2468
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.8452
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.4721
+          },
+          {
+            "text": "VENUE7",
+            "score": 0.8969
+          },
+          {
+            "text": "B ! SIDDSGOD3",
+            "score": 0.2343
+          },
+          {
+            "text": "1SBME0779",
+            "score": 0.4487
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.9921
+          },
+          {
+            "text": "9,00 00 AM",
+            "score": 0.3947
+          },
+          {
+            "text": "VENUES",
+            "score": 0.6478
+          },
+          {
+            "text": "B ISIDDSGOOS",
+            "score": 0.2973
+          },
+          {
+            "text": "ISBME0288",
+            "score": 0.4396
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.901
+          },
+          {
+            "text": "9.00 00 AM",
+            "score": 0.6562
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9956
+          },
+          {
+            "text": "BASIDSGOO8",
+            "score": 0.446
+          },
+          {
+            "text": "ISBMEO675",
+            "score": 0.3848
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.8195
+          },
+          {
+            "text": "9.00:00 AM",
+            "score": 0.6251
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9896
+          },
+          {
+            "text": "10",
+            "score": 0.9999
+          },
+          {
+            "text": "B L8IDDSGOI?",
+            "score": 0.2204
+          },
+          {
+            "text": "1SBME0676",
+            "score": 0.5013
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.9899
+          },
+          {
+            "text": "9.00.00 AM",
+            "score": 0.9571
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9991
+          },
+          {
+            "text": "11",
+            "score": 0.2884
+          },
+          {
+            "text": "B ASIDSGO3O",
+            "score": 0.2333
+          },
+          {
+            "text": "1SBMEO740",
+            "score": 0.4424
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.8494
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.7966
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9985
+          },
+          {
+            "text": "12",
+            "score": 0.9667
+          },
+          {
+            "text": "BASDDSG034",
+            "score": 0.3359
+          },
+          {
+            "text": "1SBEMOMO",
+            "score": 0.3686
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.9971
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.6484
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9897
+          }
+        ]
+      }
+    },
+    {
+      "image": "screenshot 9.jpeg",
+      "category": "event",
+      "task": {
+        "task_title": "Invited talk on Designing Industrial lot at Undergraduate Level",
+        "description": "Platform: Webex. Mode: Online.",
+        "task_type": "event",
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-10-09T20:00:00",
+        "source": "Screenshot/OCR",
+        "raw_text": "~IEEE\n68\nIEEE| IEee\n04 ,\nstudents\nKT\nTo\nstudents\nOn\nP R E $ E NT $\nAN INVITED TALK ON\nDESIGNING\nGen\nINDUSTRIAL lot\nJilk\nAT UNDERGRADUATE LEVEL\nby\nDr PRAVIN WANKHEDE\nAssoclate Protesscr; CSMSS Chh. Shahu College of Engineenng;\nAurangabad\nVke Chair\nIEEE Industrial Electronic > Chapter\nMaharashtra Stction\nEEE Senior Merber\nREGISTER NOW\n9th October\n8.00 PM\nMode: Online\nPlatform: Webex\nScan thc QR codc t0\nrogister:\nOrganized by, IEEE Student Branch, Academy of Technology (STB13681), Hooghly, West Bengal, India\nwwaot eduin\npo",
+        "date_time_expression": "9th October, 8.00 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "ocr": {
+        "image_filename": "screenshot 9.jpeg",
+        "overall_confidence": 0.6024,
+        "line_confidences": [
+          {
+            "text": "~IEEE",
+            "score": 0.6539
+          },
+          {
+            "text": "68",
+            "score": 0.318
+          },
+          {
+            "text": "IEEE| IEee",
+            "score": 0.3682
+          },
+          {
+            "text": "04 ,",
+            "score": 0.0457
+          },
+          {
+            "text": "students",
+            "score": 0.9925
+          },
+          {
+            "text": "KT",
+            "score": 0.4223
+          },
+          {
+            "text": "To",
+            "score": 0.0254
+          },
+          {
+            "text": "students",
+            "score": 0.9339
+          },
+          {
+            "text": "On",
+            "score": 0.0407
+          },
+          {
+            "text": "P R E $ E NT $",
+            "score": 0.4402
+          },
+          {
+            "text": "AN INVITED TALK ON",
+            "score": 0.8847
+          },
+          {
+            "text": "DESIGNING",
+            "score": 0.9994
+          },
+          {
+            "text": "Gen",
+            "score": 0.0479
+          },
+          {
+            "text": "INDUSTRIAL lot",
+            "score": 0.4579
+          },
+          {
+            "text": "Jilk",
+            "score": 0.1551
+          },
+          {
+            "text": "AT UNDERGRADUATE LEVEL",
+            "score": 0.8209
+          },
+          {
+            "text": "by",
+            "score": 0.997
+          },
+          {
+            "text": "Dr PRAVIN WANKHEDE",
+            "score": 0.6675
+          },
+          {
+            "text": "Assoclate Protesscr; CSMSS Chh. Shahu College of Engineenng;",
+            "score": 0.5419
+          },
+          {
+            "text": "Aurangabad",
+            "score": 0.983
+          },
+          {
+            "text": "Vke Chair",
+            "score": 0.6572
+          },
+          {
+            "text": "IEEE Industrial Electronic > Chapter",
+            "score": 0.5701
+          },
+          {
+            "text": "Maharashtra Stction",
+            "score": 0.7044
+          },
+          {
+            "text": "EEE Senior Merber",
+            "score": 0.4825
+          },
+          {
+            "text": "REGISTER NOW",
+            "score": 0.934
+          },
+          {
+            "text": "9th October",
+            "score": 0.9688
+          },
+          {
+            "text": "8.00 PM",
+            "score": 0.9926
+          },
+          {
+            "text": "Mode: Online",
+            "score": 0.9696
+          },
+          {
+            "text": "Platform: Webex",
+            "score": 0.9522
+          },
+          {
+            "text": "Scan thc QR codc t0",
+            "score": 0.7071
+          },
+          {
+            "text": "rogister:",
+            "score": 0.2603
+          },
+          {
+            "text": "Organized by, IEEE Student Branch, Academy of Technology (STB13681), Hooghly, West Bengal, India",
+            "score": 0.7249
+          },
+          {
+            "text": "wwaot eduin",
+            "score": 0.7089
+          },
+          {
+            "text": "po",
+            "score": 0.0519
+          }
+        ]
+      }
+    }
+  ]
+}
