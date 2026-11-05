@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "Real parse_ocr_file output for the archived OCR JSON files.",
-    "parser_commit": "6c10f1c07f9b1063f86e29f70396a899cc97c05c",
+    "parser_commit": "9b1e7290881f5b86905bf3424d18ee2919f17466",
     "generated_on": "2026-11-05",
     "ocr_samples": "nlp/test_data/ocr_samples",
     "reference_date": "2026-10-28",
