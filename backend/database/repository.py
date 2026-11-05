@@ -324,3 +324,129 @@ def get_all_tasks(
     finally:
         if owns_connection:
             con.close()
+
+
+EDITABLE_TASK_FIELDS = (
+    "task_title",
+    "due_date",
+    "due_time",
+    "event_datetime",
+    "importance",
+    "estimated_effort",
+)
+
+
+def _blank_to_none(value: Any) -> Any:
+    if isinstance(value, str) and not value.strip():
+        return None
+    return value
+
+
+def _validated_edit_fields(fields: Dict[str, Any]) -> Dict[str, Any]:
+    """Validate editable fields. Raises ValueError on bad input."""
+    if not isinstance(fields, dict) or not fields:
+        raise ValueError("No fields to update.")
+    unknown = sorted(set(fields) - set(EDITABLE_TASK_FIELDS))
+    if unknown:
+        raise ValueError(f"Fields not editable: {unknown}")
+
+    clean: Dict[str, Any] = {}
+    for name, value in fields.items():
+        value = _blank_to_none(value)
+        if name == "task_title":
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError("task_title must be a non-empty string.")
+            value = value.strip()
+        elif name == "due_date" and value is not None:
+            try:
+                datetime.strptime(str(value).strip(), "%Y-%m-%d")
+            except ValueError:
+                raise ValueError("due_date must be YYYY-MM-DD.")
+            value = str(value).strip()
+        elif name == "due_time" and value is not None:
+            text = str(value).strip()
+            for fmt in ("%H:%M", "%H:%M:%S"):
+                try:
+                    datetime.strptime(text, fmt)
+                    break
+                except ValueError:
+                    continue
+            else:
+                raise ValueError("due_time must be HH:MM or HH:MM:SS.")
+            value = text
+        elif name == "event_datetime" and value is not None:
+            try:
+                datetime.fromisoformat(str(value).strip())
+            except ValueError:
+                raise ValueError("event_datetime must be an ISO 8601 date-time.")
+            value = str(value).strip()
+        clean[name] = value
+    return clean
+
+
+def update_task_fields(
+    task_id: int,
+    fields: Dict[str, Any],
+    db_path: Optional[str] = None,
+    connection: Optional[sqlite3.Connection] = None,
+) -> bool:
+    """Edit allowed fields of a task. Status cannot be changed here.
+
+    If due_date or due_time is edited, due_datetime is recomputed with
+    normalize_due_datetime (NULL unless both date and time exist).
+    Returns True if the task was found and updated, False if not found.
+    """
+    clean = _validated_edit_fields(fields)
+
+    owns_connection = connection is None
+    con = connection or get_connection(db_path)
+    try:
+        cursor = con.cursor()
+        cursor.execute(
+            "SELECT due_date, due_time FROM tasks WHERE task_id = ?", (task_id,)
+        )
+        row = cursor.fetchone()
+        if row is None:
+            return False
+
+        if "due_date" in clean or "due_time" in clean:
+            new_date = clean["due_date"] if "due_date" in clean else row["due_date"]
+            new_time = clean["due_time"] if "due_time" in clean else row["due_time"]
+            clean["due_datetime"] = normalize_due_datetime(new_date, new_time)
+
+        set_clause = ", ".join(f"{column} = ?" for column in clean)
+        cursor.execute(
+            f"UPDATE tasks SET {set_clause} WHERE task_id = ?",
+            [*clean.values(), task_id],
+        )
+        con.commit()
+        return True
+    finally:
+        if owns_connection:
+            con.close()
+
+
+def delete_task(
+    task_id: int,
+    db_path: Optional[str] = None,
+    connection: Optional[sqlite3.Connection] = None,
+) -> bool:
+    """Hard-delete a task (and its OCR metadata row, if any).
+
+    Returns True if a task was deleted, False if it did not exist.
+    """
+    owns_connection = connection is None
+    con = connection or get_connection(db_path)
+    try:
+        cursor = con.cursor()
+        try:
+            cursor.execute("DELETE FROM ocr_metadata WHERE task_id = ?", (task_id,))
+        except sqlite3.OperationalError:
+            pass  # no ocr_metadata table or column in this database
+        cursor.execute("DELETE FROM tasks WHERE task_id = ?", (task_id,))
+        deleted = cursor.rowcount > 0
+        con.commit()
+        return deleted
+    finally:
+        if owns_connection:
+            con.close()
