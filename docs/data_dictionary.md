@@ -1,6 +1,6 @@
-﻿# NUDGE Data Dictionary
-**Phase 7: Database & Data Layer â€” Step 45**
-**Authoritative Contract Reference:** `PROJECT.md` â€” Shared Structured JSON / Data Contract (Step 3)
+# NUDGE Data Dictionary
+**Phase 7: Database & Data Layer — Step 45**
+**Authoritative Contract Reference:** `PROJECT.md` — Shared Structured JSON / Data Contract (Step 3)
 **Schema Implementation:** `backend/database/schema.sql` (Step 43)
 **Constraint Specification:** `docs/database_constraints.md` (Step 44)
 
@@ -33,7 +33,7 @@ All components in the platform (NLP parser, OCR ingestion, database repository, 
 | `source` | Origin channel, platform, or ingest modality of the message. | `string` | `TEXT` | **No** | **NLP Module** | Provenance identifier (e.g., `'LMS Notice'`, `'Email'`, `'WhatsApp'`, `'Screenshot/OCR'`). Cannot be empty (`CHECK (length(trim(source)) > 0)`). |
 | `raw_text` | Unmodified, unparsed input text or OCR detection string. | `string` | `TEXT` | **No** | **NLP Module** | Full raw message text preserved for auditing, re-parsing, and change detection. Cannot be empty (`CHECK (length(trim(raw_text)) > 0)`). |
 | `date_time_expression` | Literal verbatim date/time phrase identified within the raw source text. | `string / null` | `TEXT` | **Yes** | **NLP Module** | Preserves literal text expressions (e.g., `'tomorrow at 5 PM'`, `'by 15th October'`). Must remain `null` if no explicit phrase was matched. |
-| `confidence` | NLP parser extraction confidence score. | `float (0.0 â€“ 1.0)` | `REAL` | **No** | **NLP Module** | Confidence score between `0.0` and `1.0`. Default: `0.0`. Validated by `CHECK (confidence >= 0.0 AND confidence <= 1.0)`. |
+| `confidence` | NLP parser extraction confidence score. | `float (0.0 – 1.0)` | `REAL` | **No** | **NLP Module** | Confidence score between `0.0` and `1.0`. Default: `0.0`. Validated by `CHECK (confidence >= 0.0 AND confidence <= 1.0)`. |
 | `change_information` | Array of detected modifications against previous notices or records. | `array of objects`<br>(default: `[]`) | `TEXT` *(JSON Array)* | **No** | **NLP Module** | Default: `'[]'`. Validated as a valid JSON array (`CHECK (json_valid(change_information) AND json_type(change_information) = 'array')`). Must be empty array `[]` when no change is detected. |
 | `created_at` | Timestamp when the task record was created in the storage layer. | `string (ISO 8601)`<br>`YYYY-MM-DDTHH:MM:SS` | `TEXT` | **No** | **Task / Storage Layer** | Generated automatically on insertion using local ISO 8601 format (`strftime('%Y-%m-%dT%H:%M:%S', 'now', 'localtime')`). Immutable. |
 | `completed_at` | Timestamp when the task was marked completed. | `string (ISO 8601) / null`<br>`YYYY-MM-DDTHH:MM:SS` | `TEXT` | **Yes** | **Task / Storage Layer** | Managed by the storage/repository layer. Recorded when `status` transitions to `'completed'`. Cleared to `null` if task is reopened (`status` reverted to `'pending'` or `'in_progress'`). Consumed by productivity metrics. |
@@ -47,13 +47,13 @@ To prevent scheduling clashes and deadline confusion, the platform strictly sepa
 ```text
 Temporal Fields in NUDGE:
 
-1. due_date (NLP)        â”€â”€> Raw date extracted: "2026-10-15"
-2. due_time (NLP)        â”€â”€> Raw time extracted: "17:00"
-                                     â”‚
-                                     â–¼ (Normalized by Storage Layer ONLY if both exist)
-3. due_datetime (Storage) â”€â”€> "2026-10-15T17:00:00" (Submission Deadline)
+1. due_date (NLP)        ──> Raw date extracted: "2026-10-15"
+2. due_time (NLP)        ──> Raw time extracted: "17:00"
+                                     │
+                                     ▼ (Normalized by Storage Layer ONLY if both exist)
+3. due_datetime (Storage) ──> "2026-10-15T17:00:00" (Submission Deadline)
 
-4. event_datetime (NLP)   â”€â”€> "2026-10-15T10:00:00" (Exam/Class/Meeting Occurrence)
+4. event_datetime (NLP)   ──> "2026-10-15T10:00:00" (Exam/Class/Meeting Occurrence)
 ```
 
 ### Detailed Differences
@@ -118,37 +118,37 @@ Each element in the `change_information` array is an object with four mandatory 
 The 19 fields are owned and maintained across clearly defined module boundaries:
 
 ```text
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ NLP Module Extracts & Provides:                        â”‚
-â”‚   â€¢ task_title          â€¢ description                  â”‚
-â”‚   â€¢ task_type           â€¢ subject                      â”‚
-â”‚   â€¢ due_date            â€¢ due_time                     â”‚
-â”‚   â€¢ event_datetime      â€¢ date_time_expression         â”‚
-â”‚   â€¢ source              â€¢ raw_text                     â”‚
-â”‚   â€¢ confidence          â€¢ change_information           â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                            â”‚
-                            â–¼
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Task / Storage Layer Maintains & Normalizes:           â”‚
-â”‚   â€¢ task_id (generated) â€¢ due_datetime (normalized)    â”‚
-â”‚   â€¢ status (authoritative)                             â”‚
-â”‚   â€¢ created_at (insert) â€¢ completed_at (transition)    â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                            â”‚
-                            â–¼
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Shared / Configured Fields:                            â”‚
-â”‚   â€¢ importance          â€¢ estimated_effort             â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                            â”‚
-                            â–¼
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Intelligence Layer Computes Dynamically (NOT stored):  â”‚
-â”‚   â€¢ priority_score      â€¢ priority_label               â”‚
-â”‚   â€¢ priority_reason     â€¢ workload metrics             â”‚
-â”‚   â€¢ productivity metricsâ€¢ risk signals                 â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+┌────────────────────────────────────────────────────────┐
+│ NLP Module Extracts & Provides:                        │
+│   • task_title          • description                  │
+│   • task_type           • subject                      │
+│   • due_date            • due_time                     │
+│   • event_datetime      • date_time_expression         │
+│   • source              • raw_text                     │
+│   • confidence          • change_information           │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Task / Storage Layer Maintains & Normalizes:           │
+│   • task_id (generated) • due_datetime (normalized)    │
+│   • status (authoritative)                             │
+│   • created_at (insert) • completed_at (transition)    │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Shared / Configured Fields:                            │
+│   • importance          • estimated_effort             │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Intelligence Layer Computes Dynamically (NOT stored):  │
+│   • priority_score      • priority_label               │
+│   • priority_reason     • workload metrics             │
+│   • productivity metrics• risk signals                 │
+└────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -162,3 +162,19 @@ The following constraints are database-level enforcement mechanisms in SQLite (`
 * **JSON Array Validation**: `CHECK (json_valid(change_information) AND json_type(change_information) = 'array')` using SQLite's native JSON1 extension.
 * **Non-Negative Effort**: `CHECK (estimated_effort IS NULL OR estimated_effort >= 0)`.
 * **Non-Empty Text**: `CHECK (length(trim(field)) > 0)` on `task_title`, `source`, and `raw_text` (`task_type` may be NULL but not blank).
+
+
+---
+
+## OCR Metadata Table (`ocr_metadata`)
+
+Holds OCR confidence for tasks that came from a screenshot. The OCR engine's confidence (how sure it was about the text) is a different thing from the NLP `confidence` in `tasks` (how complete the parsed fields are), so the two are never mixed. One row per task at most.
+
+| Column | Type | Nullable | Description |
+|---|---|---|---|
+| `ocr_id` | `INTEGER` | No | Primary key, assigned by the database. |
+| `task_id` | `INTEGER` | No | Foreign key to `tasks(task_id)`. Unique. Deleted together with its task. |
+| `image_filename` | `TEXT` | No | Name of the screenshot file. Cannot be blank. |
+| `overall_confidence` | `REAL` | **Yes** | Average OCR confidence from 0.0 to 1.0. `NULL` when the OCR found no text. |
+| `line_confidences` | `TEXT` (JSON array) | No | List of `{"text": ..., "score": ...}` objects, one per text line. Default `'[]'`. |
+| `created_at` | `TEXT` | No | Set automatically when the row is stored. |

@@ -73,3 +73,25 @@ CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);
 CREATE INDEX IF NOT EXISTS idx_tasks_due_datetime ON tasks(due_datetime);
 CREATE INDEX IF NOT EXISTS idx_tasks_event_datetime ON tasks(event_datetime);
 CREATE INDEX IF NOT EXISTS idx_tasks_subject ON tasks(subject);
+
+
+-- ============================================================================
+-- OCR metadata (Step 47)
+-- Confidence details for tasks that came from a screenshot. Kept in its own
+-- table so the 19-field tasks contract is unchanged. The NLP confidence stays
+-- in tasks.confidence and is never mixed with OCR confidence.
+-- ============================================================================
+CREATE TABLE IF NOT EXISTS ocr_metadata (
+    ocr_id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    task_id             INTEGER NOT NULL UNIQUE
+                        REFERENCES tasks(task_id) ON DELETE CASCADE,
+    image_filename      TEXT NOT NULL CHECK (length(trim(image_filename)) > 0),
+    overall_confidence  REAL
+                        CHECK (overall_confidence IS NULL
+                               OR (overall_confidence >= 0.0 AND overall_confidence <= 1.0)),
+    line_confidences    TEXT NOT NULL DEFAULT '[]'
+                        CHECK (json_valid(line_confidences)
+                               AND json_type(line_confidences) = 'array'),
+    created_at          TEXT NOT NULL
+                        DEFAULT (strftime('%Y-%m-%dT%H:%M:%S', 'now', 'localtime'))
+);
