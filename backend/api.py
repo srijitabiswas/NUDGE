@@ -1,6 +1,7 @@
 """Phase A API: a thin Flask layer over backend/database/repository.py."""
 import os
 import sqlite3
+from datetime import datetime
 
 from flask import Flask, jsonify, request
 
@@ -17,10 +18,39 @@ from backend.database.repository import (
 VALID_STATUSES = {"pending", "in_progress", "completed", "cancelled"}
 ALLOWED_ORIGIN = "http://localhost:5173"
 MAX_BODY_BYTES = 64 * 1024
+# Owned by the storage layer: a client may send them (a full parser object has
+# them as nulls) but they are ignored on create.
+CREATE_IGNORED_FIELDS = ("task_id", "created_at", "completed_at", "due_datetime", "status")
 EDITABLE_FIELDS = {
     "task_title", "due_date", "due_time", "event_datetime",
     "importance", "estimated_effort",
 }
+
+
+def _matches_format(text, formats):
+    for fmt in formats:
+        try:
+            if datetime.strptime(text, fmt).strftime(fmt) == text:
+                return True
+        except ValueError:
+            continue
+    return False
+
+
+def _bad_format(data):
+    """Return an error message if a date/time field has an invalid format."""
+    checks = (
+        ("due_date", ("%Y-%m-%d",)),
+        ("due_time", ("%H:%M", "%H:%M:%S")),
+        ("event_datetime", ("%Y-%m-%dT%H:%M:%S",)),
+    )
+    for field, formats in checks:
+        value = data.get(field)
+        if value is None or (isinstance(value, str) and not value.strip()):
+            continue
+        if not isinstance(value, str) or not _matches_format(value, formats):
+            return f"{field} has an invalid format"
+    return None
 
 
 def create_app(db_path=None):
@@ -54,6 +84,18 @@ def create_app(db_path=None):
     def too_large(_exc):
         return error(f"Request body too large (max {MAX_BODY_BYTES} bytes)", 413)
 
+    @app.errorhandler(404)
+    def not_found(_exc):
+        return error("Not found", 404)
+
+    @app.errorhandler(405)
+    def method_not_allowed(exc):
+        response = jsonify({"error": "Method not allowed"})
+        response.status_code = 405
+        if getattr(exc, "valid_methods", None):
+            response.headers["Allow"] = ", ".join(sorted(exc.valid_methods))
+        return response
+
     @app.get("/tasks")
     def list_tasks():
         return jsonify(get_all_tasks(db_path=app.config["DB_PATH"]))
@@ -70,7 +112,11 @@ def create_app(db_path=None):
         data = request.get_json(silent=True)
         if not isinstance(data, dict):
             return error("Request body must be a JSON object", 400)
-        data.pop("task_id", None)  # the storage layer assigns task_id
+        for field in CREATE_IGNORED_FIELDS:  # owned by the storage layer
+            data.pop(field, None)
+        bad = _bad_format(data)
+        if bad:
+            return error(bad, 400)
         try:
             new_id = insert_task(data, db_path=app.config["DB_PATH"])
         except (ValueError, TypeError, KeyError, sqlite3.IntegrityError) as exc:
@@ -99,7 +145,7 @@ def create_app(db_path=None):
     def remove_task(task_id):
         if not delete_task(task_id, db_path=app.config["DB_PATH"]):
             return error("Task not found", 404)
-        return jsonify({"deleted": task_id})
+        return jsonify({"task_id": task_id, "deleted": True})
 
     @app.patch("/tasks/<int:task_id>/status")
     def change_status(task_id):
