@@ -1,0 +1,61 @@
+{
+    "evaluation_name":  "NUDGE OCR Evaluation",
+    "step":  67,
+    "cases":  [
+                  {
+                      "id":  "payment_notice",
+                      "source":  "payment_notice.png",
+                      "reference_text":  "NOTICE: Payment of Next Semester Fees\nDear Students,\nPlease be informed that the semester fees for your next semester must be paid before the beginning of the End Semester Examination, which will be held from November 25, 2026.\nAs per the Academic Calendar:\nFee payment starts: October 27, 2026\nLast date for payment: November 4, 2026\nImportant points to note:\n1. The Admit Card for the End Semester Examination will be issued only to those students who have paid their fees within the stipulated time.\n2. Students who have bank loans are requested to collect the Demand Letter now onwards from the reception counter by submitting:\nA copy of the sanction letter\nThe prescribed form\nAll students are advised to treat this notice with the utmost urgency and ensure timely"
+                  },
+                  {
+                      "id":  "screenshot 2",
+                      "source":  "screenshot 2.jpeg",
+                      "reference_text":  "SESSION ALERT\nNetwork\n\u0026\nNetwork Security\nDATE:\n11TH JANUARY\nTIME:\n7 PM\nMODE:\nONLINE\nZERODAY\nalliance"
+                  },
+                  {
+                      "id":  "screenshot 3",
+                      "source":  "screenshot 3.jpeg",
+                      "reference_text":  "TECHNO INDIA GROUP\nA Satyam Roychowdhury initiative\nSNU\nSISTER NIVEDITA UNIVERSITY\nNOTICE\nGrade Card Distribution for 6th Semester\nB.Tech Computer Science \u0026 Engineering (Batch 2023-2027)\nDistribution of 6th Semester Grade Cards is scheduled!\nPlease note the details below for collection.\nThis applies to students of:\nB.Tech Computer Science \u0026 Engineering\nB.Tech CSE (Artificial Intelligence \u0026 Machine Learning)\nB.Tech CSE (IoT, Cyber Security, Blockchain)\nB.Tech CSE (CSBS)\nDates:\nTuesday, October 27th, 2026\nFriday, October 30th, 2026\nTime:\n2.00 PM – 4:00 PM\nVenue:\nRoom No. 201, Admin Desk\nFor Queries, Contact:\nKrishnendu Sir \u0026 Anjan Sir"
+                  },
+                  {
+                      "id":  "screenshot 4",
+                      "source":  "screenshot 4.jpeg",
+                      "reference_text":  "Employability.life\nFederation University\nEL Community\nDesigning successful digital careers\nToday is the Day\nMeet the voices behind today\u0027s debate\nFor the Motion\nRoshni M\nXPro Learner, Dhanalakshmi Srinivasan University\nCaleb Gomes\nXPro Learner, Meghnad Saha Institute of Technology\nAgainst the Motion\nShruti Kumari\nXPro Learner, PES College of Engineering\nAyesha Jamil\nXPro Learner, Meghnad Saha Institute of Technology\nBEYOND THE ARGUMENT\nDebate Topic:\nWhen automation reduces errors but removes human judgement, is it still an improvement?\n9 Oct, 2026\n03:30 PM onwards\nMicrosoft Teams"
+                  },
+                  {
+                      "id":  "screenshot 5",
+                      "source":  "screenshot 5.jpeg",
+                      "reference_text":  "Employability.life\nFederation University\nDesigning successful digital careers\nWebinar on\nThe Future of Work in Australia: Are You Ready for 2028?\nAssociate Prof. Paul Pang\nAssociate Professor, Cyber Security, Federation University Australia\nJune 05\n4:30–5:30 PM IST\nMicrosoft Teams\nScan QR Code to Register Now"
+                  },
+                  {
+                      "id":  "screenshot 6",
+                      "source":  "screenshot 6.jpeg",
+                      "reference_text":  "NOTICE\nB.Tech/BCA Honours with Research – Eligibility and Guidelines\nAll concerned students of the B.Tech and BCA programmes are hereby informed about the provision for Honours with Research.\nAs per the B.Tech and BCA programme curriculum, completing a Project is a mandatory requirement for all students.\nAs recommended in the Departmental Council Meeting held on 5th August 2026, students fulfilling the prescribed academic criteria may be given an opportunity to opt for B.Tech/BCA Honours with Research, as applicable.\nEligibility and Requirements\nStudents who have secured an average GPA of 7.5 or above up to the end of the Third Year (Semester I to Semester VI) may be given an opportunity to opt for B.Tech/BCA Honours with Research. Eligible students may earn 4 additional credits by carrying out research work and successfully publishing at least one research paper in an indexed conference or journal during the entire Fourth Year. Eligible students whose research papers are accepted or published based on their research work may be considered for the award of B.Tech/BCA Honours with Research, as applicable.\nFrequently Asked Questions (FAQ)\n1. Is the Project compulsory for every B.Tech/BCA student?\nYes. As per the curriculum, the Project is a mandatory component of the B.Tech and BCA degree programmes.\n2. Who is eligible to opt for Honours with Research?\nStudents having an average GPA of 7.5 or above up to the end of Semester VI may be considered eligible to opt for B.Tech/BCA Honours with Research, subject to applicable academic rules.\n3. Is Honours with Research compulsory for eligible students?\nNo. It is an additional academic opportunity for eligible students. The regular Project requirement remains mandatory for all students.\n4. How many additional credits can be earned?\nAn eligible student may earn 4 additional credits through the prescribed research work for Honours with Research.\n5. Is publication of a research paper compulsory?\nFor consideration for Honours with Research, the student is required to have at least one research paper accepted or published in an indexed conference or journal, subject to the applicable academic requirements.\n6. Is acceptance of the paper sufficient, or must it already be published?\nA research paper that is accepted or published, subject to verification and applicable academic requirements, may be considered.\n7. Can any research paper be used for Honours with Research?\nThe paper should be based on the research work carried out by the student as part of the programme and should satisfy the prescribed academic and publication requirements.\n8. Can a paper published before the Fourth Year be considered?\nThe requirement specifically relates to research work undertaken for Honours with Research during the prescribed programme period. Eligibility of any earlier work will be subject to verification and approval by the Department/University as per applicable rules.\n9. Does having a GPA of 7.5 or above automatically give a student Honours with Research?\nNo. A GPA of 7.5 or above provides eligibility to be considered for opting for Honours with Research. The final award depends on successful completion of all prescribed requirements such as research publication."
+                  },
+                  {
+                      "id":  "screenshot 7",
+                      "source":  "screenshot 7.jpeg",
+                      "reference_text":  "Google Developer Group\nOn Campus Sister Nivedita University\nBuild Learn Grow Together\nSame Community. New Possibilities.\nIt\u0027s your time to carry the legacy forward.\nCO-ORGANISERS \u0026 CORE TEAM\nAPPLICATIONS ARE LIVE!\nBe a part of the team that drives innovation, organizes impactful events, and builds a thriving developer community at Sister Nivedita University!\nTEAMS YOU CAN JOIN\nTech Team\nSocial Media\nOutreach\nEvent Management\nPhotography\nVideography\nVideo Editing\nGraphic Design\nContent Team\nLAST DATE TO APPLY:\n9th Sep, 2026\nAPPLY NOW\nhttps://forms.gle/Bx3XJE83GgWz5bXn8\nLeadership Opportunities\nHands-on Experience\nSkill Development\nImpact Community\nLEAD ORGANIZE CREATE IMPACT\nIDEAS PEOPLE IMPACT\nGoogle\nIdeas for a better tomorrow:\nGOOGLE DEVELOPER GROUP ON CAMPUS\nSISTER NIVEDITA UNIVERSITY\nLEARN • BUILD • CONNECT • BELONG •"
+                  },
+                  {
+                      "id":  "screenshot 8",
+                      "source":  "screenshot 8.jpeg",
+                      "reference_text":  "VIT\nVellore Institute of Technology\n(Deemed to be University under section 3 of UGC Act, 1956)\nSchool of Mechanical Engineering\nMEE-4099 Capstone Project\nWinter Semester 2018-19\nViva Voce\nB. Tech. Mechanical, Specialization in Energy and Production \u0026 Industrial Engineering\nDate: 4th and 5th April 2019\nReporting Time:\nFN 09.00 a.m. to 01.00 p.m. \u0026\nAN 2.00 p.m. to 6.00 p.m.\nSl. No Project ID Students Date Reporting Time Venue\n1 B18IDAER001 15BME0903 04-04-2019 9:00:00 AM VENUE8\n2 B18IDAER002 15BME0656 04-04-2019 9:00:00 AM VENUE8\n3 B18IDAER005 15BME0803 04-04-2019 9:00:00 AM VENUE8\n4 B18IDAUT002 15BME0578 04-04-2019 9:00:00 AM VENUE7\n5 B18IDAUT004 15BME0058 04-04-2019 9:00:00 AM VENUE7\n6 B18IDCFD002 15BME0193 04-04-2019 9:00:00 AM VENUE7\n7 B18IDDSG003 15BME0779 04-04-2019 9:00:00 AM VENUE5\n8 B18IDDSG005 15BME0288 04-04-2019 9:00:00 AM VENUE5\n9 B18IDDSG008 15BME0675 04-04-2019 9:00:00 AM VENUE5\n10 B18IDDSG012 15BME0676 04-04-2019 9:00:00 AM VENUE5\n11 B18IDDSG030 15BME0740 04-04-2019 9:00:00 AM VENUE5\n12 B18IDDSG034 15BEM0110 04-04-2019 9:00:00 AM VENUE5"
+                  },
+                  {
+                      "id":  "screenshot 9",
+                      "source":  "screenshot 9.jpeg",
+                      "reference_text":  "IEEE SB AOT\nIEEE\nIEEE students\nIEEE DAY\nStudent Virtual Speakers Bureau\nAOT\nPRESENTS\nAN INVITED TALK ON\nDESIGNING INDUSTRIAL IoT AT UNDERGRADUATE LEVEL\nby Dr PRAVIN WANKHEDE\nAssociate Professor, CSMSS Chh. Shahu College of Engineering, Aurangabad\nVice Chair – IEEE Industrial Electronics Chapter, Maharashtra Section\nIEEE Senior Member\nREGISTER NOW\n9th October\n8:00 PM\nMode: Online\nPlatform: Webex\nScan the QR code to register.\nOrganized by, IEEE Student Branch, Academy of Technology (STB13681), Hooghly, West Bengal, India\nwww.aot.edu.in"
+                  }
+              ],
+    "methodology":  {
+                        "reference_source":  "Manual transcription from the nine supplied original screenshots. Status: provisional pending final human review.",
+                        "reference_rules":  "Include all legible text, including wordmarks, handwritten slogans, and text on illustrated clothing. Exclude QR-code payloads and unreadable text. Preserve visible spelling and typographical errors.",
+                        "normalization":  "Unicode NFKC, case-folding and whitespace normalization; punctuation retained.",
+                        "metrics":  [
+                                        "Character Error Rate (CER)",
+                                        "Word Error Rate (WER)"
+                                    ],
+                        "limitations":  "References are provisional until human-verified. CER/WER do not show whether key fields (dates, times) were read correctly."
+                    }
+}

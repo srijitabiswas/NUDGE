@@ -1,0 +1,44 @@
+[
+  {
+    "message_id": "MSG-001",
+    "provenance": "reused_nlp_contract",
+    "provenance_note": "Reused verbatim from PROJECT.md Section 7 and docs/NLP_INTERFACE.md Section 11",
+    "source": "LMS Notice",
+    "raw_text": "Dear Students, please submit your Machine Learning Assignment 1 on Moodle by 15th October at 5:00 PM."
+  },
+  {
+    "message_id": "MSG-002",
+    "provenance": "reused_real_ocr",
+    "provenance_note": "Reused excerpt from real Sister Nivedita University notice extracted in ocr/student-life-ocr/output/payment_notice.txt",
+    "source": "Screenshot/OCR",
+    "raw_text": "NOTICE: Payment of Next Semester Fees\nDear Students,\nPlease be informed that the semester fees for your next semester must be paid before the beginning of the End Semester Examination.\nFee payment starts: October 27, 2026\nLast date for payment: November 4, 2026"
+  },
+  {
+    "message_id": "MSG-003",
+    "provenance": "reused_real_ocr",
+    "provenance_note": "Reused excerpt from real Sister Nivedita University notice extracted in ocr/student-life-ocr/output/screenshot 3.txt",
+    "source": "Screenshot/OCR",
+    "raw_text": "SISTER NIVEDITA UNIVERSITY NOTICE: Grade Card Distribution for 6th Semester B.Tech Computer Science & Engineering (Batch 2023-2027)\nDate: October 27, 2026\nTime: 2:00 PM - 4:00 PM\nVenue: Room No. 201, Admin Desk"
+  },
+  {
+    "message_id": "MSG-004",
+    "provenance": "reused_project_sample",
+    "provenance_note": "Reused and adapted from frontend/src/data/sampleTasks.js Task 1 (rescheduled assignment with deadline change)",
+    "source": "WhatsApp",
+    "raw_text": "Notice: The deadline for DBMS Assignment 3 on ER diagram and normalization has been extended from Wednesday 11:59 PM to Friday, 30th October at 11:59 PM on Google Classroom."
+  },
+  {
+    "message_id": "MSG-005",
+    "provenance": "reused_project_sample",
+    "provenance_note": "Reused and adapted from frontend/src/data/sampleTasks.js Task 2 (scheduled mid-sem exam)",
+    "source": "Email",
+    "raw_text": "Operating Systems mid-sem exam will be held on 30th October at 10:00 AM in Room 204. Syllabus covers Units 1 to 3."
+  },
+  {
+    "message_id": "MSG-006",
+    "provenance": "synthetic_test_case",
+    "provenance_note": "Synthetic test case created specifically to evaluate missing date/time handling (incomplete temporal information)",
+    "source": "Email",
+    "raw_text": "All B.Tech CSE students are required to complete the registration form for their 7th semester elective subjects on the university portal."
+  }
+]
