@@ -26,6 +26,7 @@ export function normalizeOne(task, priority) {
     subject: task.subject || "",
     due_date: task.due_date || dtDate,
     due_time: task.due_time || dtTime,
+    event_datetime: task.event_datetime || null,
     source: task.source || "Unknown",
     status: task.status || "pending",
     confidence: task.confidence,

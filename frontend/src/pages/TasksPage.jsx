@@ -69,7 +69,7 @@ export default function TasksPage() {
 
   async function handleSubmit(fields) {
     if (form.task) {
-      await editTask(form.task.id, fields);
+      await editTask(form.task.id, fields, form.task);
     } else {
       await addTask({
         task_title: fields.title,

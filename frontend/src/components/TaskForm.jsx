@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Field } from "./ui";
+import { USING_SAMPLE_DATA } from "../services/taskService";
 
 const TYPES = ["assignment", "exam", "quiz", "project", "event", "task", "other"];
 
 export default function TaskForm({ initial, onSubmit, onCancel }) {
   const editing = !!initial;
+  // With the real API only the title and date/time can be changed after a task is saved.
+  const locked = editing && !USING_SAMPLE_DATA;
   const [v, setV] = useState({
     title: initial?.title || "",
     description: initial?.description || "",
@@ -55,17 +58,18 @@ export default function TaskForm({ initial, onSubmit, onCancel }) {
   return (
     <form className="card stack" onSubmit={handleSubmit} noValidate aria-label={editing ? "Edit task" : "Add task"}>
       <h2>{editing ? "Edit task" : "Add task"}</h2>
+      {locked && <p className="muted">Type, subject and description can't be changed after saving yet.</p>}
       {formError && <div className="callout callout-danger" role="alert">{formError}</div>}
       <div className="form-grid">
         <Field id="tf-title" label="Title" value={v.title} onChange={set("title")} error={errors["tf-title"]} />
-        <Field id="tf-type" as="select" label="Type" value={v.type} onChange={set("type")}>
+        <Field id="tf-type" as="select" label="Type" value={v.type} onChange={set("type")} disabled={locked}>
           {TYPES.map((t) => <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
         </Field>
-        <Field id="tf-subject" label="Subject (optional)" value={v.subject} onChange={set("subject")} />
+        <Field id="tf-subject" label="Subject (optional)" value={v.subject} onChange={set("subject")} disabled={locked} />
         <Field id="tf-date" type="date" label="Due date" value={v.due_date} onChange={set("due_date")} error={errors["tf-date"]} />
         <Field id="tf-time" type="time" label="Due time (optional)" value={v.due_time} onChange={set("due_time")} />
       </div>
-      <Field id="tf-desc" as="textarea" rows={3} label="Description (optional)" value={v.description} onChange={set("description")} />
+      <Field id="tf-desc" as="textarea" rows={3} label="Description (optional)" value={v.description} onChange={set("description")} disabled={locked} />
       <div className="row">
         <button type="submit" className="btn btn-primary" disabled={saving}>
           {saving ? "Saving…" : editing ? "Save changes" : "Add task"}

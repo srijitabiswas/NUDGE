@@ -57,9 +57,9 @@ function Inner({ uid, prefs, children }) {
   }, []);
 
   // fields: { title, description, type, subject, due_date, due_time }
-  const editTask = useCallback(async (id, fields) => {
-    await updateTaskFields(id, fields);
-    setTasks((prev) => markConflicts(prev.map((t) => (t.id === id ? { ...t, ...fields } : t))));
+  const editTask = useCallback(async (id, fields, task) => {
+    const updated = await updateTaskFields(id, fields, task);
+    setTasks((prev) => markConflicts(prev.map((t) => (t.id === id ? { ...t, ...fields, ...updated } : t))));
   }, []);
 
   const removeTask = useCallback(async (id) => {
