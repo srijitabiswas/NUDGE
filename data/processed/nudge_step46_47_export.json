@@ -1,0 +1,2044 @@
+{
+  "_meta": {
+    "generated_on": "2026-11-05",
+    "task_count": 30,
+    "note": "Tasks follow the 19-field contract. 'ocr' is filled only for screenshot tasks, otherwise null.",
+    "parser_snapshot": {
+      "description": "Real parse_message output for the Step 21 dataset.",
+      "parser_commit": "9b1e7290881f5b86905bf3424d18ee2919f17466",
+      "generated_on": "2026-11-05",
+      "dataset": "nlp/test_data/step21_dataset.json",
+      "reference_date": "2026-10-28",
+      "record_count": 25
+    },
+    "ocr_snapshot": {
+      "description": "Real parse_ocr_file output for the archived OCR JSON files.",
+      "parser_commit": "9b1e7290881f5b86905bf3424d18ee2919f17466",
+      "generated_on": "2026-11-05",
+      "ocr_samples": "nlp/test_data/ocr_samples",
+      "reference_date": "2026-10-28",
+      "reference_date_note": "Same as the Step 21 dataset unless given explicitly. The screenshots have no stated reference date.",
+      "record_count": 9
+    }
+  },
+  "tasks": [
+    {
+      "task_id": 1,
+      "task_title": "Submit Machine Learning Assignment 2",
+      "description": "Submit on Moodle",
+      "task_type": "assignment",
+      "subject": "Machine Learning",
+      "due_date": "2026-11-05",
+      "due_time": "17:00",
+      "due_datetime": "2026-11-05T17:00:00",
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "LMS",
+      "raw_text": "Please submit Machine Learning Assignment 2 on Moodle by 5 November 2026 at 5:00 PM.",
+      "date_time_expression": "5 November 2026 at 5:00 PM",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 2,
+      "task_title": "Submit Data Structures assignment",
+      "description": null,
+      "task_type": "assignment",
+      "subject": "Data Structures",
+      "due_date": "2026-11-07",
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "WhatsApp",
+      "raw_text": "Reminder: Data Structures assignment is due on 7 November.",
+      "date_time_expression": "7 November",
+      "confidence": 0.75,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 3,
+      "task_title": "Submit DBMS lab record",
+      "description": null,
+      "task_type": null,
+      "subject": "DBMS",
+      "due_date": "2026-10-28",
+      "due_time": "18:00",
+      "due_datetime": "2026-10-28T18:00:00",
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "WhatsApp",
+      "raw_text": "Submit your DBMS lab record by 6 PM today.",
+      "date_time_expression": "6 PM today",
+      "confidence": 0.75,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 4,
+      "task_title": "Operating Systems mid-semester exam",
+      "description": null,
+      "task_type": "exam",
+      "subject": "Operating Systems",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2026-11-10T10:30:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "University Notice",
+      "raw_text": "The Operating Systems mid-semester exam will be held on 10 November 2026 at 10:30 AM.",
+      "date_time_expression": "10 November 2026 at 10:30 AM",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 5,
+      "task_title": "Statistics quiz",
+      "description": "Room details will follow",
+      "task_type": "quiz",
+      "subject": "Statistics",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2026-10-30T14:00:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "WhatsApp",
+      "raw_text": "Statistics quiz on Friday at 2 PM. Room details will follow.",
+      "date_time_expression": "Friday at 2 PM",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 6,
+      "task_title": "Upload Smart Campus project proposal",
+      "description": null,
+      "task_type": "project",
+      "subject": "Smart Campus",
+      "due_date": "2026-11-12",
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "LMS",
+      "raw_text": "Project proposal for the Smart Campus project must be uploaded by 12 November 2026.",
+      "date_time_expression": "12 November 2026",
+      "confidence": 0.75,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 7,
+      "task_title": "Software Engineering lecture",
+      "description": "Location: Lab 3",
+      "task_type": "class",
+      "subject": "Software Engineering",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2026-10-29T09:00:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "WhatsApp",
+      "raw_text": "Our Software Engineering lecture starts tomorrow at 9:00 AM in Lab 3.",
+      "date_time_expression": "tomorrow at 9:00 AM",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 8,
+      "task_title": "Final-year project team meeting",
+      "description": null,
+      "task_type": "meeting",
+      "subject": "Final-year project",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2026-11-02T11:00:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "WhatsApp",
+      "raw_text": "Team meeting for the final-year project next Monday at 11 AM.",
+      "date_time_expression": "next Monday at 11 AM",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 9,
+      "task_title": "Finish Computer Networks assignment",
+      "description": null,
+      "task_type": "assignment",
+      "subject": "Computer Networks",
+      "due_date": "2026-10-29",
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "LMS",
+      "raw_text": "Please finish the Computer Networks assignment by tomorrow.",
+      "date_time_expression": "tomorrow",
+      "confidence": 0.75,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 10,
+      "task_title": "Department seminar",
+      "description": null,
+      "task_type": "event",
+      "subject": null,
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2026-11-13T15:15:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "University Notice",
+      "raw_text": "The department seminar is scheduled for 13 November 2026 at 3:15 PM.",
+      "date_time_expression": "13 November 2026 at 3:15 PM",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 11,
+      "task_title": "Project review meeting",
+      "description": null,
+      "task_type": "meeting",
+      "subject": null,
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Email",
+      "raw_text": "Please attend the project review meeting at 4 PM.",
+      "date_time_expression": "4 PM",
+      "confidence": 0.75,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 12,
+      "task_title": "Submit Data Mining assignment",
+      "description": null,
+      "task_type": "assignment",
+      "subject": "Data Mining",
+      "due_date": "2026-11-02",
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "LMS",
+      "raw_text": "The Data Mining assignment deadline is Monday.",
+      "date_time_expression": "Monday",
+      "confidence": 0.75,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 13,
+      "task_title": "College cultural fest",
+      "description": "More details soon",
+      "task_type": "event",
+      "subject": null,
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "University Notice",
+      "raw_text": "The college cultural fest will take place next week. More details soon.",
+      "date_time_expression": "next week",
+      "confidence": 0.5,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 14,
+      "task_title": "Prepare and submit Artificial Intelligence mini-project",
+      "description": "The deadline has not been announced yet",
+      "task_type": "project",
+      "subject": "Artificial Intelligence",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "LMS",
+      "raw_text": "Prepare and submit the Artificial Intelligence mini-project. The deadline has not been announced yet.",
+      "date_time_expression": null,
+      "confidence": 0.5,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 15,
+      "task_title": "Physics practical viva",
+      "description": null,
+      "task_type": "viva",
+      "subject": "Physics",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2026-11-18T13:00:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "University Notice",
+      "raw_text": "The Physics practical viva is on 18 November 2026 at 1 PM.",
+      "date_time_expression": "18 November 2026 at 1 PM",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 16,
+      "task_title": "Submit internship report",
+      "description": null,
+      "task_type": null,
+      "subject": null,
+      "due_date": "2026-11-20",
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Email",
+      "raw_text": "Submit the internship report by 20 November 2026.",
+      "date_time_expression": "20 November 2026",
+      "confidence": 0.5,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 17,
+      "task_title": "Web Technologies project deadline change",
+      "description": null,
+      "task_type": "project",
+      "subject": "Web Technologies",
+      "due_date": "2026-11-12",
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "LMS",
+      "raw_text": "Update: the Web Technologies project deadline has moved from 8 November to 12 November 2026.",
+      "date_time_expression": "12 November 2026",
+      "confidence": 0.75,
+      "change_information": [
+        {
+          "is_changed": true,
+          "change_type": "deadline",
+          "old_value": "8 November",
+          "new_value": "12 November 2026"
+        }
+      ],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 18,
+      "task_title": "Computer Architecture quiz rescheduled",
+      "description": null,
+      "task_type": "quiz",
+      "subject": "Computer Architecture",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2026-11-11T12:00:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "WhatsApp",
+      "raw_text": "The Computer Architecture quiz originally planned for 9 November is now rescheduled to 11 November 2026 at 12 PM.",
+      "date_time_expression": "11 November 2026 at 12 PM",
+      "confidence": 1.0,
+      "change_information": [
+        {
+          "is_changed": true,
+          "change_type": "date",
+          "old_value": "9 November",
+          "new_value": "11 November 2026"
+        }
+      ],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 19,
+      "task_title": "Bring ID card to campus",
+      "description": null,
+      "task_type": null,
+      "subject": null,
+      "due_date": "2026-10-29",
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "WhatsApp",
+      "raw_text": "Reminder: bring your ID card to campus tomorrow.",
+      "date_time_expression": "tomorrow",
+      "confidence": 0.5,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 20,
+      "task_title": "Complete Discrete Mathematics quiz",
+      "description": null,
+      "task_type": "quiz",
+      "subject": "Discrete Mathematics",
+      "due_date": null,
+      "due_time": "19:00",
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "LMS",
+      "raw_text": "Please complete the Discrete Mathematics quiz before 7 PM.",
+      "date_time_expression": "7 PM",
+      "confidence": 0.75,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 21,
+      "task_title": "Placement preparation workshop",
+      "description": null,
+      "task_type": "event",
+      "subject": null,
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2026-11-16T10:00:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "WhatsApp",
+      "raw_text": "Can everyone attend the placement preparation workshop on 16 November at 10 AM?",
+      "date_time_expression": "16 November at 10 AM",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 22,
+      "task_title": "Submit assignment",
+      "description": "The exact deadline will be announced by the instructor",
+      "task_type": "assignment",
+      "subject": null,
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Email",
+      "raw_text": "Please submit your assignment soon. The exact deadline will be announced by the instructor.",
+      "date_time_expression": null,
+      "confidence": 0.5,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": null
+    },
+    {
+      "task_id": 23,
+      "task_title": "Pay next semester fees",
+      "description": null,
+      "task_type": null,
+      "subject": "End",
+      "due_date": "2026-11-04",
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Screenshot/OCR",
+      "raw_text": "NOTICE: Payment of Nert Semester Fees\nDear Students,\nPlease be informed that the semester fees for your next semester must be\nbefore\nthe beginning of the End Semester Examination; which will be held from November\n25,2026.\nAs per the Academic Calendar:\nFee payment starts: October 27, 2026\nLast date for payment: November 4, 2026\nImportant points to note:\n1\nThe Admit Card for the End Semester Examination will be issued\nto those\nstudents who\ntheir fees within the stipulated time.\n2\nStudents who have bank loans are requested to collect the Demand Letter now\nonwards from the\nreception counter by submitting:\nA copy of the sanction letter\nThe prescribed form\nAlL students are advised to treat this notice with the utmost urgency and ensure timely\npaid\nonly\npaid\nhave",
+      "date_time_expression": "November 4, 2026",
+      "confidence": 0.5,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": {
+        "task_id": 23,
+        "image_filename": "payment_notice.png",
+        "overall_confidence": 0.8946,
+        "line_confidences": [
+          {
+            "text": "NOTICE: Payment of Nert Semester Fees",
+            "score": 0.7525
+          },
+          {
+            "text": "Dear Students,",
+            "score": 0.7373
+          },
+          {
+            "text": "Please be informed that the semester fees for your next semester must be",
+            "score": 0.7412
+          },
+          {
+            "text": "before",
+            "score": 1.0
+          },
+          {
+            "text": "the beginning of the End Semester Examination; which will be held from November",
+            "score": 0.6473
+          },
+          {
+            "text": "25,2026.",
+            "score": 0.9904
+          },
+          {
+            "text": "As per the Academic Calendar:",
+            "score": 0.9364
+          },
+          {
+            "text": "Fee payment starts: October 27, 2026",
+            "score": 0.8884
+          },
+          {
+            "text": "Last date for payment: November 4, 2026",
+            "score": 0.9657
+          },
+          {
+            "text": "Important points to note:",
+            "score": 0.9843
+          },
+          {
+            "text": "1",
+            "score": 0.9476
+          },
+          {
+            "text": "The Admit Card for the End Semester Examination will be issued",
+            "score": 0.6511
+          },
+          {
+            "text": "to those",
+            "score": 0.9974
+          },
+          {
+            "text": "students who",
+            "score": 0.982
+          },
+          {
+            "text": "their fees within the stipulated time.",
+            "score": 0.9438
+          },
+          {
+            "text": "2",
+            "score": 1.0
+          },
+          {
+            "text": "Students who have bank loans are requested to collect the Demand Letter now",
+            "score": 0.6587
+          },
+          {
+            "text": "onwards from the",
+            "score": 0.9336
+          },
+          {
+            "text": "reception counter by submitting:",
+            "score": 0.8595
+          },
+          {
+            "text": "A copy of the sanction letter",
+            "score": 0.9816
+          },
+          {
+            "text": "The prescribed form",
+            "score": 0.9699
+          },
+          {
+            "text": "AlL students are advised to treat this notice with the utmost urgency and ensure timely",
+            "score": 0.6952
+          },
+          {
+            "text": "paid",
+            "score": 1.0
+          },
+          {
+            "text": "only",
+            "score": 0.9998
+          },
+          {
+            "text": "paid",
+            "score": 0.9954
+          },
+          {
+            "text": "have",
+            "score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "task_id": 24,
+      "task_title": "Network & Network Security session",
+      "description": "Mode: Online.",
+      "task_type": "event",
+      "subject": "Network Security",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Screenshot/OCR",
+      "raw_text": "SESSION ALERT\nNetwork\n&\nNetwork Security\nDATE:\nTH\nJANUARY\nTIME:\n7 PM\nMODE:\nONLINE\nZER\nGway\na uia 0 c e",
+      "date_time_expression": "7 PM",
+      "confidence": 0.75,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": {
+        "task_id": 24,
+        "image_filename": "screenshot 2.jpeg",
+        "overall_confidence": 0.7989,
+        "line_confidences": [
+          {
+            "text": "SESSION ALERT",
+            "score": 0.9388
+          },
+          {
+            "text": "Network",
+            "score": 0.7662
+          },
+          {
+            "text": "&",
+            "score": 0.8075
+          },
+          {
+            "text": "Network Security",
+            "score": 0.9986
+          },
+          {
+            "text": "DATE:",
+            "score": 0.9974
+          },
+          {
+            "text": "TH",
+            "score": 0.9953
+          },
+          {
+            "text": "JANUARY",
+            "score": 0.909
+          },
+          {
+            "text": "TIME:",
+            "score": 0.9981
+          },
+          {
+            "text": "7 PM",
+            "score": 0.8532
+          },
+          {
+            "text": "MODE:",
+            "score": 0.9965
+          },
+          {
+            "text": "ONLINE",
+            "score": 0.6197
+          },
+          {
+            "text": "ZER",
+            "score": 0.9993
+          },
+          {
+            "text": "Gway",
+            "score": 0.202
+          },
+          {
+            "text": "a uia 0 c e",
+            "score": 0.1035
+          }
+        ]
+      }
+    },
+    {
+      "task_id": 25,
+      "task_title": "Grade Card Distribution for Semester",
+      "description": "Dates: Tuesday, October 27th, 2026; Friday, October 30th, 2026. Location: Room No. 201, Admin Desk.",
+      "task_type": "event",
+      "subject": "Artificial Intelligence",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Screenshot/OCR",
+      "raw_text": "A Satyam Roychowdhury initiative\nSNU\nSISTER NIVEDITA\nINDIA\nUNIVERSITY\n6\nNOTICE\nGrade Card Distribution for\nSemester\nB.Tech Computer Science & Engineering (Batch 2023-2027)\nDistribution of 6th Semester Grade Cards is scheduled!\nPlease note the details below for collection:\nThis\nto students of:\nB.Tech Computer Science & Engineering\nB.Tech CSE (Artificial Intelligence & Machine Learning)\nB.Tech CSE (loT, Cyber Security, Blockchain)\nB.Tech CSE (CSBS)\nAt\nDates:\nTuesday, October 27th , 2026\nFriday, October 30th, 2026\nTime:\n2.00 PM\nC\n4:00 PM\nVenue:\nRoom No. 201, Admin Desk\nFor Queries, Contact:\n?\nKrishnendu Sir & Anjan Sir\n}\n(\n6th\napplies\nGRADE\nCARD",
+      "date_time_expression": "2.00 PM",
+      "confidence": 0.75,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": {
+        "task_id": 25,
+        "image_filename": "screenshot 3.jpeg",
+        "overall_confidence": 0.817,
+        "line_confidences": [
+          {
+            "text": "A Satyam Roychowdhury initiative",
+            "score": 0.7878
+          },
+          {
+            "text": "SNU",
+            "score": 1.0
+          },
+          {
+            "text": "SISTER NIVEDITA",
+            "score": 0.8999
+          },
+          {
+            "text": "INDIA",
+            "score": 0.9129
+          },
+          {
+            "text": "UNIVERSITY",
+            "score": 1.0
+          },
+          {
+            "text": "6",
+            "score": 0.1253
+          },
+          {
+            "text": "NOTICE",
+            "score": 0.9999
+          },
+          {
+            "text": "Grade Card Distribution for",
+            "score": 0.7097
+          },
+          {
+            "text": "Semester",
+            "score": 0.9954
+          },
+          {
+            "text": "B.Tech Computer Science & Engineering (Batch 2023-2027)",
+            "score": 0.8899
+          },
+          {
+            "text": "Distribution of 6th Semester Grade Cards is scheduled!",
+            "score": 0.7375
+          },
+          {
+            "text": "Please note the details below for collection:",
+            "score": 0.8556
+          },
+          {
+            "text": "This",
+            "score": 1.0
+          },
+          {
+            "text": "to students of:",
+            "score": 0.9865
+          },
+          {
+            "text": "B.Tech Computer Science & Engineering",
+            "score": 0.8856
+          },
+          {
+            "text": "B.Tech CSE (Artificial Intelligence & Machine Learning)",
+            "score": 0.9545
+          },
+          {
+            "text": "B.Tech CSE (loT, Cyber Security, Blockchain)",
+            "score": 0.8304
+          },
+          {
+            "text": "B.Tech CSE (CSBS)",
+            "score": 0.9954
+          },
+          {
+            "text": "At",
+            "score": 0.5641
+          },
+          {
+            "text": "Dates:",
+            "score": 1.0
+          },
+          {
+            "text": "Tuesday, October 27th , 2026",
+            "score": 0.7723
+          },
+          {
+            "text": "Friday, October 30th, 2026",
+            "score": 0.915
+          },
+          {
+            "text": "Time:",
+            "score": 0.9999
+          },
+          {
+            "text": "2.00 PM",
+            "score": 0.996
+          },
+          {
+            "text": "C",
+            "score": 0.0666
+          },
+          {
+            "text": "4:00 PM",
+            "score": 0.7135
+          },
+          {
+            "text": "Venue:",
+            "score": 0.9714
+          },
+          {
+            "text": "Room No. 201, Admin Desk",
+            "score": 0.7459
+          },
+          {
+            "text": "For Queries, Contact:",
+            "score": 0.7711
+          },
+          {
+            "text": "?",
+            "score": 0.5805
+          },
+          {
+            "text": "Krishnendu Sir & Anjan Sir",
+            "score": 0.89
+          },
+          {
+            "text": "}",
+            "score": 0.3529
+          },
+          {
+            "text": "(",
+            "score": 0.3468
+          },
+          {
+            "text": "6th",
+            "score": 0.9759
+          },
+          {
+            "text": "applies",
+            "score": 1.0
+          },
+          {
+            "text": "GRADE",
+            "score": 0.9998
+          },
+          {
+            "text": "CARD",
+            "score": 0.9995
+          }
+        ]
+      }
+    },
+    {
+      "task_id": 26,
+      "task_title": "Debate: When automation reduces errors but removes human judgement, is it still an improvement?",
+      "description": "Platform: Microsoft Teams.",
+      "task_type": "event",
+      "subject": null,
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2026-10-09T15:30:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Screenshot/OCR",
+      "raw_text": "Semployability-life\nFederation\nEL\nDesigning successtul digital carcers\nIUniversity\nCommuty\nix the\nMeet the voices behind today's debate\nFor the Motion\nAgainst the Motion\nRoshni M\nCaleb Gomes\nShruti Kumari\nAyesha Jamil\nXPro Learner; Dhanalarshm\nXPro Learner, Meghnad Saha\nXPro Learner, PES College\nXPro Learner; Meghnad Saha\nSrinivasan Unrversity\nInstitute ot Technolgy\nof Engineering\nInstitute ot Technology\nBEYOND THE ARGUMENT\nDebate Topic:\nWhen automation reduces errors but removes human judgement, is it still an improvement?\n9 Oct, 2026\n03:30 PM onwards\nMicrosoft Teams\n[dovK\nTodtwx",
+      "date_time_expression": "9 Oct, 2026, 03:30 PM",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": {
+        "task_id": 26,
+        "image_filename": "screenshot 4.jpeg",
+        "overall_confidence": 0.7243,
+        "line_confidences": [
+          {
+            "text": "Semployability-life",
+            "score": 0.5755
+          },
+          {
+            "text": "Federation",
+            "score": 1.0
+          },
+          {
+            "text": "EL",
+            "score": 0.9979
+          },
+          {
+            "text": "Designing successtul digital carcers",
+            "score": 0.7131
+          },
+          {
+            "text": "IUniversity",
+            "score": 0.7911
+          },
+          {
+            "text": "Commuty",
+            "score": 0.2961
+          },
+          {
+            "text": "ix the",
+            "score": 0.2276
+          },
+          {
+            "text": "Meet the voices behind today's debate",
+            "score": 0.915
+          },
+          {
+            "text": "For the Motion",
+            "score": 0.8199
+          },
+          {
+            "text": "Against the Motion",
+            "score": 0.946
+          },
+          {
+            "text": "Roshni M",
+            "score": 0.882
+          },
+          {
+            "text": "Caleb Gomes",
+            "score": 0.9993
+          },
+          {
+            "text": "Shruti Kumari",
+            "score": 0.9988
+          },
+          {
+            "text": "Ayesha Jamil",
+            "score": 0.9999
+          },
+          {
+            "text": "XPro Learner; Dhanalarshm",
+            "score": 0.221
+          },
+          {
+            "text": "XPro Learner, Meghnad Saha",
+            "score": 0.7483
+          },
+          {
+            "text": "XPro Learner, PES College",
+            "score": 0.7756
+          },
+          {
+            "text": "XPro Learner; Meghnad Saha",
+            "score": 0.5857
+          },
+          {
+            "text": "Srinivasan Unrversity",
+            "score": 0.7384
+          },
+          {
+            "text": "Institute ot Technolgy",
+            "score": 0.5767
+          },
+          {
+            "text": "of Engineering",
+            "score": 0.5126
+          },
+          {
+            "text": "Institute ot Technology",
+            "score": 0.6788
+          },
+          {
+            "text": "BEYOND THE ARGUMENT",
+            "score": 0.9872
+          },
+          {
+            "text": "Debate Topic:",
+            "score": 0.9987
+          },
+          {
+            "text": "When automation reduces errors but removes human judgement, is it still an improvement?",
+            "score": 0.9339
+          },
+          {
+            "text": "9 Oct, 2026",
+            "score": 0.936
+          },
+          {
+            "text": "03:30 PM onwards",
+            "score": 0.6597
+          },
+          {
+            "text": "Microsoft Teams",
+            "score": 0.8973
+          },
+          {
+            "text": "[dovK",
+            "score": 0.0616
+          },
+          {
+            "text": "Todtwx",
+            "score": 0.2547
+          }
+        ]
+      }
+    },
+    {
+      "task_id": 27,
+      "task_title": "The Future of Work in Australia: Are You Ready for 2028?",
+      "description": "Platform: Microsoft Teams.",
+      "task_type": "event",
+      "subject": "Cyber Security",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Screenshot/OCR",
+      "raw_text": "Employabilitylife\nFederation\nDosigning succossful dlgital caroors\nUniversity\nWelvv ou\nThe Future of Work in Australia:\nAre You Ready for 2028?\nAssociate Prof: Paul Pang\nAssociate Professor; Cyber Security, Federation University Australia\nJune\n4.30-5.30 PM\nMicrosoft\n05\nIST\nTeams\nScan QR Code to\nRegister Now\n5123\nMll\nMt\nZutrdo\n512",
+      "date_time_expression": "4.30-5.30 PM",
+      "confidence": 0.75,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": {
+        "task_id": 27,
+        "image_filename": "screenshot 5.jpeg",
+        "overall_confidence": 0.75,
+        "line_confidences": [
+          {
+            "text": "Employabilitylife",
+            "score": 0.9994
+          },
+          {
+            "text": "Federation",
+            "score": 1.0
+          },
+          {
+            "text": "Dosigning succossful dlgital caroors",
+            "score": 0.3482
+          },
+          {
+            "text": "University",
+            "score": 0.7959
+          },
+          {
+            "text": "Welvv ou",
+            "score": 0.4057
+          },
+          {
+            "text": "The Future of Work in Australia:",
+            "score": 0.6977
+          },
+          {
+            "text": "Are You Ready for 2028?",
+            "score": 0.959
+          },
+          {
+            "text": "Associate Prof: Paul Pang",
+            "score": 0.8187
+          },
+          {
+            "text": "Associate Professor; Cyber Security, Federation University Australia",
+            "score": 0.541
+          },
+          {
+            "text": "June",
+            "score": 0.936
+          },
+          {
+            "text": "4.30-5.30 PM",
+            "score": 0.7519
+          },
+          {
+            "text": "Microsoft",
+            "score": 0.9999
+          },
+          {
+            "text": "05",
+            "score": 0.9999
+          },
+          {
+            "text": "IST",
+            "score": 0.9983
+          },
+          {
+            "text": "Teams",
+            "score": 0.9999
+          },
+          {
+            "text": "Scan QR Code to",
+            "score": 0.7159
+          },
+          {
+            "text": "Register Now",
+            "score": 0.9992
+          },
+          {
+            "text": "5123",
+            "score": 0.9705
+          },
+          {
+            "text": "Mll",
+            "score": 0.4057
+          },
+          {
+            "text": "Mt",
+            "score": 0.1388
+          },
+          {
+            "text": "Zutrdo",
+            "score": 0.0261
+          },
+          {
+            "text": "512",
+            "score": 0.9925
+          }
+        ]
+      }
+    },
+    {
+      "task_id": 28,
+      "task_title": "Apply for Co-Organisers & Core Team",
+      "description": null,
+      "task_type": null,
+      "subject": null,
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": null,
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Screenshot/OCR",
+      "raw_text": "Google Developer Group\nOn Campus Sister Nivedita University\nIt's your time to carry the legacy forward.\nNew'\nCO-ORGANISERS\n& CORE TEAM\nAPPLICATIONS ARE LIVEI\nBe & port of the team that drives innovation,\norganizes impactful events, and builds & thriving\ndeveloper community at Sister Nivedita University!\nIDeAS\nPe6plE\nTEAMS YOU CAN JOIN\nWPACT\nLAST DATE TO APPLY:\n677\n0\nTech\nSccial\nCurach\nEont\nPeampit\nvidesanpll\nVikjo\nGraehi\nCcatent\n9th\n2026\nTram\nMeJy\n#anmainam\n(dong\nDesign\nFente\nAPPLY NOW\nOp\nLoedortho\nKond: on\nStl\n888\nInnjt\nnttos {fforms glc/Bx3X JE83GgWzSbXng\nOcpcrturitk:\nDpcrience\nCe -ofmitte\nCammucity\n8oogl DoPe?\nGfcu?\n0r\nCaMRUS\n0tbjrttt\nSi}#\nLe @\n16 Jmivembits\nLfaRN\nBlild\nCONNfct\nBCLcrc\nBuild\nLearn\nGrow\nTogether\nSanwe\nCorsruaityt\nPcssio litics.\nSISTER\nNivedita\nUnivERsiTy\nLEAD\nCrGanize\nCREate\nIMPACT\nGoge\nSep,",
+      "date_time_expression": null,
+      "confidence": 0.25,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": {
+        "task_id": 28,
+        "image_filename": "screenshot 7.jpeg",
+        "overall_confidence": 0.4169,
+        "line_confidences": [
+          {
+            "text": "Google Developer Group",
+            "score": 0.7946
+          },
+          {
+            "text": "On Campus Sister Nivedita University",
+            "score": 0.9246
+          },
+          {
+            "text": "It's your time to carry the legacy forward.",
+            "score": 0.7877
+          },
+          {
+            "text": "New'",
+            "score": 0.35
+          },
+          {
+            "text": "CO-ORGANISERS",
+            "score": 0.701
+          },
+          {
+            "text": "& CORE TEAM",
+            "score": 0.9899
+          },
+          {
+            "text": "APPLICATIONS ARE LIVEI",
+            "score": 0.8436
+          },
+          {
+            "text": "Be & port of the team that drives innovation,",
+            "score": 0.3949
+          },
+          {
+            "text": "organizes impactful events, and builds & thriving",
+            "score": 0.729
+          },
+          {
+            "text": "developer community at Sister Nivedita University!",
+            "score": 0.632
+          },
+          {
+            "text": "IDeAS",
+            "score": 0.2026
+          },
+          {
+            "text": "Pe6plE",
+            "score": 0.1039
+          },
+          {
+            "text": "TEAMS YOU CAN JOIN",
+            "score": 0.8681
+          },
+          {
+            "text": "WPACT",
+            "score": 0.7229
+          },
+          {
+            "text": "LAST DATE TO APPLY:",
+            "score": 0.7389
+          },
+          {
+            "text": "677",
+            "score": 0.0193
+          },
+          {
+            "text": "0",
+            "score": 0.3867
+          },
+          {
+            "text": "Tech",
+            "score": 0.2803
+          },
+          {
+            "text": "Sccial",
+            "score": 0.6353
+          },
+          {
+            "text": "Curach",
+            "score": 0.3334
+          },
+          {
+            "text": "Eont",
+            "score": 0.2733
+          },
+          {
+            "text": "Peampit",
+            "score": 0.0437
+          },
+          {
+            "text": "videsanpll",
+            "score": 0.2301
+          },
+          {
+            "text": "Vikjo",
+            "score": 0.1261
+          },
+          {
+            "text": "Graehi",
+            "score": 0.2231
+          },
+          {
+            "text": "Ccatent",
+            "score": 0.1997
+          },
+          {
+            "text": "9th",
+            "score": 0.9415
+          },
+          {
+            "text": "2026",
+            "score": 1.0
+          },
+          {
+            "text": "Tram",
+            "score": 0.2699
+          },
+          {
+            "text": "MeJy",
+            "score": 0.1439
+          },
+          {
+            "text": "#anmainam",
+            "score": 0.1397
+          },
+          {
+            "text": "(dong",
+            "score": 0.679
+          },
+          {
+            "text": "Design",
+            "score": 0.1969
+          },
+          {
+            "text": "Fente",
+            "score": 0.0015
+          },
+          {
+            "text": "APPLY NOW",
+            "score": 0.9577
+          },
+          {
+            "text": "Op",
+            "score": 0.306
+          },
+          {
+            "text": "Loedortho",
+            "score": 0.1174
+          },
+          {
+            "text": "Kond: on",
+            "score": 0.1792
+          },
+          {
+            "text": "Stl",
+            "score": 0.2944
+          },
+          {
+            "text": "888",
+            "score": 0.2753
+          },
+          {
+            "text": "Innjt",
+            "score": 0.0676
+          },
+          {
+            "text": "nttos {fforms glc/Bx3X JE83GgWzSbXng",
+            "score": 0.1989
+          },
+          {
+            "text": "Ocpcrturitk:",
+            "score": 0.6859
+          },
+          {
+            "text": "Dpcrience",
+            "score": 0.3054
+          },
+          {
+            "text": "Ce -ofmitte",
+            "score": 0.0051
+          },
+          {
+            "text": "Cammucity",
+            "score": 0.4196
+          },
+          {
+            "text": "8oogl DoPe?",
+            "score": 0.073
+          },
+          {
+            "text": "Gfcu?",
+            "score": 0.1749
+          },
+          {
+            "text": "0r",
+            "score": 0.09
+          },
+          {
+            "text": "CaMRUS",
+            "score": 0.0705
+          },
+          {
+            "text": "0tbjrttt",
+            "score": 0.0012
+          },
+          {
+            "text": "Si}#",
+            "score": 0.0676
+          },
+          {
+            "text": "Le @",
+            "score": 0.0204
+          },
+          {
+            "text": "16 Jmivembits",
+            "score": 0.042
+          },
+          {
+            "text": "LfaRN",
+            "score": 0.0491
+          },
+          {
+            "text": "Blild",
+            "score": 0.3055
+          },
+          {
+            "text": "CONNfct",
+            "score": 0.3951
+          },
+          {
+            "text": "BCLcrc",
+            "score": 0.0588
+          },
+          {
+            "text": "Build",
+            "score": 0.983
+          },
+          {
+            "text": "Learn",
+            "score": 0.9843
+          },
+          {
+            "text": "Grow",
+            "score": 0.9884
+          },
+          {
+            "text": "Together",
+            "score": 0.9993
+          },
+          {
+            "text": "Sanwe",
+            "score": 0.4309
+          },
+          {
+            "text": "Corsruaityt",
+            "score": 0.1414
+          },
+          {
+            "text": "Pcssio litics.",
+            "score": 0.2727
+          },
+          {
+            "text": "SISTER",
+            "score": 0.4713
+          },
+          {
+            "text": "Nivedita",
+            "score": 0.7036
+          },
+          {
+            "text": "UnivERsiTy",
+            "score": 0.1493
+          },
+          {
+            "text": "LEAD",
+            "score": 0.9678
+          },
+          {
+            "text": "CrGanize",
+            "score": 0.4517
+          },
+          {
+            "text": "CREate",
+            "score": 0.1651
+          },
+          {
+            "text": "IMPACT",
+            "score": 0.8162
+          },
+          {
+            "text": "Goge",
+            "score": 0.7013
+          },
+          {
+            "text": "Sep,",
+            "score": 0.554
+          }
+        ]
+      }
+    },
+    {
+      "task_id": 29,
+      "task_title": "Viva Voce",
+      "description": "Dates: 4th and 5th April 2019.",
+      "task_type": "viva",
+      "subject": "Mechanical Engineering MEE-4099 Capstone",
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2019-04-04T09:00:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Screenshot/OCR",
+      "raw_text": "VIT\nVellore Institute of Technology\n(Dcatuedtok UmutendytuXi *ciou\nJol UGCAc 1986)\nSchool of Mechanical Engineering\nMEE-4099 Capstone Project\nWinter Semester 2018\n19\nViva Voce\nB\nTech: Mechanical, Specialization in Energy and Production &\nIndustrial Engineering\nDate: 4th and 5th April 2019\nReporting Time:\nFN 09.00 a.m. to 01.00 p.m: &\nAN 2.00 p.m. to 6.00 p.m.\nSi. No\nProject ID\nStudents\nDate\nReporting\nVenue\nTime\nBASDAEROOI\nISBMEO903\n04-04-2019\n9.00.00 AM\nVENUES\nB A SIAEROO?\nISBME0656\n04-04-2019\n9.00.00 AM\nVENUES\nBA8DAEROOS\n1SBMEOSO3\n04-04-2019\n9.00. 00 AM\nVENUES\nB [ SIDAUTOO?\n1SBME0S78\n04-04-2019\n9.00. 00 AM\nVENUE7\n5\nB [ SIDAUTOO4\n1SBMEOO58\n04-04-2019\n9.00. 00 AM\nVENUE7\nB [ SIDCFDOO?\nISBME0193\n04-04-2019\n9.00. 00 AM\nVENUE7\nB ! SIDDSGOD3\n1SBME0779\n04-04-2019\n9,00 00 AM\nVENUES\nB ISIDDSGOOS\nISBME0288\n04-04-2019\n9.00 00 AM\nVENUES\nBASIDSGOO8\nISBMEO675\n04-04-2019\n9.00:00 AM\nVENUES\n10\nB L8IDDSGOI?\n1SBME0676\n04-04-2019\n9.00.00 AM\nVENUES\n11\nB ASIDSGO3O\n1SBMEO740\n04-04-2019\n9.00. 00 AM\nVENUES\n12\nBASDDSG034\n1SBEMOMO\n04-04-2019\n9.00. 00 AM\nVENUES",
+      "date_time_expression": "4th and 5th April 2019, 09.00 a.m. to 01.00 p.m",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": {
+        "task_id": 29,
+        "image_filename": "screenshot 8.jpeg",
+        "overall_confidence": 0.6805,
+        "line_confidences": [
+          {
+            "text": "VIT",
+            "score": 0.9995
+          },
+          {
+            "text": "Vellore Institute of Technology",
+            "score": 0.9672
+          },
+          {
+            "text": "(Dcatuedtok UmutendytuXi *ciou",
+            "score": 0.0076
+          },
+          {
+            "text": "Jol UGCAc 1986)",
+            "score": 0.1701
+          },
+          {
+            "text": "School of Mechanical Engineering",
+            "score": 0.653
+          },
+          {
+            "text": "MEE-4099 Capstone Project",
+            "score": 0.6346
+          },
+          {
+            "text": "Winter Semester 2018",
+            "score": 0.9954
+          },
+          {
+            "text": "19",
+            "score": 0.3474
+          },
+          {
+            "text": "Viva Voce",
+            "score": 0.9999
+          },
+          {
+            "text": "B",
+            "score": 0.9979
+          },
+          {
+            "text": "Tech: Mechanical, Specialization in Energy and Production &",
+            "score": 0.3912
+          },
+          {
+            "text": "Industrial Engineering",
+            "score": 0.6593
+          },
+          {
+            "text": "Date: 4th and 5th April 2019",
+            "score": 0.683
+          },
+          {
+            "text": "Reporting Time:",
+            "score": 0.9823
+          },
+          {
+            "text": "FN 09.00 a.m. to 01.00 p.m: &",
+            "score": 0.5909
+          },
+          {
+            "text": "AN 2.00 p.m. to 6.00 p.m.",
+            "score": 0.861
+          },
+          {
+            "text": "Si. No",
+            "score": 0.5383
+          },
+          {
+            "text": "Project ID",
+            "score": 0.9978
+          },
+          {
+            "text": "Students",
+            "score": 1.0
+          },
+          {
+            "text": "Date",
+            "score": 1.0
+          },
+          {
+            "text": "Reporting",
+            "score": 0.9103
+          },
+          {
+            "text": "Venue",
+            "score": 1.0
+          },
+          {
+            "text": "Time",
+            "score": 0.9719
+          },
+          {
+            "text": "BASDAEROOI",
+            "score": 0.7185
+          },
+          {
+            "text": "ISBMEO903",
+            "score": 0.4538
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.737
+          },
+          {
+            "text": "9.00.00 AM",
+            "score": 0.6023
+          },
+          {
+            "text": "VENUES",
+            "score": 0.8539
+          },
+          {
+            "text": "B A SIAEROO?",
+            "score": 0.1734
+          },
+          {
+            "text": "ISBME0656",
+            "score": 0.3863
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.6452
+          },
+          {
+            "text": "9.00.00 AM",
+            "score": 0.9594
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9967
+          },
+          {
+            "text": "BA8DAEROOS",
+            "score": 0.273
+          },
+          {
+            "text": "1SBMEOSO3",
+            "score": 0.5207
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.9154
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.8952
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9967
+          },
+          {
+            "text": "B [ SIDAUTOO?",
+            "score": 0.5617
+          },
+          {
+            "text": "1SBME0S78",
+            "score": 0.4154
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.6354
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.6953
+          },
+          {
+            "text": "VENUE7",
+            "score": 0.6577
+          },
+          {
+            "text": "5",
+            "score": 1.0
+          },
+          {
+            "text": "B [ SIDAUTOO4",
+            "score": 0.4841
+          },
+          {
+            "text": "1SBMEOO58",
+            "score": 0.2874
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.6073
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.7642
+          },
+          {
+            "text": "VENUE7",
+            "score": 0.7984
+          },
+          {
+            "text": "B [ SIDCFDOO?",
+            "score": 0.4975
+          },
+          {
+            "text": "ISBME0193",
+            "score": 0.2468
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.8452
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.4721
+          },
+          {
+            "text": "VENUE7",
+            "score": 0.8969
+          },
+          {
+            "text": "B ! SIDDSGOD3",
+            "score": 0.2343
+          },
+          {
+            "text": "1SBME0779",
+            "score": 0.4487
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.9921
+          },
+          {
+            "text": "9,00 00 AM",
+            "score": 0.3947
+          },
+          {
+            "text": "VENUES",
+            "score": 0.6478
+          },
+          {
+            "text": "B ISIDDSGOOS",
+            "score": 0.2973
+          },
+          {
+            "text": "ISBME0288",
+            "score": 0.4396
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.901
+          },
+          {
+            "text": "9.00 00 AM",
+            "score": 0.6562
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9956
+          },
+          {
+            "text": "BASIDSGOO8",
+            "score": 0.446
+          },
+          {
+            "text": "ISBMEO675",
+            "score": 0.3848
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.8195
+          },
+          {
+            "text": "9.00:00 AM",
+            "score": 0.6251
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9896
+          },
+          {
+            "text": "10",
+            "score": 0.9999
+          },
+          {
+            "text": "B L8IDDSGOI?",
+            "score": 0.2204
+          },
+          {
+            "text": "1SBME0676",
+            "score": 0.5013
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.9899
+          },
+          {
+            "text": "9.00.00 AM",
+            "score": 0.9571
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9991
+          },
+          {
+            "text": "11",
+            "score": 0.2884
+          },
+          {
+            "text": "B ASIDSGO3O",
+            "score": 0.2333
+          },
+          {
+            "text": "1SBMEO740",
+            "score": 0.4424
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.8494
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.7966
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9985
+          },
+          {
+            "text": "12",
+            "score": 0.9667
+          },
+          {
+            "text": "BASDDSG034",
+            "score": 0.3359
+          },
+          {
+            "text": "1SBEMOMO",
+            "score": 0.3686
+          },
+          {
+            "text": "04-04-2019",
+            "score": 0.9971
+          },
+          {
+            "text": "9.00. 00 AM",
+            "score": 0.6484
+          },
+          {
+            "text": "VENUES",
+            "score": 0.9897
+          }
+        ]
+      }
+    },
+    {
+      "task_id": 30,
+      "task_title": "Invited talk on Designing Industrial lot at Undergraduate Level",
+      "description": "Platform: Webex. Mode: Online.",
+      "task_type": "event",
+      "subject": null,
+      "due_date": null,
+      "due_time": null,
+      "due_datetime": null,
+      "event_datetime": "2026-10-09T20:00:00",
+      "status": "pending",
+      "importance": null,
+      "estimated_effort": null,
+      "source": "Screenshot/OCR",
+      "raw_text": "~IEEE\n68\nIEEE| IEee\n04 ,\nstudents\nKT\nTo\nstudents\nOn\nP R E $ E NT $\nAN INVITED TALK ON\nDESIGNING\nGen\nINDUSTRIAL lot\nJilk\nAT UNDERGRADUATE LEVEL\nby\nDr PRAVIN WANKHEDE\nAssoclate Protesscr; CSMSS Chh. Shahu College of Engineenng;\nAurangabad\nVke Chair\nIEEE Industrial Electronic > Chapter\nMaharashtra Stction\nEEE Senior Merber\nREGISTER NOW\n9th October\n8.00 PM\nMode: Online\nPlatform: Webex\nScan thc QR codc t0\nrogister:\nOrganized by, IEEE Student Branch, Academy of Technology (STB13681), Hooghly, West Bengal, India\nwwaot eduin\npo",
+      "date_time_expression": "9th October, 8.00 PM",
+      "confidence": 1.0,
+      "change_information": [],
+      "created_at": "2026-11-05T15:28:53",
+      "completed_at": null,
+      "ocr": {
+        "task_id": 30,
+        "image_filename": "screenshot 9.jpeg",
+        "overall_confidence": 0.6024,
+        "line_confidences": [
+          {
+            "text": "~IEEE",
+            "score": 0.6539
+          },
+          {
+            "text": "68",
+            "score": 0.318
+          },
+          {
+            "text": "IEEE| IEee",
+            "score": 0.3682
+          },
+          {
+            "text": "04 ,",
+            "score": 0.0457
+          },
+          {
+            "text": "students",
+            "score": 0.9925
+          },
+          {
+            "text": "KT",
+            "score": 0.4223
+          },
+          {
+            "text": "To",
+            "score": 0.0254
+          },
+          {
+            "text": "students",
+            "score": 0.9339
+          },
+          {
+            "text": "On",
+            "score": 0.0407
+          },
+          {
+            "text": "P R E $ E NT $",
+            "score": 0.4402
+          },
+          {
+            "text": "AN INVITED TALK ON",
+            "score": 0.8847
+          },
+          {
+            "text": "DESIGNING",
+            "score": 0.9994
+          },
+          {
+            "text": "Gen",
+            "score": 0.0479
+          },
+          {
+            "text": "INDUSTRIAL lot",
+            "score": 0.4579
+          },
+          {
+            "text": "Jilk",
+            "score": 0.1551
+          },
+          {
+            "text": "AT UNDERGRADUATE LEVEL",
+            "score": 0.8209
+          },
+          {
+            "text": "by",
+            "score": 0.997
+          },
+          {
+            "text": "Dr PRAVIN WANKHEDE",
+            "score": 0.6675
+          },
+          {
+            "text": "Assoclate Protesscr; CSMSS Chh. Shahu College of Engineenng;",
+            "score": 0.5419
+          },
+          {
+            "text": "Aurangabad",
+            "score": 0.983
+          },
+          {
+            "text": "Vke Chair",
+            "score": 0.6572
+          },
+          {
+            "text": "IEEE Industrial Electronic > Chapter",
+            "score": 0.5701
+          },
+          {
+            "text": "Maharashtra Stction",
+            "score": 0.7044
+          },
+          {
+            "text": "EEE Senior Merber",
+            "score": 0.4825
+          },
+          {
+            "text": "REGISTER NOW",
+            "score": 0.934
+          },
+          {
+            "text": "9th October",
+            "score": 0.9688
+          },
+          {
+            "text": "8.00 PM",
+            "score": 0.9926
+          },
+          {
+            "text": "Mode: Online",
+            "score": 0.9696
+          },
+          {
+            "text": "Platform: Webex",
+            "score": 0.9522
+          },
+          {
+            "text": "Scan thc QR codc t0",
+            "score": 0.7071
+          },
+          {
+            "text": "rogister:",
+            "score": 0.2603
+          },
+          {
+            "text": "Organized by, IEEE Student Branch, Academy of Technology (STB13681), Hooghly, West Bengal, India",
+            "score": 0.7249
+          },
+          {
+            "text": "wwaot eduin",
+            "score": 0.7089
+          },
+          {
+            "text": "po",
+            "score": 0.0519
+          }
+        ]
+      }
+    }
+  ]
+}

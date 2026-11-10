@@ -1,0 +1,177 @@
+/* ===== App shell: warm brown sidebar + ivory canvas ===== */
+:root {
+  --sidebar: #82664f;
+  --sidebar-hover: #735a44;
+  --sidebar-text: #f6efe4;
+  --shell-bar-h: 80px;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 252px minmax(0, 1fr);
+  background: var(--sidebar);
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  display: flex; flex-direction: column; gap: var(--space-3);
+  padding: 0 0 var(--space-4) var(--space-3);
+  background: var(--sidebar);
+  border-right: 0;
+  color: var(--sidebar-text);
+}
+.sidebar-brand {
+  display: flex; align-items: center;
+  height: var(--shell-bar-h); flex: none;
+  padding: 0 var(--space-3);
+}
+.sidebar .logo {
+  color: #fff; font-family: var(--font-display); font-size: var(--text-xl);
+  letter-spacing: 0.06em; line-height: 1;
+}
+.sidebar .logo:hover { color: #fff; }
+.logo-mark {
+  background: var(--ivory); color: var(--espresso);
+  font-family: var(--font-display); font-weight: 700;
+}
+
+.sidebar-nav { gap: var(--space-1); }
+.side-link {
+  position: relative; display: flex; align-items: center; gap: var(--space-3);
+  min-height: 48px; padding: 0 var(--space-3);
+  border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+  color: var(--sidebar-text); font-size: var(--text-base); font-weight: 500; text-decoration: none;
+  transition: background-color .15s, color .15s;
+}
+.side-link:hover { background: var(--sidebar-hover); color: #fff; }
+.side-link.active { background: var(--ivory); color: var(--espresso); font-weight: 700; }
+.side-link.active svg { color: var(--brown); }
+
+/* Curved joins so the active pill flows into the page */
+.side-link::before { content: none; }
+.side-link.active::before,
+.side-link.active::after {
+  content: ""; position: absolute; right: 0; width: 20px; height: 20px; pointer-events: none;
+}
+.side-link.active::before {
+  top: -20px; left: auto; bottom: auto; border-radius: 0;
+  background: radial-gradient(circle at 0 0, transparent 20px, var(--ivory) 20.5px);
+}
+.side-link.active::after {
+  bottom: -20px;
+  background: radial-gradient(circle at 0 100%, transparent 20px, var(--ivory) 20.5px);
+}
+.nav-badge { background: var(--ivory); color: var(--espresso); }
+
+/* Main canvas */
+.app-main { background: var(--ivory); min-width: 0; }
+
+/* One-line top bar */
+.topbar {
+  position: sticky; top: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+  height: var(--shell-bar-h); min-height: var(--shell-bar-h); padding: 0 var(--space-5);
+  background: var(--ivory); border-bottom: 0;
+}
+.topbar-left, .topbar-right { display: flex; align-items: center; gap: var(--space-3); }
+.topbar-title {
+  margin: 0; max-width: none;
+  font-family: var(--font-display); font-weight: 600; font-size: var(--text-2xl);
+  color: var(--espresso); letter-spacing: -0.01em; line-height: 1;
+}
+
+.bell-btn {
+  position: relative; display: grid; place-items: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #fff; border: 1px solid var(--color-border); color: var(--brown);
+}
+.bell-btn:hover { background: var(--sand-soft); color: var(--espresso); }
+.bell-dot {
+  position: absolute; top: 9px; right: 10px; min-width: 0; width: 9px; height: 9px; padding: 0;
+  border-radius: 50%; background: var(--color-danger); border: 2px solid #fff; box-sizing: content-box;
+}
+
+.profile-btn { display: grid; place-items: center; padding: 0; border: 0; background: transparent; border-radius: 50%; }
+.profile-btn:hover { background: transparent; }
+.profile-name { display: none; }
+.avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--sand); color: var(--espresso);
+  font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg);
+}
+.menu-pop { background: #fff; border: 1px solid var(--color-border); box-shadow: var(--shadow-md); }
+.menu-item:hover { background: var(--sand-soft); }
+
+/* Topbar carries the page title; page h1s stay for screen readers only */
+.app-content h1 {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  :root { --shell-bar-h: 64px; }
+  .app-shell { grid-template-columns: minmax(0, 1fr); }
+  .sidebar {
+    position: fixed; inset: 0 auto 0 0; width: 280px; z-index: 60;
+    transform: translateX(-100%); visibility: hidden;
+    transition: transform .2s, visibility .2s;
+  }
+  .sidebar.open { transform: translateX(0); visibility: visible; box-shadow: var(--shadow-lg); }
+  .scrim.open { background: rgba(43, 33, 24, 0.55); }
+  .topbar { padding: 0 var(--space-3); }
+  .topbar-title { font-size: var(--text-xl); }
+  .mobile-only { color: var(--espresso); }
+}
+
+/* ===== Compact spacing, all pages ===== */
+:root {
+  --color-info-soft: #efe7da;
+  --color-success-soft: #e4f1e6;
+  --color-warning-soft: #f8ecd0;
+  --color-danger-soft: #fbe5e2;
+}
+
+.app-content { padding: var(--space-1) var(--space-5) var(--space-4); }
+.stack { gap: var(--space-3); }
+.layout { gap: var(--space-3); }
+.stats { gap: var(--space-3); }
+
+.page-header { margin-bottom: 0; gap: var(--space-2); }
+.page-header p, .page-header .muted { margin: 0; }
+
+.card, .panel { padding: 1.25rem; }
+.main-col > * + * { margin-top: var(--space-3); }
+.filters { margin-bottom: var(--space-2); }
+.task-list { gap: var(--space-2); }
+.side-col { gap: var(--space-3); }
+
+/* Dismissible-looking notice banner */
+.callout {
+  margin: 0; padding: 0.625rem 1rem;
+  display: flex; align-items: center; gap: var(--space-2);
+  border-radius: var(--radius-md); font-size: var(--text-sm);
+}
+.callout-info {
+  background: var(--sand-soft); color: var(--espresso);
+  border: 1px solid var(--sand); border-left: 4px solid var(--brown);
+}
+.callout a { color: var(--brown); font-weight: 700; }
+
+/* Stat tiles */
+.stat-card { padding: 0.875rem 1.125rem; gap: 2px; background: #fff; }
+.stat-value { font-family: var(--font-display); font-size: 2rem; line-height: 1.1; color: var(--espresso); }
+.stat-label { color: var(--brown); font-size: var(--text-sm); font-weight: 500; }
+
+@media (max-width: 900px) {
+  .app-content { padding: var(--space-1) var(--space-3) var(--space-3); }
+}
+
+/* Logo image on a light tile so the dark-brown mark stays visible on any bar */
+.logo-img {
+  display: block; width: 40px; height: 40px; padding: 5px;
+  background: var(--ivory); border-radius: var(--radius-md);
+  object-fit: contain;
+}

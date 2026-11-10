@@ -1,0 +1,1254 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "suite": "NUDGE Step 66 Independent NLP Evaluation Dataset",
+    "created_by": "Rumana (Data/DB & Evaluation Lead)",
+    "reference_date": "2026-11-04",
+    "description": "50-case independent evaluation suite (40 active benchmark cases + 10 deferred roadmap cases) covering all 12 NLP contract fields, OCR noise, and DB validation.",
+    "active_cases_count": 40,
+    "deferred_cases_count": 10
+  },
+  "active_cases": [
+    {
+      "case_id": "EVAL-NLP-01",
+      "category": "task",
+      "raw_text": "Please submit Machine Learning Assignment 3 on Moodle by 15 November at 5:00 PM.",
+      "source": "LMS",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Submit Machine Learning Assignment 3",
+        "description": "Submit on Moodle",
+        "task_type": "assignment",
+        "subject": "Machine Learning",
+        "due_date": "2026-11-15",
+        "due_time": "17:00",
+        "event_datetime": null,
+        "source": "LMS",
+        "raw_text": "Please submit Machine Learning Assignment 3 on Moodle by 15 November at 5:00 PM.",
+        "date_time_expression": "15 November at 5:00 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Standard LMS assignment with explicit date, time, and Moodle description."
+    },
+    {
+      "case_id": "EVAL-NLP-02",
+      "category": "task",
+      "raw_text": "Reminder: Complete the Operating Systems assignment before 20 November at 11:59 PM.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Complete Operating Systems assignment",
+        "description": null,
+        "task_type": "assignment",
+        "subject": "Operating Systems",
+        "due_date": "2026-11-20",
+        "due_time": "23:59",
+        "event_datetime": null,
+        "source": "WhatsApp",
+        "raw_text": "Reminder: Complete the Operating Systems assignment before 20 November at 11:59 PM.",
+        "date_time_expression": "20 November at 11:59 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "WhatsApp reminder prefix stripped, explicit date and 11:59 PM time."
+    },
+    {
+      "case_id": "EVAL-NLP-03",
+      "category": "task",
+      "raw_text": "Dear Students, please submit your Software Engineering project report by 25 November at 18:00.",
+      "source": "Email",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Submit Software Engineering project report",
+        "description": null,
+        "task_type": "project",
+        "subject": "Software Engineering",
+        "due_date": "2026-11-25",
+        "due_time": "18:00",
+        "event_datetime": null,
+        "source": "Email",
+        "raw_text": "Dear Students, please submit your Software Engineering project report by 25 November at 18:00.",
+        "date_time_expression": "25 November at 18:00",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Email with greeting stripped, 24-hour time 18:00."
+    },
+    {
+      "case_id": "EVAL-NLP-04",
+      "category": "task",
+      "raw_text": "Upload the Computer Networks lab assignment on LMS by 10 November at 14:00.",
+      "source": "LMS",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Upload Computer Networks lab assignment on LMS",
+        "description": "Submit on LMS",
+        "task_type": "assignment",
+        "subject": "Computer Networks",
+        "due_date": "2026-11-10",
+        "due_time": "14:00",
+        "event_datetime": null,
+        "source": "LMS",
+        "raw_text": "Upload the Computer Networks lab assignment on LMS by 10 November at 14:00.",
+        "date_time_expression": "10 November at 14:00",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "LMS upload with 24-hour time and known course subject."
+    },
+    {
+      "case_id": "EVAL-NLP-05",
+      "category": "task",
+      "raw_text": "All students must submit the Artificial Intelligence assignment by 17 November at 4 PM.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Submit Artificial Intelligence assignment",
+        "description": null,
+        "task_type": "assignment",
+        "subject": "Artificial Intelligence",
+        "due_date": "2026-11-17",
+        "due_time": "16:00",
+        "event_datetime": null,
+        "source": "Notice",
+        "raw_text": "All students must submit the Artificial Intelligence assignment by 17 November at 4 PM.",
+        "date_time_expression": "17 November at 4 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Notice with modal 'must submit' action verb and 12h time."
+    },
+    {
+      "case_id": "EVAL-NLP-06",
+      "category": "task",
+      "raw_text": "Please solve Discrete Mathematics assignment 4 by 19 November at 8 PM.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Solve Discrete Mathematics assignment 4",
+        "description": null,
+        "task_type": "assignment",
+        "subject": "Discrete Mathematics",
+        "due_date": "2026-11-19",
+        "due_time": "20:00",
+        "event_datetime": null,
+        "source": "WhatsApp",
+        "raw_text": "Please solve Discrete Mathematics assignment 4 by 19 November at 8 PM.",
+        "date_time_expression": "19 November at 8 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Action verb 'solve' and assignment number."
+    },
+    {
+      "case_id": "EVAL-NLP-07",
+      "category": "task",
+      "raw_text": "Kindly prepare your Cloud Computing project presentation by 22 November at 10:00 AM.",
+      "source": "Email",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Prepare Cloud Computing project presentation",
+        "description": null,
+        "task_type": "project",
+        "subject": "Cloud Computing",
+        "due_date": "2026-11-22",
+        "due_time": "10:00",
+        "event_datetime": null,
+        "source": "Email",
+        "raw_text": "Kindly prepare your Cloud Computing project presentation by 22 November at 10:00 AM.",
+        "date_time_expression": "22 November at 10:00 AM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Email action 'prepare' and project task type."
+    },
+    {
+      "case_id": "EVAL-NLP-08",
+      "category": "task",
+      "raw_text": "Submit the Data Mining assignment on the portal by 14 November at 16:30.",
+      "source": "LMS",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Submit Data Mining assignment",
+        "description": "Submit on the portal",
+        "task_type": "assignment",
+        "subject": "Data Mining",
+        "due_date": "2026-11-14",
+        "due_time": "16:30",
+        "event_datetime": null,
+        "source": "LMS",
+        "raw_text": "Submit the Data Mining assignment on the portal by 14 November at 16:30.",
+        "date_time_expression": "14 November at 16:30",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Portal submission notes and 24h minutes."
+    },
+    {
+      "case_id": "EVAL-NLP-09",
+      "category": "task",
+      "raw_text": "Students are required to register for the Cyber Security workshop project by 13 November at 5 PM.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Students are required to register for the Cyber Security workshop project",
+        "description": null,
+        "task_type": "project",
+        "subject": "Cyber Security",
+        "due_date": "2026-11-13",
+        "due_time": "17:00",
+        "event_datetime": null,
+        "source": "Notice",
+        "raw_text": "Students are required to register for the Cyber Security workshop project by 13 November at 5 PM.",
+        "date_time_expression": "13 November at 5 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Action 'register' beats workshop event; project task type."
+    },
+    {
+      "case_id": "EVAL-NLP-10",
+      "category": "task",
+      "raw_text": "Finish the Web Technologies assignment 2 by 16 November at 9 PM.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Finish Web Technologies assignment 2",
+        "description": null,
+        "task_type": "assignment",
+        "subject": "Web Technologies",
+        "due_date": "2026-11-16",
+        "due_time": "21:00",
+        "event_datetime": null,
+        "source": "WhatsApp",
+        "raw_text": "Finish the Web Technologies assignment 2 by 16 November at 9 PM.",
+        "date_time_expression": "16 November at 9 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Action verb 'finish' with numbered assignment."
+    },
+    {
+      "case_id": "EVAL-NLP-11",
+      "category": "event",
+      "raw_text": "The Database Management Systems mid-semester exam is scheduled for 24 November at 10:30 AM. Room 301.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Database Management Systems mid-semester exam",
+        "description": "Room 301",
+        "task_type": "exam",
+        "subject": "Database Management Systems",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-24T10:30:00",
+        "source": "Notice",
+        "raw_text": "The Database Management Systems mid-semester exam is scheduled for 24 November at 10:30 AM. Room 301.",
+        "date_time_expression": "24 November at 10:30 AM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Exam event with date and time merged into event_datetime; room in description."
+    },
+    {
+      "case_id": "EVAL-NLP-12",
+      "category": "event",
+      "raw_text": "Machine Learning quiz on Friday at 2 PM. Room 102.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Machine Learning quiz",
+        "description": "Room 102",
+        "task_type": "quiz",
+        "subject": "Machine Learning",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-06T14:00:00",
+        "source": "WhatsApp",
+        "raw_text": "Machine Learning quiz on Friday at 2 PM. Room 102.",
+        "date_time_expression": "Friday at 2 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Quiz event with weekday Friday resolved to next occurrence (2026-11-06)."
+    },
+    {
+      "case_id": "EVAL-NLP-13",
+      "category": "event",
+      "raw_text": "The Physics practical viva is scheduled for 18 November at 13:00.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Physics practical viva",
+        "description": null,
+        "task_type": "viva",
+        "subject": "Physics",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-18T13:00:00",
+        "source": "Notice",
+        "raw_text": "The Physics practical viva is scheduled for 18 November at 13:00.",
+        "date_time_expression": "18 November at 13:00",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Viva event with 24h time."
+    },
+    {
+      "case_id": "EVAL-NLP-14",
+      "category": "event",
+      "raw_text": "The department seminar is scheduled for 27 November at 15:00.",
+      "source": "Email",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Department seminar",
+        "description": null,
+        "task_type": "event",
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-27T15:00:00",
+        "source": "Email",
+        "raw_text": "The department seminar is scheduled for 27 November at 15:00.",
+        "date_time_expression": "27 November at 15:00",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Department seminar classified as type event."
+    },
+    {
+      "case_id": "EVAL-NLP-15",
+      "category": "event",
+      "raw_text": "Team meeting for the final-year project on Monday at 11 AM.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Final-year project team meeting",
+        "description": null,
+        "task_type": "meeting",
+        "subject": "Final-year project",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-09T11:00:00",
+        "source": "WhatsApp",
+        "raw_text": "Team meeting for the final-year project on Monday at 11 AM.",
+        "date_time_expression": "Monday at 11 AM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Meeting event with weekday Monday resolved to 2026-11-09."
+    },
+    {
+      "case_id": "EVAL-NLP-16",
+      "category": "event",
+      "raw_text": "Our Software Engineering lecture starts on 21 November at 9:00 AM.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Software Engineering lecture",
+        "description": null,
+        "task_type": "class",
+        "subject": "Software Engineering",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-21T09:00:00",
+        "source": "Notice",
+        "raw_text": "Our Software Engineering lecture starts on 21 November at 9:00 AM.",
+        "date_time_expression": "21 November at 9:00 AM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Lecture event classified as class type."
+    },
+    {
+      "case_id": "EVAL-NLP-17",
+      "category": "event",
+      "raw_text": "The college cultural fest will take place on 30 November.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "College cultural fest",
+        "description": null,
+        "task_type": "event",
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Notice",
+        "raw_text": "The college cultural fest will take place on 30 November.",
+        "date_time_expression": "30 November",
+        "confidence": 0.75,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Event with date only (no time); event_datetime must be null (do not guess)."
+    },
+    {
+      "case_id": "EVAL-NLP-18",
+      "category": "event",
+      "raw_text": "Please attend the project review meeting at 4 PM.",
+      "source": "Email",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Project review meeting",
+        "description": null,
+        "task_type": "meeting",
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Email",
+        "raw_text": "Please attend the project review meeting at 4 PM.",
+        "date_time_expression": "4 PM",
+        "confidence": 0.75,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Event with time only (no date); event_datetime must be null (do not guess)."
+    },
+    {
+      "case_id": "EVAL-NLP-19",
+      "category": "task",
+      "raw_text": "Submit your Computer Architecture assignment by 6 PM today.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Submit Computer Architecture assignment",
+        "description": null,
+        "task_type": "assignment",
+        "subject": "Computer Architecture",
+        "due_date": "2026-11-04",
+        "due_time": "18:00",
+        "event_datetime": null,
+        "source": "WhatsApp",
+        "raw_text": "Submit your Computer Architecture assignment by 6 PM today.",
+        "date_time_expression": "6 PM today",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Relative date today resolves to reference_date (2026-11-04)."
+    },
+    {
+      "case_id": "EVAL-NLP-20",
+      "category": "task",
+      "raw_text": "Reminder: Complete the Statistics quiz tomorrow at 3 PM.",
+      "source": "Email",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Complete Statistics quiz",
+        "description": null,
+        "task_type": "quiz",
+        "subject": "Statistics",
+        "due_date": "2026-11-05",
+        "due_time": "15:00",
+        "event_datetime": null,
+        "source": "Email",
+        "raw_text": "Reminder: Complete the Statistics quiz tomorrow at 3 PM.",
+        "date_time_expression": "tomorrow at 3 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Relative date tomorrow resolves to 2026-11-05."
+    },
+    {
+      "case_id": "EVAL-NLP-21",
+      "category": "task",
+      "raw_text": "The Smart Campus project proposal deadline is Friday at noon.",
+      "source": "LMS",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Smart Campus project proposal",
+        "description": null,
+        "task_type": "project",
+        "subject": "Smart Campus",
+        "due_date": "2026-11-06",
+        "due_time": "12:00",
+        "event_datetime": null,
+        "source": "LMS",
+        "raw_text": "The Smart Campus project proposal deadline is Friday at noon.",
+        "date_time_expression": "Friday at noon",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Relative date Friday (2026-11-06) and 'noon' resolves to 12:00."
+    },
+    {
+      "case_id": "EVAL-NLP-22",
+      "category": "task",
+      "raw_text": "Submit your Deep Learning assignment on Monday by 17:00.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Submit Deep Learning assignment",
+        "description": null,
+        "task_type": "assignment",
+        "subject": "Deep Learning",
+        "due_date": "2026-11-09",
+        "due_time": "17:00",
+        "event_datetime": null,
+        "source": "WhatsApp",
+        "raw_text": "Submit your Deep Learning assignment on Monday by 17:00.",
+        "date_time_expression": "Monday by 17:00",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Relative weekday Monday (2026-11-09) with 24h time."
+    },
+    {
+      "case_id": "EVAL-NLP-23",
+      "category": "event",
+      "raw_text": "The Computer Networks exam is on 16 November from 10 AM to 12 PM.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Computer Networks exam",
+        "description": null,
+        "task_type": "exam",
+        "subject": "Computer Networks",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-16T10:00:00",
+        "source": "Notice",
+        "raw_text": "The Computer Networks exam is on 16 November from 10 AM to 12 PM.",
+        "date_time_expression": "16 November from 10 AM to 12 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Time range 10 AM to 12 PM retains start time 10:00."
+    },
+    {
+      "case_id": "EVAL-NLP-24",
+      "category": "event",
+      "raw_text": "The Computer Architecture quiz originally at 10 AM moved to 12 PM on 11 November.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Computer Architecture quiz moved",
+        "description": null,
+        "task_type": "quiz",
+        "subject": "Computer Architecture",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-11T12:00:00",
+        "source": "WhatsApp",
+        "raw_text": "The Computer Architecture quiz originally at 10 AM moved to 12 PM on 11 November.",
+        "date_time_expression": "12 PM on 11 November",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Time change statement retains new time 12:00."
+    },
+    {
+      "case_id": "EVAL-NLP-25",
+      "category": "task",
+      "raw_text": "DATA STRUCTURES ASSIGNMENT 2: Submit by 18 November at 5 PM on Moodle.",
+      "source": "Screenshot/OCR",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Submit Data Structures ASSIGNMENT 2",
+        "description": "Submit on Moodle",
+        "task_type": "assignment",
+        "subject": "Data Structures",
+        "due_date": "2026-11-18",
+        "due_time": "17:00",
+        "event_datetime": null,
+        "source": "Screenshot/OCR",
+        "raw_text": "DATA STRUCTURES ASSIGNMENT 2: Submit by 18 November at 5 PM on Moodle.",
+        "date_time_expression": "18 November at 5 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "OCR clean sentence with explicit task action and Moodle platform."
+    },
+    {
+      "case_id": "EVAL-NLP-26",
+      "category": "event",
+      "raw_text": "OPERATING SYSTEMS LAB VIVA on 23 November 2026 at 10:00 AM. Room 402.",
+      "source": "Screenshot/OCR",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "OPERATING SYSTEMS LAB VIVA",
+        "description": "Room 402",
+        "task_type": "viva",
+        "subject": "Operating Systems",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-23T10:00:00",
+        "source": "Screenshot/OCR",
+        "raw_text": "OPERATING SYSTEMS LAB VIVA on 23 November 2026 at 10:00 AM. Room 402.",
+        "date_time_expression": "23 November 2026 at 10:00 AM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "OCR viva announcement with Room venue."
+    },
+    {
+      "case_id": "EVAL-NLP-27",
+      "category": "task",
+      "raw_text": "Smart Campus project proposal is due on 28 November at 4 PM. Late submissions not accepted.",
+      "source": "Screenshot/OCR",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Smart Campus project proposal",
+        "description": "Late submissions not accepted",
+        "task_type": "project",
+        "subject": "Smart Campus",
+        "due_date": "2026-11-28",
+        "due_time": "16:00",
+        "event_datetime": null,
+        "source": "Screenshot/OCR",
+        "raw_text": "Smart Campus project proposal is due on 28 November at 4 PM. Late submissions not accepted.",
+        "date_time_expression": "28 November at 4 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "OCR format task with trailing penalty note in description."
+    },
+    {
+      "case_id": "EVAL-NLP-28",
+      "category": "event",
+      "raw_text": "Theory of Computation examination on 19 November at 2:00 PM. Room 204.",
+      "source": "Screenshot/OCR",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Theory of Computation examination",
+        "description": "Room 204",
+        "task_type": "exam",
+        "subject": "Theory of Computation",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": "2026-11-19T14:00:00",
+        "source": "Screenshot/OCR",
+        "raw_text": "Theory of Computation examination on 19 November at 2:00 PM. Room 204.",
+        "date_time_expression": "19 November at 2:00 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "event",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "OCR exam schedule notice with room venue."
+    },
+    {
+      "case_id": "EVAL-NLP-29",
+      "category": "task",
+      "raw_text": "Machine Learning assignment 4 must be uploaded by 26 November at 11:59 PM.",
+      "source": "Screenshot/OCR",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Upload Machine Learning assignment 4",
+        "description": null,
+        "task_type": "assignment",
+        "subject": "Machine Learning",
+        "due_date": "2026-11-26",
+        "due_time": "23:59",
+        "event_datetime": null,
+        "source": "Screenshot/OCR",
+        "raw_text": "Machine Learning assignment 4 must be uploaded by 26 November at 11:59 PM.",
+        "date_time_expression": "26 November at 11:59 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "OCR modal action 'must be uploaded' with 11:59 PM deadline."
+    },
+    {
+      "case_id": "EVAL-NLP-30",
+      "category": "task",
+      "raw_text": "Final-year project proposal: submit by 17 November at noon. Room 105.",
+      "source": "Screenshot/OCR",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Final-year project proposal: submit",
+        "description": "Room 105",
+        "task_type": "project",
+        "subject": "Final-year project",
+        "due_date": "2026-11-17",
+        "due_time": "12:00",
+        "event_datetime": null,
+        "source": "Screenshot/OCR",
+        "raw_text": "Final-year project proposal: submit by 17 November at noon. Room 105.",
+        "date_time_expression": "17 November at noon",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "OCR project notice with 'noon' time and Room venue."
+    },
+    {
+      "case_id": "EVAL-NLP-31",
+      "category": "task",
+      "raw_text": "Please prepare the Machine Learning assignment. The deadline will be announced later.",
+      "source": "Email",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Prepare Machine Learning assignment",
+        "description": "The deadline will be announced later",
+        "task_type": "assignment",
+        "subject": "Machine Learning",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Email",
+        "raw_text": "Please prepare the Machine Learning assignment. The deadline will be announced later.",
+        "date_time_expression": null,
+        "confidence": 0.5,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Explicit unknown deadline suppresses date/time (do not invent dates)."
+    },
+    {
+      "case_id": "EVAL-NLP-32",
+      "category": "task",
+      "raw_text": "Submit your Software Engineering assignment. The date is to be decided.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Submit Software Engineering assignment",
+        "description": "The date is to be decided",
+        "task_type": "assignment",
+        "subject": "Software Engineering",
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "WhatsApp",
+        "raw_text": "Submit your Software Engineering assignment. The date is to be decided.",
+        "date_time_expression": null,
+        "confidence": 0.5,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Unknown date suppresses date."
+    },
+    {
+      "case_id": "EVAL-NLP-33",
+      "category": "task",
+      "raw_text": "Please submit your Information Security assignment by 24 November at 5 PM.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Submit Information Security assignment",
+        "description": null,
+        "task_type": "assignment",
+        "subject": "Information Security",
+        "due_date": "2026-11-24",
+        "due_time": "17:00",
+        "event_datetime": null,
+        "source": "Notice",
+        "raw_text": "Please submit your Information Security assignment by 24 November at 5 PM.",
+        "date_time_expression": "24 November at 5 PM",
+        "confidence": 1.0,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Known subject from SUBJECTS dictionary."
+    },
+    {
+      "case_id": "EVAL-NLP-34",
+      "category": "task",
+      "raw_text": "Upload the Natural Language Processing assignment by 31 February at 5 PM.",
+      "source": "LMS",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": "Upload Natural Language Processing assignment by 31 February",
+        "description": null,
+        "task_type": "assignment",
+        "subject": "Natural Language Processing",
+        "due_date": null,
+        "due_time": "17:00",
+        "event_datetime": null,
+        "source": "LMS",
+        "raw_text": "Upload the Natural Language Processing assignment by 31 February at 5 PM.",
+        "date_time_expression": "5 PM",
+        "confidence": 0.75,
+        "change_information": []
+      },
+      "expected_category": "task",
+      "db_expectation": {
+        "insertable": true,
+        "expected_error": null
+      },
+      "notes": "Invalid calendar date 31 February results in null date."
+    },
+    {
+      "case_id": "EVAL-NLP-35",
+      "category": "general_notice",
+      "raw_text": "Notice: The central library will remain closed on Friday for inventory check.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": null,
+        "description": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Notice",
+        "raw_text": "Notice: The central library will remain closed on Friday for inventory check.",
+        "date_time_expression": null,
+        "confidence": 0.0,
+        "change_information": []
+      },
+      "expected_category": "general_notice",
+      "db_expectation": {
+        "insertable": false,
+        "expected_error": "ValueError"
+      },
+      "notes": "Administrative closure notice; all fields null, confidence 0.0."
+    },
+    {
+      "case_id": "EVAL-NLP-36",
+      "category": "general_notice",
+      "raw_text": "All students are informed that semester registration opens next Monday on the portal.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": null,
+        "description": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Notice",
+        "raw_text": "All students are informed that semester registration opens next Monday on the portal.",
+        "date_time_expression": null,
+        "confidence": 0.0,
+        "change_information": []
+      },
+      "expected_category": "general_notice",
+      "db_expectation": {
+        "insertable": false,
+        "expected_error": "ValueError"
+      },
+      "notes": "General administrative circular."
+    },
+    {
+      "case_id": "EVAL-NLP-37",
+      "category": "general_notice",
+      "raw_text": "The exam timetable has been published on the university website.",
+      "source": "LMS",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": null,
+        "description": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "LMS",
+        "raw_text": "The exam timetable has been published on the university website.",
+        "date_time_expression": null,
+        "confidence": 0.0,
+        "change_information": []
+      },
+      "expected_category": "general_notice",
+      "db_expectation": {
+        "insertable": false,
+        "expected_error": "ValueError"
+      },
+      "notes": "Informational timetable announcement."
+    },
+    {
+      "case_id": "EVAL-NLP-38",
+      "category": "general_notice",
+      "raw_text": "Notice: The campus cafeteria will be closed tomorrow for sanitation work.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": null,
+        "description": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "Notice",
+        "raw_text": "Notice: The campus cafeteria will be closed tomorrow for sanitation work.",
+        "date_time_expression": null,
+        "confidence": 0.0,
+        "change_information": []
+      },
+      "expected_category": "general_notice",
+      "db_expectation": {
+        "insertable": false,
+        "expected_error": "ValueError"
+      },
+      "notes": "Campus maintenance notice."
+    },
+    {
+      "case_id": "EVAL-NLP-39",
+      "category": "general_notice",
+      "raw_text": "Great job on the presentation everyone, see you all tomorrow!",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": null,
+        "description": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "WhatsApp",
+        "raw_text": "Great job on the presentation everyone, see you all tomorrow!",
+        "date_time_expression": null,
+        "confidence": 0.0,
+        "change_information": []
+      },
+      "expected_category": "general_notice",
+      "db_expectation": {
+        "insertable": false,
+        "expected_error": "ValueError"
+      },
+      "notes": "Casual peer celebration chatter without task action signal."
+    },
+    {
+      "case_id": "EVAL-NLP-40",
+      "category": "general_notice",
+      "raw_text": "Can someone please share the syllabus copy when you get a chance?",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "expected": {
+        "task_title": null,
+        "description": null,
+        "task_type": null,
+        "subject": null,
+        "due_date": null,
+        "due_time": null,
+        "event_datetime": null,
+        "source": "WhatsApp",
+        "raw_text": "Can someone please share the syllabus copy when you get a chance?",
+        "date_time_expression": null,
+        "confidence": 0.0,
+        "change_information": []
+      },
+      "expected_category": "general_notice",
+      "db_expectation": {
+        "insertable": false,
+        "expected_error": "ValueError"
+      },
+      "notes": "Conversational courtesy query without deadline or task assignment."
+    }
+  ],
+  "deferred_cases": [
+    {
+      "case_id": "DEF-NLP-01",
+      "roadmap_step": "38-39",
+      "category": "task",
+      "raw_text": "Submit the compiler lab writeup in 2 days at 5 PM.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "deferred_expected": {
+        "due_date": "2026-11-06",
+        "due_time": "17:00",
+        "date_time_expression": "in 2 days at 5 PM"
+      },
+      "notes": "Natural relative offset ('in 2 days'); unsupported in Phase 1 parser."
+    },
+    {
+      "case_id": "DEF-NLP-02",
+      "roadmap_step": "38-39",
+      "category": "task",
+      "raw_text": "Please upload the project report by midnight tonight.",
+      "source": "Email",
+      "reference_date": "2026-11-04",
+      "deferred_expected": {
+        "due_date": "2026-11-04",
+        "due_time": "23:59",
+        "date_time_expression": "midnight tonight"
+      },
+      "notes": "Keyword 'midnight' and 'tonight'; unsupported in Phase 1 parser."
+    },
+    {
+      "case_id": "DEF-NLP-03",
+      "roadmap_step": "38-39",
+      "category": "task",
+      "raw_text": "Reminder: Submit the Networks assignment next Friday at 5 PM.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "deferred_expected": {
+        "due_date": "2026-11-13",
+        "due_time": "17:00",
+        "date_time_expression": "next Friday at 5 PM"
+      },
+      "notes": "'next Friday' (+7 days disambiguation vs regular Friday)."
+    },
+    {
+      "case_id": "DEF-NLP-04",
+      "roadmap_step": "38-39",
+      "category": "task",
+      "raw_text": "Submit the assignment by 15/11/2026 at 18:00.",
+      "source": "LMS",
+      "reference_date": "2026-11-04",
+      "deferred_expected": {
+        "due_date": "2026-11-15",
+        "due_time": "18:00",
+        "date_time_expression": "15/11/2026 at 18:00"
+      },
+      "notes": "Numeric slash date format (DD/MM/YYYY); convention pending team agreement."
+    },
+    {
+      "case_id": "DEF-NLP-05",
+      "roadmap_step": "38-39",
+      "category": "task",
+      "raw_text": "Complete the assignment this weekend by Sunday night.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "deferred_expected": {
+        "due_date": "2026-11-08",
+        "due_time": "23:59",
+        "date_time_expression": "this weekend by Sunday night"
+      },
+      "notes": "Vague range 'this weekend' and 'Sunday night'."
+    },
+    {
+      "case_id": "DEF-NLP-06",
+      "roadmap_step": "38-39",
+      "category": "event",
+      "raw_text": "Guest lecture on Artificial Intelligence next week on Wednesday at 10 AM.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "deferred_expected": {
+        "event_datetime": "2026-11-11T10:00:00",
+        "date_time_expression": "next week on Wednesday at 10 AM"
+      },
+      "notes": "'next week on Wednesday' composite offset."
+    },
+    {
+      "case_id": "DEF-NLP-07",
+      "roadmap_step": "41-42",
+      "category": "task",
+      "raw_text": "The Machine Learning assignment deadline has been postponed from 10 November to 15 November at 5 PM.",
+      "source": "Email",
+      "reference_date": "2026-11-04",
+      "deferred_expected": {
+        "due_date": "2026-11-15",
+        "change_information": [
+          {
+            "field": "due_date",
+            "previous": "2026-11-10",
+            "new": "2026-11-15"
+          }
+        ]
+      },
+      "notes": "Structured postponement diff; change_information currently hardcoded to []."
+    },
+    {
+      "case_id": "DEF-NLP-08",
+      "roadmap_step": "41-42",
+      "category": "event",
+      "raw_text": "Update: Operating Systems exam rescheduled from 18 November 10 AM to 20 November 2 PM in Hall C.",
+      "source": "WhatsApp",
+      "reference_date": "2026-11-04",
+      "deferred_expected": {
+        "event_datetime": "2026-11-20T14:00:00",
+        "change_information": [
+          {
+            "field": "event_datetime",
+            "previous": "2026-11-18T10:00:00",
+            "new": "2026-11-20T14:00:00"
+          }
+        ]
+      },
+      "notes": "Exam reschedule structured tracking."
+    },
+    {
+      "case_id": "DEF-NLP-09",
+      "roadmap_step": "41-42",
+      "category": "task",
+      "raw_text": "Notice of change: Project proposal submission moved from Friday 5 PM to Monday 5 PM.",
+      "source": "LMS",
+      "reference_date": "2026-11-04",
+      "deferred_expected": {
+        "due_date": "2026-11-09",
+        "change_information": [
+          {
+            "field": "due_date",
+            "previous": "2026-11-06",
+            "new": "2026-11-09"
+          }
+        ]
+      },
+      "notes": "Weekday shift with change tracking."
+    },
+    {
+      "case_id": "DEF-NLP-10",
+      "roadmap_step": "41-42",
+      "category": "event",
+      "raw_text": "Class venue change: Database lecture moved from Room 201 to Auditorium on 12 November at 11 AM.",
+      "source": "Notice",
+      "reference_date": "2026-11-04",
+      "deferred_expected": {
+        "event_datetime": "2026-11-12T11:00:00",
+        "change_information": [
+          {
+            "field": "location",
+            "previous": "Room 201",
+            "new": "Auditorium"
+          }
+        ]
+      },
+      "notes": "Venue relocation diff."
+    }
+  ]
+}
